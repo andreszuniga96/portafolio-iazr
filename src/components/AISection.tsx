@@ -1,6 +1,7 @@
-import { useRef, useEffect, useMemo } from "react";
+import { useRef, useEffect, useMemo, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Brain, Zap, BarChart3, Globe2, ShieldCheck, ArrowRight } from "lucide-react";
+import { SectionLabel, TextReveal } from "@/components/ui/AnimatedElements";
 
 const PRIMARY = "#FF6B2B";
 
@@ -177,6 +178,7 @@ const AISection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const [focusedCap, setFocusedCap] = useState<number | null>(null);
 
   return (
     <section ref={ref} className="relative py-24 md:py-32 overflow-hidden border-t"
@@ -187,19 +189,19 @@ const AISection = () => {
         style={{ background: "rgba(255,107,43,0.05)" }} />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-        {/* Header */}
+        {/* Header with SectionLabel + TextReveal */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <motion.div
             initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7 }}
           >
-            <span className="text-xs font-poppins text-primary uppercase tracking-[0.3em] font-bold block mb-4">
-              Potenciado por IA
-            </span>
-            <h2 className="text-4xl md:text-6xl font-sora leading-tight" style={{ color: "#f0ede8" }}>
-              Soluciones que piensan,
+            <SectionLabel text="Potenciado por IA" className="mb-5" />
+            <h2 className="text-4xl md:text-6xl font-outfit leading-tight" style={{ color: "#f0ede8" }}>
+              <TextReveal text="Soluciones que piensan," delay={0.05} />
               <br />
-              <span className="aurora-text">aprenden y actúan</span>
+              <span className="aurora-text">
+                <TextReveal text="aprenden y actúan" delay={0.25} />
+              </span>
             </h2>
           </motion.div>
           <motion.div style={{ y }}
@@ -220,19 +222,27 @@ const AISection = () => {
 
         {/* Two column: Cards + Constellation */}
         <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* Capability cards */}
-          <div className="grid gap-4">
+          {/* Capability cards — with Bento Focus */}
+          <div
+            className="grid gap-4"
+            onMouseLeave={() => setFocusedCap(null)}
+          >
             {aiCapabilities.map((cap, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: 0.55, delay: i * 0.08 }}
-                whileHover={{ x: 4, transition: { duration: 0.2 } }}
-                className="group flex items-start gap-4 p-5 rounded-2xl cursor-default transition-all duration-300"
+                animate={{
+                  opacity: focusedCap !== null && focusedCap !== i ? 0.35 : 1,
+                  scale: focusedCap !== null && focusedCap !== i ? 0.97 : 1,
+                  x: focusedCap === i ? 6 : 0,
+                }}
+                onMouseEnter={() => setFocusedCap(i)}
+                className="group flex items-start gap-4 p-5 rounded-2xl cursor-default transition-colors duration-300"
                 style={{
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.05)",
+                  background: focusedCap === i ? `${cap.color}08` : "rgba(255,255,255,0.02)",
+                  border: `1px solid ${focusedCap === i ? cap.color + '25' : 'rgba(255,255,255,0.05)'}`,
                 }}
               >
                 <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
@@ -240,8 +250,8 @@ const AISection = () => {
                   {cap.icon}
                 </div>
                 <div>
-                  <h3 className="font-sora font-semibold mb-1.5" style={{ color: "#f0ede8" }}>{cap.title}</h3>
-                  <p className="text-sm font-poppins leading-relaxed" style={{ color: "rgba(240,237,232,0.45)" }}>
+                  <h3 className="font-outfit font-semibold mb-1.5" style={{ color: "#f0ede8" }}>{cap.title}</h3>
+                  <p className="text-sm font-outfit leading-relaxed" style={{ color: "rgba(240,237,232,0.45)" }}>
                     {cap.desc}
                   </p>
                 </div>

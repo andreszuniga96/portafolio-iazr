@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useMotionTemplate } from "framer-motion";
 import { Code2, BrainCircuit, GraduationCap, ShieldAlert, LineChart, Briefcase, X, ArrowUpRight } from "lucide-react";
+import { SectionLabel, TextReveal } from "@/components/ui/AnimatedElements";
 
 interface Service {
   title: string;
@@ -173,8 +174,10 @@ const ServiceModal = ({ service, onClose }: { service: Service; onClose: () => v
   );
 };
 
-// ── Spotlight Card ────────────────────────────────────────────────────────────
-const ServiceCard = ({ service, index, onClick }: { service: Service; index: number; onClick: () => void }) => {
+const ServiceCard = ({ service, index, onClick, isFocused, isDimmed }: {
+  service: Service; index: number; onClick: () => void;
+  isFocused?: boolean; isDimmed?: boolean;
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -202,7 +205,7 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
   const isFeatured = service.featured;
 
   return (
-    <div className={`folder-card-wrapper h-full ${isFeatured ? "" : ""}`}>
+    <div className="folder-card-wrapper h-full">
       <motion.div
         ref={cardRef}
         layout
@@ -210,6 +213,11 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.65, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+        animate={{
+          opacity: isDimmed ? 0.35 : 1,
+          scale: isDimmed ? 0.97 : 1,
+          filter: isDimmed ? "blur(1px)" : "blur(0px)",
+        }}
         style={{ rotateX: rotateX, rotateY: rotateY, transformStyle: "preserve-3d" }}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
@@ -217,9 +225,9 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
         className="relative group rounded-3xl cursor-pointer h-full"
         onClick={onClick}
       >
-        {/* Outer glow */}
+        {/* Outer glow — stronger when focused */}
         <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl -z-10"
-          style={{ background: `${service.categoryColor}18` }} />
+          style={{ background: `${service.categoryColor}${isFocused ? '28' : '18'}` }} />
         {/* Mouse border glow */}
         <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{ background: `radial-gradient(180px circle at ${borderPos.x}% ${borderPos.y}%, ${service.categoryColor}20, transparent 70%)` }} />
@@ -228,7 +236,7 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
         <div className="liquid-glass relative h-full rounded-3xl overflow-hidden border group-hover:border-white/10 transition-all duration-500"
           style={{
             background: "rgba(255,255,255,0.018)",
-            borderColor: "rgba(255,255,255,0.05)",
+            borderColor: isFocused ? `${service.categoryColor}35` : "rgba(255,255,255,0.05)",
             padding: isFeatured ? "2rem 2.25rem" : "1.75rem",
           }}>
           {/* Spotlight */}
@@ -236,7 +244,7 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
             style={{ background: spotBg }} />
 
           {/* Number */}
-          <div className="absolute top-5 right-6 font-sora font-bold text-4xl md:text-5xl pointer-events-none select-none"
+          <div className="absolute top-5 right-6 font-outfit font-bold text-4xl md:text-5xl pointer-events-none select-none"
             style={{ color: "rgba(255,255,255,0.025)" }}>
             {service.num}
           </div>
@@ -253,11 +261,11 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
 
           {/* Text */}
           <div className="relative z-10 flex flex-col gap-2 flex-1">
-            <span className="text-[10px] font-poppins uppercase tracking-widest font-bold"
+            <span className="text-[10px] font-outfit uppercase tracking-widest font-bold"
               style={{ color: service.categoryColor }}>{service.category}</span>
-            <h3 className={`font-sora ${isFeatured ? "text-xl md:text-2xl" : "text-lg"}`}
+            <h3 className={`font-outfit ${isFeatured ? "text-xl md:text-2xl" : "text-lg"}`}
               style={{ color: "#f0ede8" }}>{service.title}</h3>
-            <p className="text-sm font-poppins leading-relaxed" style={{ color: "rgba(240,237,232,0.45)" }}>
+            <p className="text-sm font-outfit leading-relaxed" style={{ color: "rgba(240,237,232,0.45)" }}>
               {service.desc}
             </p>
           </div>
@@ -267,7 +275,7 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
             <div className="flex flex-wrap gap-1.5 mt-4 relative z-10">
               {service.tags.slice(0, 4).map((tag, i) => (
                 <span key={tag}
-                  className="px-2 py-0.5 rounded-full text-[10px] font-poppins uppercase tracking-wider"
+                  className="px-2 py-0.5 rounded-full text-[10px] font-outfit uppercase tracking-wider"
                   style={{ background: `${service.tagColors[i] || "#8a857c"}12`, color: service.tagColors[i] || "#8a857c", border: `1px solid ${service.tagColors[i] || "#8a857c"}25` }}>
                   {tag}
                 </span>
@@ -278,10 +286,10 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
           {/* Footer */}
           <div className="mt-5 pt-4 border-t flex items-center justify-between relative z-10"
             style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-            <span className="text-primary font-sora text-xs uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 flex items-center gap-1.5">
+            <span className="text-primary font-outfit text-xs uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 flex items-center gap-1.5">
               Explorar <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
-            <span className="text-xs font-poppins" style={{ color: "rgba(255,255,255,0.2)" }}>
+            <span className="text-xs font-outfit" style={{ color: "rgba(255,255,255,0.2)" }}>
               {service.price.split("\n")[0].length > 22 ? service.price.split("\n")[0].slice(0, 22) + "…" : service.price.split("\n")[0]}
             </span>
           </div>
@@ -293,6 +301,7 @@ const ServiceCard = ({ service, index, onClick }: { service: Service; index: num
 
 const ServicesSection = () => {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   return (
     <>
@@ -309,38 +318,43 @@ const ServicesSection = () => {
         </div>
 
         <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-          {/* Header */}
+          {/* Header with SectionLabel + TextReveal */}
           <motion.div
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="mb-16 md:mb-20"
           >
-            <span className="text-xs font-poppins uppercase tracking-[0.3em] font-bold block mb-4" style={{ color: PRIMARY }}>
-              Catálogo Tecnológico
-            </span>
+            <SectionLabel text="Catálogo Tecnológico" className="mb-5" />
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-sora leading-none" style={{ color: "#f0ede8" }}>
-                Servicios
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-outfit leading-none" style={{ color: "#f0ede8" }}>
+                <TextReveal text="Servicios" />
                 <br />
-                <span className="aurora-text">Especializados</span>
+                <span className="aurora-text">
+                  <TextReveal text="Especializados" delay={0.15} />
+                </span>
               </h2>
-              <p className="text-sm font-poppins max-w-xs text-right hidden md:block" style={{ color: "rgba(240,237,232,0.4)" }}>
+              <p className="text-sm font-outfit max-w-xs text-right hidden md:block" style={{ color: "rgba(240,237,232,0.4)" }}>
                 Haz clic en cualquier servicio para ver detalle completo, tecnologías y precio.
               </p>
             </div>
           </motion.div>
 
-          {/* Bento Grid Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-auto">
-            {/* Featured services — larger */}
+          {/* Bento Grid — with Focus effect */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 auto-rows-auto"
+            onMouseLeave={() => setFocusedIndex(null)}
+          >
             {services.map((service, index) => (
               <div
                 key={index}
                 className={service.featured ? "lg:col-span-1 lg:row-span-1" : ""}
+                onMouseEnter={() => setFocusedIndex(index)}
               >
                 <ServiceCard
                   service={service}
                   index={index}
                   onClick={() => setSelectedService(service)}
+                  isFocused={focusedIndex === index}
+                  isDimmed={focusedIndex !== null && focusedIndex !== index}
                 />
               </div>
             ))}

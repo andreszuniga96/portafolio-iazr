@@ -1,65 +1,91 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { TextReveal, SectionLabel } from '@/components/ui/AnimatedElements';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ── Letter-by-letter split helper ── */
-const SplitText = ({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) => {
-  return (
-    <span className={className} aria-label={text}>
-      {text.split('').map((char, i) => (
-        <span key={i} className="letter-char" aria-hidden="true">
-          <span
-            className="letter-char-inner"
-            style={{
-              animationDelay: `${delay + i * 0.035}s`,
-              animationFillMode: 'both',
-            }}
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        </span>
+/* ── CSS Aurora Particle Dots (GPU-friendly, no Three.js) ── */
+const AuroraDots = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    {[...Array(18)].map((_, i) => {
+      const size = 2 + (i % 3);
+      const col = i % 4 === 0 ? '#FF6B2B' : i % 4 === 1 ? '#f59e0b' : i % 4 === 2 ? '#8b5cf6' : '#3b82f6';
+      return (
+        <div
+          key={i}
+          className="absolute rounded-full"
+          style={{
+            width: size,
+            height: size,
+            background: col,
+            opacity: 0.25 + (i % 3) * 0.1,
+            left: `${5 + (i * 17) % 90}%`,
+            top: `${10 + (i * 23) % 80}%`,
+            animation: `aurora-float-${i % 4} ${5 + (i % 5)}s ease-in-out ${i * 0.4}s infinite`,
+            boxShadow: `0 0 ${6 + size * 2}px ${col}60`,
+          }}
+        />
+      );
+    })}
+    {/* Connecting lines */}
+    <svg className="absolute inset-0 w-full h-full opacity-[0.04]" xmlns="http://www.w3.org/2000/svg">
+      {[...Array(6)].map((_, i) => (
+        <line
+          key={i}
+          x1={`${10 + i * 16}%`} y1={`${20 + (i % 3) * 25}%`}
+          x2={`${26 + i * 16}%`} y2={`${40 + (i % 3) * 20}%`}
+          stroke="#FF6B2B" strokeWidth="0.5"
+        />
       ))}
-    </span>
+    </svg>
+  </div>
+);
+
+/* ── Magnetic floating badge ── */
+const FloatingBadge = ({
+  label, emoji, style, delay = 0,
+}: { label: string; emoji?: string; style?: React.CSSProperties; delay?: number }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 120, damping: 20 });
+  const springY = useSpring(y, { stiffness: 120, damping: 20 });
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const dx = (e.clientX - rect.left - rect.width / 2) * 0.15;
+    const dy = (e.clientY - rect.top - rect.height / 2) * 0.15;
+    x.set(dx); y.set(dy);
+  };
+  const onMouseLeave = () => { x.set(0); y.set(0); };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.6, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      style={{ x: springX, y: springY, ...style }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className="absolute pointer-events-auto select-none hidden md:block cursor-default"
+    >
+      <div
+        className="animate-float-badge px-3 py-1.5 rounded-full backdrop-blur-sm flex items-center gap-1.5 whitespace-nowrap text-xs font-outfit font-semibold transition-all hover:scale-105"
+        style={{
+          background: 'rgba(255,107,43,0.12)',
+          border: '1px solid rgba(255,107,43,0.3)',
+          color: 'rgba(255,255,255,0.85)',
+          animationDelay: `${delay}s`,
+          boxShadow: '0 4px 20px rgba(255,107,43,0.15)',
+        }}
+      >
+        {emoji && <span className="text-sm">{emoji}</span>}
+        {label}
+      </div>
+    </motion.div>
   );
 };
-
-/* ── Floating badge — hidden on mobile to avoid clutter ── */
-const FloatingBadge = ({
-  label,
-  emoji,
-  style,
-  delay = 0,
-}: {
-  label: string;
-  emoji?: string;
-  style?: React.CSSProperties;
-  delay?: number;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, scale: 0.6, y: 20 }}
-    animate={{ opacity: 1, scale: 1, y: 0 }}
-    transition={{ delay, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-    className="absolute pointer-events-none select-none hidden md:block"
-    style={style}
-  >
-    <div
-      className="animate-float-badge px-3 py-1.5 rounded-full backdrop-blur-sm flex items-center gap-1.5 whitespace-nowrap text-xs font-outfit font-semibold"
-      style={{
-        background: 'rgba(255,107,43,0.12)',
-        border: '1px solid rgba(255,107,43,0.3)',
-        color: 'rgba(255,255,255,0.85)',
-        animationDelay: `${delay}s`,
-        boxShadow: '0 4px 20px rgba(255,107,43,0.15)',
-      }}
-    >
-      {emoji && <span className="text-sm">{emoji}</span>}
-      {label}
-    </div>
-  </motion.div>
-);
 
 const HeroImmersive = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -79,7 +105,7 @@ const HeroImmersive = () => {
   useEffect(() => {
     if (!containerRef.current) return;
     const ctx = gsap.context(() => {
-      /* Sub-elements: badge, role, CTA — use opacity only (no filter:blur = compositor-friendly) */
+      /* Sub-elements: opacity only (compositable, no filter:blur) */
       gsap.set('.hero-sub', { opacity: 0, y: 24 });
       gsap.to('.hero-sub', {
         opacity: 1, y: 0,
@@ -123,35 +149,19 @@ const HeroImmersive = () => {
         <div className="absolute inset-0" style={{ background: 'rgba(12,10,8,0.22)' }} />
       </motion.div>
 
-      {/* ── Layer 2: Floating Badges (desktop only, hidden on mobile) ── */}
+      {/* ── Aurora dots (CSS particles, no WebGL) ── */}
+      <AuroraDots />
+
+      {/* ── Layer 2: Floating Badges (desktop only, magnetic) ── */}
       <motion.div
         style={{ opacity: badgesOpacity }}
         className="absolute inset-0 pointer-events-none z-10"
         aria-hidden="true"
       >
-        <FloatingBadge
-          label="6+ Años Experiencia"
-          emoji="⚡"
-          delay={1.8}
-          style={{ top: '22%', right: '8%' }}
-        />
-        <FloatingBadge
-          label="IA & Full-Stack"
-          emoji="🧠"
-          delay={2.0}
-          style={{ top: '36%', right: '4%' }}
-        />
-        <FloatingBadge
-          label="Disponible ✓"
-          emoji="🟢"
-          delay={2.2}
-          style={{ bottom: '32%', right: '10%' }}
-        />
-        <FloatingBadge
-          label="Colombia 🇨🇴 → Mundo 🌍"
-          delay={2.4}
-          style={{ bottom: '44%', left: '3%' }}
-        />
+        <FloatingBadge label="6+ Años Experiencia" emoji="⚡" delay={1.8} style={{ top: '22%', right: '8%' }} />
+        <FloatingBadge label="IA & Full-Stack" emoji="🧠" delay={2.0} style={{ top: '36%', right: '4%' }} />
+        <FloatingBadge label="Disponible ✓" emoji="🟢" delay={2.2} style={{ bottom: '32%', right: '10%' }} />
+        <FloatingBadge label="Colombia 🇨🇴 → Mundo 🌍" delay={2.4} style={{ bottom: '44%', left: '3%' }} />
       </motion.div>
 
       {/* ── Layer 3: Text content ── */}
@@ -160,31 +170,24 @@ const HeroImmersive = () => {
         className="relative z-10 w-full h-screen max-w-7xl mx-auto px-5 sm:px-8 md:px-12 flex flex-col justify-end pb-24 sm:pb-32 md:pb-40"
       >
         <div>
-          {/* Role label */}
-          <p className="hero-sub text-[10px] sm:text-xs font-outfit text-primary uppercase tracking-[0.35em] mb-4 sm:mb-5 block">
-            Ivan Zuñiga &mdash; Ingeniería &amp; Inteligencia Artificial
-          </p>
+          {/* Section label with animated bar */}
+          <div className="hero-sub mb-4 sm:mb-5">
+            <SectionLabel text="Ivan Zuñiga — Ingeniería & Inteligencia Artificial" delay={0.3} />
+          </div>
 
-          {/* Main headline */}
+          {/* Main headline with TextReveal */}
           <h1
             className="font-outfit font-bold uppercase text-white leading-[0.9] tracking-[-0.03em] mb-6 sm:mb-8 overflow-visible"
-            style={{
-              fontSize: 'clamp(2.2rem, 9vw, 90px)',
-              perspective: '800px',
-            }}
+            style={{ fontSize: 'clamp(2.2rem, 9vw, 90px)' }}
           >
             <span className="block">
-              <SplitText text="Tecnología" delay={0.3} />
+              <TextReveal text="Tecnología" delay={0.35} className="text-white" />
+            </span>
+            <span className="block aurora-text">
+              <TextReveal text="de Vanguardia" delay={0.6} />
             </span>
             <span className="block">
-              <SplitText
-                text="de Vanguardia"
-                delay={0.65}
-                className="aurora-text"
-              />
-            </span>
-            <span className="block">
-              <SplitText text="para Colombia." delay={1.0} />
+              <TextReveal text="para Colombia." delay={0.85} className="text-white" />
             </span>
           </h1>
 
@@ -198,7 +201,7 @@ const HeroImmersive = () => {
             talento tecnológico que Colombia necesita para competir a nivel mundial.
           </p>
 
-          {/* CTAs — stacked on mobile, side-by-side on sm+ */}
+          {/* CTAs */}
           <div className="hero-sub flex flex-col sm:flex-row gap-3 sm:gap-4">
             <a
               href="#servicios"

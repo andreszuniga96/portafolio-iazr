@@ -1,6 +1,7 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap } from "lucide-react";
+import { SectionLabel, TextReveal } from "@/components/ui/AnimatedElements";
 
 // ── Particle field background ──────────────────────────────────────────────────
 const ParticleField = () => {
@@ -45,11 +46,39 @@ const ParticleField = () => {
 
 const CTASection = () => {
   const slotsLeft = 3;
+  const mouseX = useRef(0);
+  const mouseY = useRef(0);
+  const spotRef = useRef<HTMLDivElement>(null);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    if (spotRef.current) {
+      spotRef.current.style.background = `radial-gradient(400px circle at ${x}px ${y}px, rgba(255,107,43,0.09), transparent 70%)`;
+      spotRef.current.style.opacity = '1';
+    }
+  };
+
+  const onMouseLeave = () => {
+    if (spotRef.current) spotRef.current.style.opacity = '0';
+  };
 
   return (
-    <section className="relative py-24 md:py-36 overflow-hidden border-t"
-      style={{ backgroundColor: "#0c0c0e", borderColor: "rgba(42,39,36,0.6)" }}>
+    <section
+      className="relative py-24 md:py-36 overflow-hidden border-t"
+      style={{ backgroundColor: "#0c0c0e", borderColor: "rgba(42,39,36,0.6)" }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+    >
       <ParticleField />
+
+      {/* Spotlight layer */}
+      <div
+        ref={spotRef}
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 z-[1]"
+        style={{ background: 'transparent' }}
+      />
 
       {/* Radial warm glow */}
       <div className="absolute inset-0 pointer-events-none"
@@ -64,23 +93,30 @@ const CTASection = () => {
           style={{ background: "rgba(255,107,43,0.1)", border: "1px solid rgba(255,107,43,0.25)" }}
         >
           <Zap className="w-3.5 h-3.5 text-primary" />
-          <span className="text-xs font-poppins uppercase tracking-[0.25em] font-bold text-primary">
+          <span className="text-xs font-outfit uppercase tracking-[0.25em] font-bold text-primary">
             {slotsLeft} slots disponibles este mes
           </span>
           <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
         </motion.div>
 
-        {/* Main headline */}
+        {/* Section label */}
+        <div className="flex justify-center mb-4">
+          <SectionLabel text="Empecemos" delay={0.1} />
+        </div>
+
+        {/* Main headline with TextReveal */}
         <motion.h2
           initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-4xl md:text-6xl lg:text-7xl font-sora font-bold leading-none mb-6"
+          className="text-4xl md:text-6xl lg:text-7xl font-outfit font-bold leading-none mb-6"
           style={{ color: "#f0ede8" }}
         >
-          ¿Listo para construir
+          <TextReveal text="¿Listo para construir" delay={0.1} />
           <br />
-          <span className="aurora-text">algo extraordinario?</span>
+          <span className="aurora-text">
+            <TextReveal text="algo extraordinario?" delay={0.35} />
+          </span>
         </motion.h2>
 
         {/* Sub */}
@@ -88,7 +124,7 @@ const CTASection = () => {
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-base md:text-lg font-poppins mb-12 max-w-xl mx-auto"
+          className="text-base md:text-lg font-outfit mb-12 max-w-xl mx-auto"
           style={{ color: "rgba(240,237,232,0.5)" }}
         >
           En 30 minutos definimos tu proyecto, el stack ideal y una inversión transparente. Sin compromisos, con visión de producto.
@@ -101,17 +137,20 @@ const CTASection = () => {
           transition={{ delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
+          {/* Primary button — with shimmer on hover */}
           <a
             href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%20%F0%9F%91%8B%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20virtual%20para%20hablar%20de%20mi%20proyecto."
             target="_blank" rel="noreferrer"
-            className="btn-glow inline-flex items-center gap-2.5 px-9 py-5 rounded-full bg-primary text-black font-sora font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all"
+            className="relative btn-glow inline-flex items-center gap-2.5 px-9 py-5 rounded-full bg-primary text-black font-outfit font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all overflow-hidden group"
           >
+            {/* Shimmer sweep */}
+            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none" />
             Agendar reunión gratuita
             <ArrowRight className="w-4 h-4" />
           </a>
           <a
             href="#servicios"
-            className="inline-flex items-center gap-2 px-9 py-5 rounded-full font-sora font-semibold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-2 px-9 py-5 rounded-full font-outfit font-semibold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
             style={{ border: "1px solid rgba(255,255,255,0.1)", color: "rgba(240,237,232,0.7)", background: "rgba(255,255,255,0.03)" }}
           >
             Ver servicios
@@ -135,10 +174,10 @@ const CTASection = () => {
             ))}
           </div>
           <div className="text-left">
-            <p className="text-xs font-poppins" style={{ color: "rgba(240,237,232,0.65)" }}>
+            <p className="text-xs font-outfit" style={{ color: "rgba(240,237,232,0.65)" }}>
               "Ivan transformó nuestro proyecto en 4 semanas con IA real."
             </p>
-            <p className="text-[10px] font-poppins mt-0.5" style={{ color: "#8a857c" }}>
+            <p className="text-[10px] font-outfit mt-0.5" style={{ color: "#8a857c" }}>
               — Clientes reales · Colombia
             </p>
           </div>
