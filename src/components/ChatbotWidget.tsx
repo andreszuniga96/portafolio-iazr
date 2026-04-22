@@ -1015,10 +1015,12 @@ const ChatbotWidget = () => {
       {/* ── Floating trigger button ── */}
       <motion.button
         onClick={() => setIsOpen(v => !v)}
-        className="fixed bottom-6 right-6 z-40 md:bottom-10 md:right-10"
+        className="fixed bottom-20 right-4 z-40 md:bottom-10 md:right-10"
         whileHover={{ scale: 1.08, y: -2 }}
         whileTap={{ scale: 0.93 }}
-        aria-label="Abrir Nova AI">
+        aria-label={isOpen ? "Cerrar Nova AI" : "Abrir Nova AI, asistente de Ivan Zuñiga"}
+        aria-expanded={isOpen}
+        aria-haspopup="dialog">
         <AnimatePresence mode="wait">
           {isOpen
             ? <motion.div key="c" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}
@@ -1107,6 +1109,7 @@ const ChatbotWidget = () => {
                   <button onClick={() => setConvState(p => ({ ...p, lang: p.lang === "es" ? "en" : "es" }))}
                     className="p-2 rounded-xl transition-all"
                     style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.45)" }}
+                    aria-label={convState.lang === "es" ? "Switch to English" : "Cambiar a Español"}
                     title={convState.lang === "es" ? "Switch to English" : "Cambiar a Español"}>
                     <Globe className="w-3.5 h-3.5" />
                   </button>
@@ -1115,6 +1118,7 @@ const ChatbotWidget = () => {
                     <button onClick={() => generatePDF(convState)}
                       className="p-2 rounded-xl transition-all"
                       style={{ background: `${PRIMARY}12`, border: `1px solid ${PRIMARY}25`, color: PRIMARY }}
+                      aria-label="Descargar propuesta como PDF"
                       title="Descargar PDF">
                       <Download className="w-3.5 h-3.5" />
                     </button>
@@ -1130,7 +1134,8 @@ const ChatbotWidget = () => {
                   </a>
                   <button onClick={() => setIsOpen(false)}
                     className="p-2 rounded-xl transition-colors"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.3)" }}>
+                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.3)" }}
+                    aria-label="Cerrar chat Nova AI">
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -1198,9 +1203,10 @@ const ChatbotWidget = () => {
                       type="text"
                       value={input}
                       onChange={e => setInput(e.target.value)}
-                      placeholder={isListening ? "🎤 Escuchando..." : isThinking ? "Nova esta pensando..." : "Cuentame sobre tu proyecto..."}
+                      placeholder={isListening ? "🎙️ Escuchando..." : isThinking ? "Nova está pensando..." : "Cuéntame sobre tu proyecto..."}
                       disabled={isThinking || isListening}
-                      className="w-full rounded-2xl py-4 pl-5 pr-14 text-sm font-poppins focus:outline-none transition-all"
+                      aria-label="Escribe tu mensaje para Nova AI"
+                      className="w-full rounded-2xl py-4 pl-5 pr-14 text-sm font-outfit focus:outline-none transition-all"
                       style={{
                         background: "rgba(255,255,255,0.035)",
                         border: `1px solid ${input.trim() ? `${PRIMARY}55` : "rgba(255,255,255,0.07)"}`,
@@ -1209,7 +1215,8 @@ const ChatbotWidget = () => {
                     {/* Mic */}
                     <button type="button" onClick={isListening ? stopListen : startListen}
                       className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-xl flex items-center justify-center transition-all"
-                      style={{ background: isListening ? `${PRIMARY}25` : "transparent", color: isListening ? PRIMARY : "rgba(255,255,255,0.3)" }}>
+                      style={{ background: isListening ? `${PRIMARY}25` : "transparent", color: isListening ? PRIMARY : "rgba(255,255,255,0.3)" }}
+                      aria-label={isListening ? "Detener grabación de voz" : "Activar entrada de voz"}>
                       {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
                     </button>
                   </div>
@@ -1218,7 +1225,8 @@ const ChatbotWidget = () => {
                   <motion.button type="submit" disabled={!input.trim() || isThinking}
                     whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.94 }}
                     className="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all disabled:opacity-20"
-                    style={{ background: input.trim() && !isThinking ? PRIMARY : "rgba(255,255,255,0.08)", color: input.trim() && !isThinking ? "#000" : "#fff" }}>
+                    style={{ background: input.trim() && !isThinking ? PRIMARY : "rgba(255,255,255,0.08)", color: input.trim() && !isThinking ? "#000" : "#fff" }}
+                    aria-label="Enviar mensaje">
                     <Send className="w-4 h-4" />
                   </motion.button>
                 </form>

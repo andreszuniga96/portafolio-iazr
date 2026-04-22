@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Instagram, Linkedin, Github } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const navLinks = [
   { name: "Servicios",   href: "#servicios",   id: "servicios" },
@@ -83,34 +82,31 @@ const Navbar = () => {
   }, [activeSection]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-5 px-4 pointer-events-none transition-all duration-300">
-      {/* ── Desktop Pill ── */}
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-3 sm:pt-5 px-3 sm:px-4 pointer-events-none transition-all duration-300">
+      {/* ── Desktop/Mobile Pill ── */}
       <div
         ref={navRef}
-        className={`pointer-events-auto liquid-glass-strong inline-flex items-center rounded-full px-2 py-2 transition-all duration-500 ${
+        className={`pointer-events-auto liquid-glass-strong inline-flex items-center rounded-full px-2 py-1.5 sm:py-2 transition-all duration-500 max-w-[calc(100vw-24px)] ${
           isScrolled ? "shadow-[0_8px_40px_rgba(0,0,0,0.5)] scale-[0.97]" : "scale-100"
         }`}
       >
         {/* Logo */}
-        <Link to="/" className="flex items-center px-4 group flex-shrink-0">
-          <div className="w-8 h-8 rounded-full border border-primary/50 flex items-center justify-center bg-black group-hover:border-primary group-hover:shadow-[0_0_12px_rgba(255,107,43,0.4)] transition-all duration-300">
-            <span className="font-display italic text-sm text-primary">I</span>
+        <a href="/" className="flex items-center px-3 sm:px-4 group flex-shrink-0">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-primary/50 flex items-center justify-center bg-black group-hover:border-primary group-hover:shadow-[0_0_12px_rgba(255,107,43,0.4)] transition-all duration-300 flex-shrink-0">
+            <span className="font-display italic text-xs sm:text-sm text-primary">I</span>
           </div>
-          <div className="ml-3 overflow-hidden">
-            <span className="font-poppins font-semibold text-white tracking-widest uppercase text-sm block leading-tight">
+          <div className="ml-2 sm:ml-3 overflow-hidden hidden xs:block">
+            <span className="font-outfit font-semibold text-white tracking-widest uppercase text-xs sm:text-sm block leading-tight">
               IAZR
             </span>
-            <span className="font-poppins text-[9px] text-white/30 tracking-wider block leading-tight -mt-0.5 max-w-0 group-hover:max-w-xs overflow-hidden whitespace-nowrap transition-all duration-500">
-              Ivan Zuñiga
-            </span>
           </div>
-        </Link>
+        </a>
 
         {/* Divider */}
         <div className="hidden md:block w-px h-6 bg-white/8 mx-2 flex-shrink-0" />
 
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-0.5 px-1 relative">
+        <nav className="hidden md:flex items-center gap-0.5 px-1 relative" aria-label="Navegación principal">
           {/* Active Pill Indicator */}
           {activeSection && (
             <motion.div
@@ -126,7 +122,7 @@ const Navbar = () => {
               ref={(el) => { linkRefs.current[link.id] = el; }}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.id)}
-              className={`relative z-10 text-xs font-poppins px-4 py-2 rounded-full transition-colors duration-200 uppercase tracking-wider ${
+              className={`relative z-10 text-xs font-outfit px-4 py-2 rounded-full transition-colors duration-200 uppercase tracking-wider ${
                 activeSection === link.id ? "text-primary font-semibold" : "text-white/50 hover:text-white"
               }`}
             >
@@ -144,17 +140,19 @@ const Navbar = () => {
             href="https://wa.me/573229132643?text=Hola%20Ivan%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
             target="_blank"
             rel="noreferrer"
-            className="btn-glow flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-black font-sora font-semibold text-xs tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all"
+            className="btn-glow flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-black font-outfit font-semibold text-xs tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all"
           >
             Hablemos <span className="text-[10px]">↗</span>
           </a>
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile toggle — min 44x44px touch target */}
         <button
-          className="md:hidden p-2 text-white/70 hover:text-white ml-auto transition-colors"
+          className="md:hidden flex items-center justify-center min-w-[44px] min-h-[44px] text-white/70 hover:text-white ml-auto transition-colors rounded-full"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? "Cerrar menu" : "Abrir menu"}
+          aria-label={mobileMenuOpen ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-nav-menu"
         >
           {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -164,11 +162,14 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-nav-menu"
+            role="navigation"
+            aria-label="Menú móvil"
             initial={{ opacity: 0, y: -12, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 30 }}
-            className="absolute top-[76px] left-4 right-4 liquid-glass-strong rounded-3xl p-5 pointer-events-auto flex flex-col gap-1 md:hidden border border-white/8"
+            className="absolute top-[68px] sm:top-[76px] left-3 right-3 sm:left-4 sm:right-4 liquid-glass-strong rounded-3xl p-4 sm:p-5 pointer-events-auto flex flex-col gap-0.5 md:hidden border border-white/8"
           >
             {navLinks.map((link, i) => (
               <motion.a
@@ -176,8 +177,8 @@ const Navbar = () => {
                 href={link.href}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className={`text-sm font-poppins px-4 py-3 rounded-xl transition-colors uppercase tracking-wider text-center ${
+                transition={{ delay: i * 0.04 }}
+                className={`text-sm font-outfit min-h-[48px] flex items-center justify-center px-4 py-3 rounded-xl transition-colors uppercase tracking-wider text-center ${
                   activeSection === link.id
                     ? "text-primary bg-primary/10 font-semibold"
                     : "text-white/70 hover:text-white hover:bg-white/8"
@@ -189,18 +190,21 @@ const Navbar = () => {
             ))}
 
             {/* Redes sociales */}
-            <div className="flex items-center justify-center gap-3 py-3 mt-1 border-t border-white/8">
+            <div className="flex items-center justify-center gap-4 py-3 mt-1 border-t border-white/8">
               <a href="https://www.linkedin.com/in/iazr96/" target="_blank" rel="noreferrer"
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
-                <Linkedin size={16} />
+                aria-label="LinkedIn de Ivan Zuñiga"
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
+                <Linkedin size={18} />
               </a>
               <a href="https://www.instagram.com/iazr96/" target="_blank" rel="noreferrer"
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
-                <Instagram size={16} />
+                aria-label="Instagram de Ivan Zuñiga"
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
+                <Instagram size={18} />
               </a>
               <a href="https://github.com/andreszuniga96" target="_blank" rel="noreferrer"
-                className="w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
-                <Github size={16} />
+                aria-label="GitHub de Ivan Zuñiga"
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
+                <Github size={18} />
               </a>
             </div>
 
@@ -210,8 +214,8 @@ const Navbar = () => {
               rel="noreferrer"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navLinks.length * 0.05 + 0.05 }}
-              className="mt-2 px-6 py-4 rounded-2xl bg-primary text-black font-sora font-semibold text-center text-sm tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all"
+              transition={{ delay: navLinks.length * 0.04 + 0.05 }}
+              className="mt-2 px-6 py-4 rounded-2xl bg-primary text-black font-outfit font-semibold text-center text-sm tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all min-h-[52px] flex items-center justify-center"
               onClick={() => setMobileMenuOpen(false)}
             >
               Hablemos ↗
