@@ -1,24 +1,219 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ivan Zuñiga · Ingeniería & IA · IAZR</title>
-    <meta name="description" content="Portafolio de Ivan Zuñiga (IAZR). Desarrollo Full-Stack, Inteligencia Artificial, Automatización, Ciberseguridad y Mentoría Tecnológica. Director de Innovación. Colombia → Mundo." />
-    <meta name="author" content="Ivan Zuñiga (IAZR)" />
-    <meta name="keywords" content="Ivan Zuñiga, IAZR, desarrollo web, inteligencia artificial, automatización, ciberseguridad, mentoría, Colombia, React, Python, Gemini" />
 
-    <meta property="og:title" content="Ivan Zuñiga · Ingeniería & IA · IAZR" />
-    <meta property="og:description" content="Director de Innovación · Ingeniero Full-Stack · IA · Automatización · Colombia → Mundo" />
+    <!-- ═══════════════════════════════════════════
+         PRIMARY SEO
+    ═══════════════════════════════════════════ -->
+    <title>Ivan Zuñiga (IAZR) · Ingeniería Full-Stack, IA & Automatización · Colombia</title>
+    <meta name="description" content="Portafolio profesional de Ivan Andrés Zuñiga Rada (IAZR). Director de Innovación especializado en Desarrollo Full-Stack, Inteligencia Artificial, Automatización de procesos, Ciberseguridad y Mentoría Tecnológica. Soluciones digitales de clase mundial desde Colombia para el mundo." />
+    <meta name="author" content="Ivan Andrés Zuñiga Rada" />
+    <meta name="keywords" content="Ivan Zuñiga, IAZR, Ivan Andres Zuniga Rada, portafolio, desarrollador web, desarrollo full-stack, inteligencia artificial, IA, automatización, ciberseguridad, mentoría tecnológica, director de innovación, Colombia, React, Python, Node.js, Gemini AI, agentes IA, freelance Colombia, programador Colombia, software engineer Colombia" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="rating" content="general" />
+    <meta name="geo.region" content="CO" />
+    <meta name="geo.country" content="Colombia" />
+    <link rel="canonical" href="https://portafolio-iazr.vercel.app/" />
+
+    <!-- ═══════════════════════════════════════════
+         OPEN GRAPH (Facebook, WhatsApp, LinkedIn, Telegram)
+    ═══════════════════════════════════════════ -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://iazr.vercel.app" />
+    <meta property="og:site_name" content="IAZR · Ivan Zuñiga" />
+    <meta property="og:title" content="Ivan Zuñiga (IAZR) · Ingeniería Full-Stack & IA · Colombia → Mundo" />
+    <meta property="og:description" content="Director de Innovación · Ingeniero Full-Stack · IA · Automatización · Ciberseguridad · Mentoría. Transformo ideas en soluciones digitales de clase mundial. Colombia → Mundo 🌎" />
+    <meta property="og:url" content="https://portafolio-iazr.vercel.app/" />
+    <meta property="og:image" content="https://portafolio-iazr.vercel.app/og-preview.png" />
+    <meta property="og:image:secure_url" content="https://portafolio-iazr.vercel.app/og-preview.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ivan Zuñiga IAZR - Director de Innovación e Ingeniería Full-Stack Colombia" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="en_US" />
 
+    <!-- ═══════════════════════════════════════════
+         TWITTER / X CARD
+    ═══════════════════════════════════════════ -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ivan Zuñiga · IAZR" />
-    <meta name="twitter:description" content="Director de Innovación · Ingeniero Full-Stack · IA · Colombia" />
+    <meta name="twitter:site" content="@iazr_dev" />
+    <meta name="twitter:creator" content="@iazr_dev" />
+    <meta name="twitter:title" content="Ivan Zuñiga (IAZR) · Full-Stack & IA · Colombia" />
+    <meta name="twitter:description" content="Director de Innovación · Ingeniero Full-Stack · IA · Automatización. Transformo ideas en soluciones digitales de clase mundial 🌎" />
+    <meta name="twitter:image" content="https://portafolio-iazr.vercel.app/og-preview.png" />
+    <meta name="twitter:image:alt" content="Ivan Zuñiga IAZR - Portafolio Profesional" />
+    <meta name="twitter:domain" content="portafolio-iazr.vercel.app" />
 
+    <!-- ═══════════════════════════════════════════
+         WHATSAPP ESPECÍFICO
+         (WhatsApp usa og:title, og:description y og:image)
+         La imagen DEBE estar en HTTPS y ser pública
+    ═══════════════════════════════════════════ -->
+    <!-- WhatsApp uses og:image, og:title, og:description — covered above -->
+
+    <!-- ═══════════════════════════════════════════
+         LINKEDIN
+    ═══════════════════════════════════════════ -->
+    <meta property="og:profile:first_name" content="Ivan Andrés" />
+    <meta property="og:profile:last_name" content="Zuñiga Rada" />
+    <meta property="profile:first_name" content="Ivan Andrés" />
+    <meta property="profile:last_name" content="Zuñiga Rada" />
+
+    <!-- ═══════════════════════════════════════════
+         FAVICON & ICONOS
+    ═══════════════════════════════════════════ -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+    <meta name="theme-color" content="#f97316" />
+    <meta name="msapplication-TileColor" content="#0a0a0a" />
+    <meta name="msapplication-navbutton-color" content="#f97316" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="IAZR Portfolio" />
+
+    <!-- ═══════════════════════════════════════════
+         SCHEMA.ORG JSON-LD (Rich Snippets para Google)
+    ═══════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://portafolio-iazr.vercel.app/#person",
+          "name": "Ivan Andrés Zuñiga Rada",
+          "alternateName": ["IAZR", "Ivan Zuñiga", "Ivan Zuniga"],
+          "description": "Director de Innovación especializado en Desarrollo Full-Stack, Inteligencia Artificial, Automatización de procesos, Ciberseguridad y Mentoría Tecnológica.",
+          "image": "https://portafolio-iazr.vercel.app/og-preview.png",
+          "url": "https://portafolio-iazr.vercel.app/",
+          "jobTitle": "Director de Innovación & Ingeniero Full-Stack",
+          "worksFor": {
+            "@type": "Organization",
+            "name": "IAZR · Ingeniería & IA"
+          },
+          "nationality": "Colombian",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "CO",
+            "addressRegion": "Colombia"
+          },
+          "sameAs": [
+            "https://portafolio-iazr.vercel.app/"
+          ],
+          "knowsAbout": [
+            "Desarrollo Full-Stack",
+            "Inteligencia Artificial",
+            "Automatización de Procesos",
+            "Ciberseguridad",
+            "React",
+            "Python",
+            "Node.js",
+            "Agentes de IA",
+            "Machine Learning",
+            "Cloud Computing"
+          ],
+          "hasOccupation": {
+            "@type": "Occupation",
+            "name": "Ingeniero de Software & Director de Innovación",
+            "occupationLocation": {
+              "@type": "Country",
+              "name": "Colombia"
+            },
+            "skills": "Full-Stack Development, AI, Automatización, Ciberseguridad, Mentoría"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://portafolio-iazr.vercel.app/#website",
+          "url": "https://portafolio-iazr.vercel.app/",
+          "name": "IAZR · Ivan Zuñiga · Portafolio Profesional",
+          "description": "Portafolio profesional de Ivan Andrés Zuñiga Rada. Desarrollo Full-Stack, IA, Automatización, Ciberseguridad y Mentoría Tecnológica desde Colombia para el mundo.",
+          "author": {
+            "@id": "https://portafolio-iazr.vercel.app/#person"
+          },
+          "inLanguage": "es-CO",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://portafolio-iazr.vercel.app/"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://portafolio-iazr.vercel.app/#webpage",
+          "url": "https://portafolio-iazr.vercel.app/",
+          "name": "Ivan Zuñiga (IAZR) · Ingeniería Full-Stack, IA & Automatización · Colombia",
+          "description": "Portafolio profesional de Ivan Andrés Zuñiga Rada (IAZR). Director de Innovación especializado en Desarrollo Full-Stack, Inteligencia Artificial y Automatización.",
+          "isPartOf": { "@id": "https://portafolio-iazr.vercel.app/#website" },
+          "about": { "@id": "https://portafolio-iazr.vercel.app/#person" },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://portafolio-iazr.vercel.app/og-preview.png",
+            "width": 1200,
+            "height": 630
+          },
+          "inLanguage": "es-CO",
+          "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Inicio",
+                "item": "https://portafolio-iazr.vercel.app/"
+              }
+            ]
+          }
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://portafolio-iazr.vercel.app/#service",
+          "name": "IAZR · Ingeniería & IA",
+          "description": "Servicios profesionales de Desarrollo Full-Stack, Inteligencia Artificial, Automatización, Ciberseguridad y Mentoría Tecnológica.",
+          "url": "https://portafolio-iazr.vercel.app/",
+          "provider": { "@id": "https://portafolio-iazr.vercel.app/#person" },
+          "areaServed": {
+            "@type": "Place",
+            "name": "Mundial"
+          },
+          "serviceType": [
+            "Desarrollo Full-Stack",
+            "Inteligencia Artificial",
+            "Automatización de Procesos",
+            "Ciberseguridad",
+            "Mentoría Tecnológica"
+          ],
+          "availableLanguage": ["es", "en"],
+          "priceRange": "$$"
+        }
+      ]
+    }
+    </script>
+
+    <!-- ═══════════════════════════════════════════
+         PERFORMANCE & PRECONNECT
+    ═══════════════════════════════════════════ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- ═══════════════════════════════════════════
+         VERIFICACIÓN DE MOTORES DE BÚSQUEDA
+         (Agrega tus códigos reales aquí cuando los tengas)
+    ═══════════════════════════════════════════ -->
+    <!-- <meta name="google-site-verification" content="TU_CODIGO_AQUI" /> -->
+    <!-- <meta name="msvalidate.01" content="TU_CODIGO_BING_AQUI" /> -->
   </head>
 
   <body>
