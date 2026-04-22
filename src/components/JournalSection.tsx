@@ -262,17 +262,56 @@ const JournalSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-20"
         >
-          <span className="reveal-text text-sm font-poppins text-primary font-bold uppercase tracking-[0.3em] block mb-4">
+          {/* Crosshair icon */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center justify-center mb-6"
+          >
+            <div className="relative w-10 h-10">
+              <div className="absolute inset-0 rounded-full border border-primary/30" />
+              <div className="absolute inset-[4px] rounded-full border border-primary/20" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(255,107,43,0.8)]" />
+              <div className="absolute top-1/2 left-0 right-0 h-px bg-primary/20" />
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-primary/20" />
+            </div>
+          </motion.div>
+
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-sm font-outfit text-primary font-bold uppercase tracking-[0.3em] block mb-4"
+          >
             Trayectoria Profesional
-          </span>
-          <h2 className="reveal-text text-4xl md:text-6xl font-sora text-white">
-            Experiencia <span className="text-primary">2023 – 2026</span>
-          </h2>
-          <p className="reveal-text text-white/40 max-w-lg mx-auto mt-4 font-poppins text-sm">
+          </motion.span>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="text-5xl sm:text-6xl md:text-7xl font-outfit font-bold text-white leading-[0.95] tracking-tight"
+          >
+            Experiencia{" "}
+            <span className="text-primary">2023&nbsp;–&nbsp;2026</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="text-white/40 max-w-lg mx-auto mt-5 font-outfit text-sm"
+          >
             Haz clic en cada rol para desplegar el detalle completo.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="relative">
