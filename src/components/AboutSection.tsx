@@ -1,176 +1,258 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { User } from "lucide-react";
+import { MapPin, Zap, Award, Users, Code2, GraduationCap } from "lucide-react";
 
-// ── Tech stack logos (text-based) ─────────────────────────────────────────────
-const techStack = [
-  { name: "React",    color: "#61DAFB", bg: "#61DAFB18" },
-  { name: "Gemini",   color: "#8B5CF6", bg: "#8B5CF618" },
-  { name: "Python",   color: "#F59E0B", bg: "#F59E0B18" },
-  { name: "Node.js",  color: "#22C55E", bg: "#22C55E18" },
-  { name: "AWS",      color: "#EF4444", bg: "#EF444418" },
-  { name: "LangChain",color: "#FF6B2B", bg: "#FF6B2B18" },
+// ─── Stats (unified from Globe) ───────────────────────────────────────────────
+const stats = [
+  { value: 40, suffix: "+", label: "Proyectos" },
+  { value: 98, suffix: "%", label: "Satisfacción" },
+  { value: 6, suffix: "+", label: "Años" },
+  { value: 1200, suffix: "+", label: "Estudiantes" },
+  { value: 25, suffix: "+", label: "Certificaciones" },
+  { value: 4, suffix: "+", label: "Universidades" },
 ];
 
+const clients = [
+  "MinTIC · Talento Tech",
+  "Parquesoft Nariño",
+  "Gobernación de Nariño",
+  "Registraduría Nacional",
+  "Zolaris Platform",
+  "StartUp Hub Pasto",
+  "Solar IoT Networks",
+  "UNIR España",
+];
 
-
-// ── Mini Skill Bar ─────────────────────────────────────────────────────────────
-const SkillBar = ({ label, pct, color, delay = 0 }: { label: string; pct: number; color: string; delay?: number }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true });
-  return (
-    <div ref={ref} className="space-y-1">
-      <div className="flex justify-between text-[11px] font-poppins" style={{ color: "rgba(240,237,232,0.55)" }}>
-        <span>{label}</span>
-        <span style={{ color }}>{pct}%</span>
-      </div>
-      <div className="h-1 rounded-full" style={{ background: "rgba(255,255,255,0.06)" }}>
-        <motion.div
-          className="h-full rounded-full"
-          style={{ background: `linear-gradient(90deg, ${color}80, ${color})` }}
-          initial={{ width: 0 }} animate={{ width: inView ? `${pct}%` : 0 }}
-          transition={{ duration: 1.2, delay, ease: [0.16, 1, 0.3, 1] }}
-        />
-      </div>
-    </div>
-  );
+const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / 1800, 1);
+      setCount(Math.floor((1 - Math.pow(1 - p, 3)) * value));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, value]);
+  return <span ref={ref}>{count}{suffix}</span>;
 };
 
 const AboutSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const [techIdx, setTechIdx] = useState(0);
+  const techLabels = ["React & Next.js", "Python & IA", "Node.js & APIs", "Gemini & LLMs", "AWS & Cloud", "n8n & Automation"];
+  const techColors = ["#61DAFB", "#F59E0B", "#22C55E", "#8B5CF6", "#FF9900", "#EA4B71"];
 
-  // Tech stack carousel
   useEffect(() => {
-    const t = setInterval(() => setTechIdx(p => (p + 1) % techStack.length), 1600);
+    const t = setInterval(() => setTechIdx(p => (p + 1) % techLabels.length), 1800);
     return () => clearInterval(t);
   }, []);
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.98 },
-    visible: (i: number) => ({ opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] } }),
+    hidden: { opacity: 0, y: 24, scale: 0.97 },
+    visible: (i: number) => ({
+      opacity: 1, y: 0, scale: 1,
+      transition: { duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] },
+    }),
   };
 
   return (
-    <section id="about" ref={sectionRef}
-      className="relative py-24 md:py-32 overflow-hidden border-t"
-      style={{ backgroundColor: "#0c0c0e", borderColor: "rgba(42,39,36,0.6)" }}
+    <section
+      id="about"
+      className="relative py-24 md:py-32 overflow-hidden border-t border-white/5"
+      style={{ background: "linear-gradient(180deg, #0a0b12 0%, #0c0d14 100%)" }}
     >
-      {/* Ambient */}
+      {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 50% 60% at 20% 50%, rgba(255,107,43,0.035), transparent)" }} />
+        style={{ background: "radial-gradient(ellipse 60% 60% at 80% 40%, rgba(255,107,43,0.05), transparent)" }} />
 
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10">
-        {/* Label + Title */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
+
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="mb-14"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
         >
-          <span className="text-xs font-poppins uppercase tracking-[0.3em] font-bold block mb-4"
-            style={{ color: "#FF6B2B" }}>¿Quien soy?</span>
-          <h2 className="text-4xl md:text-6xl font-sora leading-none" style={{ color: "#f0ede8" }}>
-            Perfil Hibrido —
-            <br />
-            <span className="font-display italic" style={{ color: "#8a857c", fontWeight: 300 }}>
-              Tech & Educacion
-            </span>
+          <span className="text-xs font-poppins uppercase tracking-[0.3em] font-bold block mb-4" style={{ color: "var(--primary-color)" }}>
+            Sobre Ivan
+          </span>
+          <h2 className="text-4xl md:text-6xl font-sora text-white leading-tight">
+            El perfil detrás{" "}
+            <span className="font-display italic" style={{ color: "#8a857c", fontWeight: 300 }}>de IAZR</span>
           </h2>
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 auto-rows-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 mb-20">
 
-          {/* 1: Bio principal — 7 col, row span 2 */}
-          <motion.div custom={0} variants={cardVariants} initial="hidden" whileInView="visible"
-            viewport={{ once: true }}
-            className="bento-card lg:col-span-7 lg:row-span-2 flex flex-col justify-between min-h-[280px]"
+          {/* ── Bio card (large) ── */}
+          <motion.div
+            variants={cardVariants} initial="hidden" whileInView="visible" custom={0} viewport={{ once: true }}
+            className="lg:col-span-5 bento-card relative overflow-hidden group"
           >
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                  style={{ background: "rgba(255,107,43,0.12)", border: "1.5px solid rgba(255,107,43,0.25)" }}>
-                  <User className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-sora font-bold text-lg" style={{ color: "#f0ede8" }}>Ivan Zuñiga</p>
-                  <p className="text-xs font-poppins" style={{ color: "#8a857c" }}>Director de Innovacion · IAZR</p>
-                </div>
+            <div className="absolute top-0 right-0 w-48 h-48 pointer-events-none"
+              style={{ background: "radial-gradient(circle at 80% 20%, rgba(255,107,43,0.08), transparent 70%)" }} />
+            <div className="flex items-start gap-4 mb-6">
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-2xl font-sora font-black"
+                style={{ background: "rgba(255,107,43,0.12)", border: "1.5px solid rgba(255,107,43,0.25)", color: "var(--primary-color)" }}>
+                IA
               </div>
-              <p className="font-poppins leading-relaxed text-sm mb-4" style={{ color: "rgba(240,237,232,0.60)" }}>
-                Ingeniero Full-Stack y Director de Innovacion en Zolaris. Cuento con amplia experiencia en la creacion de plataformas completas utilizando React, Node.js y Python. Tengo una profunda pasion por la IA aplicada a negocios.
-              </p>
-              <p className="font-poppins leading-relaxed text-sm" style={{ color: "rgba(240,237,232,0.55)" }}>
-                He formado a mas de{" "}
-                <span className="font-semibold aurora-text">1.200 estudiantes</span>{" "}
-                en IA y Data a traves de Talento Tech Colombia, UTP, UDEA y Cymetria.
-              </p>
-            </div>
-            <a href="#contact"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-outfit font-medium pb-0.5 transition-colors"
-              style={{ borderBottom: "1px solid #FF6B2B", color: "#f0ede8" }}>
-              Conectar →
-            </a>
-          </motion.div>
-
-          {/* 2: Disponibilidad — 5 col */}
-          <motion.div custom={1} variants={cardVariants} initial="hidden" whileInView="visible"
-            viewport={{ once: true }}
-            className="bento-card lg:col-span-5 flex flex-col justify-center items-center text-center py-8"
-          >
-            <div className="relative mb-4">
-              <div className="w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ background: "rgba(34,197,94,0.12)", border: "1.5px solid rgba(34,197,94,0.3)" }}>
-                <span className="text-2xl">✓</span>
+              <div>
+                <h3 className="font-sora font-bold text-xl text-white">Ivan Andres Zuñiga Rada</h3>
+                <p className="text-xs font-poppins mt-1 flex items-center gap-1.5" style={{ color: "rgba(240,237,232,0.4)" }}>
+                  <MapPin className="w-3 h-3" /> Pasto, Nariño — Colombia
+                </p>
               </div>
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-500 border-2"
-                style={{ borderColor: "#0c0c0e", animation: "orb-glow 2s ease-in-out infinite" }} />
             </div>
-            <p className="font-sora font-bold text-lg" style={{ color: "#f0ede8" }}>Disponible</p>
-            <p className="text-xs font-poppins mt-1" style={{ color: "#8a857c" }}>Para nuevos proyectos</p>
-            <div className="mt-4 px-4 py-2 rounded-full text-xs font-poppins"
-              style={{ background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.25)", color: "#22c55e" }}>
-              Colombia 🇨🇴 → Mundo 🌍
+            <p className="font-poppins text-sm leading-relaxed mb-5" style={{ color: "rgba(240,237,232,0.55)" }}>
+              Ingeniero de Sistemas con maestría en Inteligencia Artificial. Más de 6 años construyendo plataformas digitales de alto impacto, agentes IA en producción y formando talento tecnológico en Colombia. Mi misión: hacer que la tecnología trabaje para tu negocio.
+            </p>
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" style={{ boxShadow: "0 0 8px rgba(74,222,128,0.6)" }} />
+              <span className="text-xs font-poppins" style={{ color: "rgba(240,237,232,0.4)" }}>
+                Disponible para nuevos proyectos
+              </span>
             </div>
           </motion.div>
 
-          {/* 3: Tech stack rotating — 5 col */}
-          <motion.div custom={2} variants={cardVariants} initial="hidden" whileInView="visible"
-            viewport={{ once: true }}
-            className="bento-card lg:col-span-5"
+          {/* ── Rotating tech badge ── */}
+          <motion.div
+            variants={cardVariants} initial="hidden" whileInView="visible" custom={1} viewport={{ once: true }}
+            className="lg:col-span-3 bento-card flex flex-col items-center justify-center text-center gap-4 relative overflow-hidden"
           >
-            <p className="text-[10px] font-poppins uppercase tracking-widest mb-4"
-              style={{ color: "rgba(240,237,232,0.3)" }}>Stack Principal</p>
-            <div className="flex flex-wrap gap-2">
-              {techStack.map((tech, i) => (
-                <motion.span key={tech.name}
-                  animate={{ scale: techIdx === i ? 1.08 : 1, opacity: techIdx === i ? 1 : 0.55 }}
-                  className="px-2.5 py-1 rounded-full text-xs font-poppins uppercase tracking-wider font-semibold cursor-default"
-                  style={{ background: techIdx === i ? tech.bg : "rgba(255,255,255,0.04)", color: techIdx === i ? tech.color : "#8a857c", border: `1px solid ${techIdx === i ? tech.color + "40" : "rgba(255,255,255,0.06)"}` }}>
-                  {tech.name}
-                </motion.span>
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: `radial-gradient(circle at 50% 50%, ${techColors[techIdx]}08, transparent 65%)`, transition: "background 0.5s" }} />
+            <p className="text-[10px] font-poppins uppercase tracking-[0.3em] text-white/25 font-bold">Actualmente trabajando con</p>
+            <motion.div
+              key={techIdx}
+              initial={{ opacity: 0, scale: 0.85, y: 8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.85 }}
+              transition={{ duration: 0.4 }}
+              className="text-2xl font-sora font-bold"
+              style={{ color: techColors[techIdx] }}
+            >
+              {techLabels[techIdx]}
+            </motion.div>
+            <div className="flex gap-1.5">
+              {techLabels.map((_, i) => (
+                <div key={i} className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                  style={{ background: i === techIdx ? techColors[techIdx] : "rgba(255,255,255,0.12)" }} />
               ))}
             </div>
           </motion.div>
 
-          {/* 4: Habilidades — 7 col */}
-          <motion.div custom={3} variants={cardVariants} initial="hidden" whileInView="visible"
-            viewport={{ once: true }}
-            className="bento-card lg:col-span-7"
+          {/* ── Role cards ── */}
+          {[
+            { icon: <Code2 className="w-5 h-5" />, color: "#61DAFB", title: "Full-Stack Engineer", desc: "React, Node.js, Python, PostgreSQL" },
+            { icon: <Zap className="w-5 h-5" />, color: "#a855f7", title: "AI Solutions Architect", desc: "LangChain, RAG, n8n, Gemini" },
+            { icon: <GraduationCap className="w-5 h-5" />, color: "#22c55e", title: "Tech Mentor", desc: "1.200+ estudiantes formados" },
+            { icon: <Award className="w-5 h-5" />, color: "#F59E0B", title: "25+ Certificaciones", desc: "Google, Microsoft, Huawei, UNIR" },
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              variants={cardVariants} initial="hidden" whileInView="visible" custom={i + 2} viewport={{ once: true }}
+              whileHover={{ y: -4 }}
+              className="lg:col-span-2 bento-card flex flex-col gap-3 group transition-all duration-200"
+            >
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: `${item.color}14`, color: item.color }}>
+                {item.icon}
+              </div>
+              <div>
+                <h4 className="font-sora font-bold text-sm text-white leading-tight">{item.title}</h4>
+                <p className="text-[11px] font-poppins mt-1" style={{ color: "rgba(240,237,232,0.4)" }}>{item.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+
+          {/* ── Availability card ── */}
+          <motion.div
+            variants={cardVariants} initial="hidden" whileInView="visible" custom={6} viewport={{ once: true }}
+            className="lg:col-span-2 bento-card flex flex-col items-center justify-center text-center gap-3"
           >
-            <p className="text-[10px] font-poppins uppercase tracking-widest mb-4"
-              style={{ color: "rgba(240,237,232,0.3)" }}>Nivel de Expertise</p>
-            <div className="space-y-3">
-              <SkillBar label="Full-Stack Development"  pct={94} color="#3B82F6" delay={0.1} />
-              <SkillBar label="AI & Machine Learning"   pct={88} color="#8B5CF6" delay={0.2} />
-              <SkillBar label="Automatizacion (n8n)"    pct={85} color="#FF6B2B" delay={0.3} />
-              <SkillBar label="Ciberseguridad"          pct={78} color="#EF4444" delay={0.4} />
-              <SkillBar label="Data Analytics"          pct={82} color="#F59E0B" delay={0.5} />
+            <Users className="w-7 h-7" style={{ color: "var(--primary-color)" }} />
+            <div>
+              <p className="text-[10px] font-poppins uppercase tracking-[0.25em] text-white/25 font-bold">Disponibilidad</p>
+              <p className="font-sora font-bold text-white mt-1">Freelance & Proyectos</p>
+              <p className="text-xs font-poppins mt-1" style={{ color: "rgba(240,237,232,0.4)" }}>Colombia → Mundo</p>
             </div>
           </motion.div>
-
-
-
         </div>
+
+        {/* Stats strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <p className="text-[10px] font-poppins uppercase tracking-[0.3em] text-white/25 font-bold text-center mb-8">
+            Resultados que hablan solos
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {stats.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.07 }}
+                whileHover={{ scale: 1.05, y: -3 }}
+                className="text-center p-5 rounded-2xl border cursor-default group"
+                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}
+              >
+                <p className="text-2xl md:text-3xl font-sora font-bold" style={{ color: "var(--primary-color)" }}>
+                  <Counter value={s.value} suffix={s.suffix} />
+                </p>
+                <p className="text-[10px] font-poppins mt-1 leading-tight" style={{ color: "rgba(240,237,232,0.35)" }}>
+                  {s.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Clients grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="text-[10px] font-poppins uppercase tracking-[0.3em] text-white/25 font-bold text-center mb-6">
+            Instituciones & Clientes
+          </p>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {clients.map((client, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                whileHover={{ scale: 1.06 }}
+                className="px-4 py-2 rounded-full text-sm font-poppins cursor-default transition-all duration-300"
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  color: "rgba(240,237,232,0.5)",
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,107,43,0.3)"; (e.currentTarget as HTMLElement).style.color = "rgba(240,237,232,0.8)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLElement).style.color = "rgba(240,237,232,0.5)"; }}
+              >
+                {client}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -8,25 +8,25 @@ import { useImmersiveScroll } from "@/hooks/useImmersiveScroll";
 import { useAppearOnScroll } from "@/hooks/useAppearOnScroll";
 
 // ── Lazy-load all below-the-fold sections ──────────────────────────────────────
-// This drastically reduces the initial JS bundle, improving FCP & TBT
-const StatsSection       = lazy(() => import("@/components/StatsSection"));
+// REMOVED: StatsSection (stats merged into AboutSection)
+// REMOVED: AIStackSection (merged into SkillsSection)
+// REMOVED: ExplorationsSection (merged into SkillsSection)
+// REMOVED: GlobeSection (stats + clients merged into AboutSection)
 const AISection          = lazy(() => import("@/components/AISection"));
-const AITerminalSection  = lazy(() => import("@/components/AITerminalSection"));
-const AIStackSection     = lazy(() => import("@/components/AIStackSection"));
 const ServicesSection    = lazy(() => import("@/components/ServicesSection"));
 const WorksSection       = lazy(() => import("@/components/WorksSection"));
 const PricingCalculator  = lazy(() => import("@/components/PricingCalculator"));
 const HowItWorksSection  = lazy(() => import("@/components/HowItWorksSection"));
+const AITerminalSection  = lazy(() => import("@/components/AITerminalSection"));
 const AboutSection       = lazy(() => import("@/components/AboutSection"));
-const ExplorationsSection= lazy(() => import("@/components/ExplorationsSection"));
+const SkillsSection      = lazy(() => import("@/components/SkillsSection"));
 const JournalSection     = lazy(() => import("@/components/JournalSection"));
-const GlobeSection       = lazy(() => import("@/components/GlobeSection"));
 const TestimonialsSection= lazy(() => import("@/components/TestimonialsSection"));
+const FAQSection         = lazy(() => import("@/components/FAQSection"));
 const CTASection         = lazy(() => import("@/components/CTASection"));
 const FooterSection      = lazy(() => import("@/components/FooterSection"));
 const ChatbotWidget      = lazy(() => import("@/components/ChatbotWidget"));
 
-// ── Lightweight fallback for lazy sections ─────────────────────────────────────
 const SectionSkeleton = () => (
   <div className="w-full py-24 flex items-center justify-center" aria-hidden="true">
     <div className="w-8 h-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
@@ -35,76 +35,63 @@ const SectionSkeleton = () => (
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
-
-  // Global animation hooks
   useImmersiveScroll();
   useAppearOnScroll();
 
   return (
     <>
-      {/* Custom cursor follower (desktop only) */}
       <CursorFollower />
-
-      {/* Grain texture overlay */}
       <div className="grain-overlay" aria-hidden="true" />
-
       <Navbar />
       {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
 
       <div className={isLoading ? "h-screen overflow-hidden" : ""}>
 
-        {/* 1. Hero — Primera impresión · WOW factor (always eager-loaded) */}
+        {/* ① Hero — Hook & primera impresión WOW */}
         <HeroImmersive />
 
-        {/* All below-the-fold sections are lazy-loaded */}
         <Suspense fallback={<SectionSkeleton />}>
 
-          {/* 2. Stats — Credibilidad inmediata */}
-          <StatsSection />
-
-          {/* 3. AI Core — El diferenciador clave */}
+          {/* ② AI Core — "¿Por qué IA?" · El diferenciador único de IAZR */}
           <AISection />
 
-          {/* 4. AI Terminal — Demo viva de IA en acción */}
-          <AITerminalSection />
-
-          {/* 5. AI Stack — Arsenal tecnológico completo */}
-          <AIStackSection />
-
-          {/* 6. Services — Catálogo de servicios */}
+          {/* ③ Services — Qué ofrezco exactamente · Conversión directa */}
           <div id="servicios"><ServicesSection /></div>
 
-          {/* 7. Works — Proyectos reales destacados */}
+          {/* ④ Works — Proyectos reales · Prueba tangible */}
           <div id="proyectos"><WorksSection /></div>
 
-          {/* 8. Pricing — Calculadora de inversión */}
+          {/* ⑤ Pricing — Transparencia total · Calculadora de inversión */}
           <div id="pricing"><PricingCalculator /></div>
 
-          {/* 9. How It Works — Metodología */}
+          {/* ⑥ How It Works — Proceso sin fricción · 4 pasos */}
           <div id="proceso"><HowItWorksSection /></div>
 
-          {/* 10. About — Bento personal */}
+          {/* ⑦ AI Terminal — Demo viva · Diferenciador técnico memorable */}
+          <AITerminalSection />
+
+          {/* ⑧ About — Hub de credibilidad: bio + stats + clientes */}
           <div id="about"><AboutSection /></div>
 
-          {/* 11. Explorations — Skills radar */}
-          <ExplorationsSection />
+          {/* ⑨ Skills — Ecosistema técnico: FlipFlow + tools + certs */}
+          <SkillsSection />
 
-          {/* 12. Journal — Trayectoria · Experience timeline */}
+          {/* ⑩ Journal — Trayectoria profesional 2023-2026 */}
           <div id="experiencia"><JournalSection /></div>
 
-          {/* 13. Globe — Alcance global */}
-          <GlobeSection />
-
-          {/* 14. Testimonials */}
+          {/* ⑪ Testimonials — Prueba social · Kinetic vertical marquee */}
           <TestimonialsSection />
 
-          {/* 15. CTA — Sección de conversión */}
+          {/* ⑫ FAQ — Resuelve dudas antes del CTA */}
+          <div id="faq"><FAQSection /></div>
+
+          {/* ⑬ CTA — Acción final sin dudas pendientes */}
           <CTASection />
 
-          {/* 16. Footer */}
+          {/* ⑭ Footer — Cierre premium IAZR */}
           <div id="contact"><FooterSection /></div>
 
-          {/* Floating: Nova AI + WhatsApp */}
+          {/* Floating: Nova AI */}
           <ChatbotWidget />
 
         </Suspense>

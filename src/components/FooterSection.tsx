@@ -200,7 +200,35 @@ const FooterSection = () => {
           </div>
         </div>
       </div>
+
+      {/* ── IAZR Outline Brand Closing ── */}
+      <div className="overflow-hidden border-t border-white/5 mt-0">
+        <motion.p
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          aria-hidden="true"
+          style={{
+            fontSize: "clamp(5rem, 22vw, 18rem)",
+            WebkitTextStroke: "1.5px rgba(255,107,43,0.18)",
+            color: "transparent",
+            fontFamily: "var(--font-modern)",
+            fontWeight: 900,
+            letterSpacing: "-0.04em",
+            textAlign: "center",
+            lineHeight: 0.9,
+            paddingBottom: "0.1em",
+            userSelect: "none",
+            pointerEvents: "none",
+            display: "block",
+          }}
+        >
+          IAZR
+        </motion.p>
+      </div>
     </section>
+
   );
 };
 

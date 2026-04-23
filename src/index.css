@@ -841,3 +841,52 @@ html, body {
   }
 }
 
+/* ═══════════════════════════════════════════════════
+   SCROLLXUI CANOPY & KINETIC ANIMATIONS
+═══════════════════════════════════════════════════ */
+
+/* ── Horizontal infinite scroll (FlipFlow) ── */
+@keyframes canopy-horizontal {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-canopy-horizontal {
+  animation: canopy-horizontal var(--duration, 30s) linear infinite;
+}
+
+/* ── Vertical infinite scroll ── */
+@keyframes canopy-vertical {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+.animate-canopy-vertical {
+  animation: canopy-vertical var(--duration, 30s) linear infinite;
+}
+
+/* ── Reverse direction (alternate rows) ── */
+.direction-reverse {
+  animation-direction: reverse;
+}
+
+/* ── Kinetic Testimonials vertical columns ── */
+@keyframes scroll-up-kinetic {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+@keyframes scroll-down-kinetic {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+.animate-scroll-up {
+  animation: scroll-up-kinetic 40s linear infinite;
+}
+.animate-scroll-down {
+  animation: scroll-down-kinetic 40s linear infinite;
+}
+
+/* ── Pause animation on group hover ── */
+.group:hover .group-hover\:paused {
+  animation-play-state: paused !important;
+}
+
+
