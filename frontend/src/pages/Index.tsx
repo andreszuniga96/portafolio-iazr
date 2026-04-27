@@ -6,29 +6,64 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { useImmersiveScroll } from "@/hooks/useImmersiveScroll";
 import { useAppearOnScroll } from "@/hooks/useAppearOnScroll";
 
-// ── Lazy-load all below-the-fold sections ──────────────────────────────────────
-// REMOVED: StatsSection (stats merged into AboutSection)
-// REMOVED: AIStackSection (merged into SkillsSection)
-// REMOVED: ExplorationsSection (merged into SkillsSection)
-// REMOVED: GlobeSection (stats + clients merged into AboutSection)
+/* ──────────────────────────────────────────────────────────────────────────────
+   ESPACIAL MINIMALISTA — Section Architecture v2
+   ──────────────────────────────────────────────────────────────────────────────
+   Total: 8 secciones (era 13). Tonos alternan entre 5 niveles de profundidad
+   cósmica para crear ritmo visual sin romper la unidad cromática.
+
+   FUSIONES / ELIMINACIONES aplicadas:
+   • AISection         → fusionada en AITerminalSection (terminal demo viva
+                         es el diferenciador real, no las cards estáticas)
+   • JournalSection    → fusionada visualmente con AboutSection (Credibilidad)
+   • CTASection        → fusionada en FAQSection (cierre con CTA integrado)
+   • TestimonialsSection→ se mantiene compacta antes de FAQ+CTA
+   ──────────────────────────────────────────────────────────────────────────── */
+
 const HeroImmersive      = lazy(() => import("@/components/HeroImmersive"));
-const AISection          = lazy(() => import("@/components/AISection"));
+const AITerminalSection  = lazy(() => import("@/components/AITerminalSection"));
 const ServicesSection    = lazy(() => import("@/components/ServicesSection"));
 const WorksSection       = lazy(() => import("@/components/WorksSection"));
-const PricingCalculator  = lazy(() => import("@/components/PricingCalculator"));
 const HowItWorksSection  = lazy(() => import("@/components/HowItWorksSection"));
-const AITerminalSection  = lazy(() => import("@/components/AITerminalSection"));
+const PricingCalculator  = lazy(() => import("@/components/PricingCalculator"));
 const AboutSection       = lazy(() => import("@/components/AboutSection"));
 const JournalSection     = lazy(() => import("@/components/JournalSection"));
 const TestimonialsSection= lazy(() => import("@/components/TestimonialsSection"));
 const FAQSection         = lazy(() => import("@/components/FAQSection"));
-const CTASection         = lazy(() => import("@/components/CTASection"));
 const FooterSection      = lazy(() => import("@/components/FooterSection"));
 const ChatbotWidget      = lazy(() => import("@/components/ChatbotWidget"));
 
 const SectionSkeleton = () => (
   <div className="w-full py-24 flex items-center justify-center" aria-hidden="true">
-    <div className="w-8 h-8 rounded-full border-2 border-white/20/30 border-t-primary animate-spin" />
+    <div className="w-8 h-8 rounded-full border-2 border-white/20 border-t-[#C7D2FE] animate-spin" />
+  </div>
+);
+
+/**
+ * ToneWrapper — aplica el tono Espacial Minimalista a la sección
+ * y un overlay sutil de moon-glow opcional.
+ */
+const ToneWrapper = ({
+  tone,
+  children,
+  withGlow = false,
+}: {
+  tone: "void" | "ink" | "deep" | "slate" | "cosmic";
+  children: React.ReactNode;
+  withGlow?: boolean;
+}) => (
+  <div className={`tone-${tone} relative`}>
+    {withGlow && (
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none opacity-60"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(199,210,254,0.05) 0%, transparent 70%)",
+        }}
+      />
+    )}
+    {children}
   </div>
 );
 
@@ -46,48 +81,58 @@ const Index = () => {
 
       <div className={isLoading ? "h-screen overflow-hidden" : ""}>
 
-        {/* ① Hero — Hook & primera impresión WOW */}
-        <Suspense fallback={<div className="h-screen w-full bg-[#0c0c0e]" />}>
+        {/* ① HERO — Ballpit Espacial Minimalista (tono ink) */}
+        <Suspense fallback={<div className="h-screen w-full bg-[#0A0B12]" />}>
           <HeroImmersive />
         </Suspense>
 
         <Suspense fallback={<SectionSkeleton />}>
 
-          {/* ② AI Core — "¿Por qué IA?" · El diferenciador único de IAZR */}
-          <AISection />
+          {/* ② IA CORE — Terminal demo viva (tono deep) — fusiona el mensaje "soluciones que piensan" */}
+          <ToneWrapper tone="deep" withGlow>
+            <AITerminalSection />
+          </ToneWrapper>
 
-          {/* ③ Services — Qué ofrezco exactamente · Conversión directa */}
-          <ServicesSection />
+          {/* ③ SERVICIOS — Qué ofrezco · Conversión directa (tono slate) */}
+          <ToneWrapper tone="slate">
+            <ServicesSection />
+          </ToneWrapper>
 
-          {/* ④ Works — Proyectos reales · Prueba tangible */}
-          <WorksSection />
+          {/* ④ PROYECTOS — Prueba tangible (tono deep) */}
+          <ToneWrapper tone="deep">
+            <WorksSection />
+          </ToneWrapper>
 
-          {/* ⑤ Proceso + Oferta — primero claridad, luego inversión */}
-          <HowItWorksSection />
+          {/* ⑤ PROCESO + INVERSIÓN — pareja narrativa (tono cosmic + slate) */}
+          <ToneWrapper tone="cosmic">
+            <HowItWorksSection />
+          </ToneWrapper>
+          <ToneWrapper tone="slate">
+            <PricingCalculator />
+          </ToneWrapper>
 
-          {/* ⑥ Pricing — transparencia total · calculadora de inversión */}
-          <PricingCalculator />
+          {/* ⑥ CREDIBILIDAD — bio + stats + clientes + experiencia profesional (tono deep) */}
+          <ToneWrapper tone="deep">
+            <AboutSection />
+            <JournalSection />
+          </ToneWrapper>
 
-          {/* ⑦ AI Terminal — Demo viva · Diferenciador técnico memorable */}
-          <AITerminalSection />
+          {/* ⑦ TESTIMONIOS — voz de clientes (tono cosmic, compacto) */}
+          <ToneWrapper tone="cosmic">
+            <TestimonialsSection />
+          </ToneWrapper>
 
-          {/* ⑧ Credibilidad — bio + stats + clientes */}
-          <AboutSection />
+          {/* ⑧ FAQ + CTA fusionados — cierre con acción (tono void, máximo contraste) */}
+          <ToneWrapper tone="void" withGlow>
+            <FAQSection />
+          </ToneWrapper>
 
-          {/* ⑨ Experiencia + prueba social */}
-          <JournalSection />
-          <TestimonialsSection />
+          {/* FOOTER — cierre premium (tono void) */}
+          <ToneWrapper tone="void">
+            <FooterSection />
+          </ToneWrapper>
 
-          {/* ⑩ FAQ — Resuelve dudas antes del CTA */}
-          <FAQSection />
-
-          {/* ⑪ CTA — Acción final sin dudas pendientes */}
-          <CTASection />
-
-          {/* ⑫ Footer — Cierre premium IAZR */}
-          <FooterSection />
-
-          {/* Floating: Nova AI */}
+          {/* Nova AI · floating */}
           <ChatbotWidget />
 
         </Suspense>

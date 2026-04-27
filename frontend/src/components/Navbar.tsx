@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Instagram, Linkedin, Github } from "lucide-react";
+import OrbitalLogo from "@/components/ui/OrbitalLogo";
 
 const navLinks = [
   { name: "Servicios",   href: "#servicios",   id: "servicios" },
@@ -89,11 +90,10 @@ const Navbar = () => {
           isScrolled ? "shadow-[0_8px_40px_rgba(0,0,0,0.5)] scale-[0.97]" : "scale-100"
         }`}
       >
-        {/* Logo */}
+        {/* Logo — OrbitalLogo Espacial Minimalista */}
         <a href="/" className="flex items-center px-3 sm:px-4 group flex-shrink-0">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center bg-background group-hover:shadow-[0_0_12px_rgba(124,102,255,0.4)] transition-all duration-300 flex-shrink-0"
-            style={{ borderColor: "rgba(124,102,255,0.45)" }}>
-            <span className="font-display italic text-xs sm:text-sm text-white">I</span>
+          <div className="flex items-center justify-center transition-all duration-300 flex-shrink-0 group-hover:drop-shadow-[0_0_10px_rgba(199,210,254,0.45)]">
+            <OrbitalLogo size={32} />
           </div>
           <div className="ml-2 sm:ml-3 overflow-hidden hidden xs:block">
             <span className="font-outfit font-semibold text-white tracking-widest uppercase text-xs sm:text-sm block leading-tight">

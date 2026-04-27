@@ -135,7 +135,7 @@ const AITerminalSection = () => {
     <section
       id="ai-terminal"
       className="relative py-24 md:py-32 overflow-hidden border-t"
-      style={{ backgroundColor: "#080b10", borderColor: "rgba(30,34,41,0.8)" }}
+      style={{ background: "transparent", borderTop: "1px solid rgba(199,210,254,0.06)" }}
     >
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[120px] pointer-events-none"

@@ -57,7 +57,7 @@ const AboutSection = () => {
     <section
       id="about"
       className="relative py-24 md:py-32 overflow-hidden border-t border-white/5"
-      style={{ background: "linear-gradient(180deg, #0a0b12 0%, #0c0d14 100%)" }}
+      style={{ background: "transparent" }}
     >
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none"

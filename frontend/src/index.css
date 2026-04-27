@@ -12,19 +12,33 @@
 
 @layer base {
   :root {
-    /* ── Core Palette — Space Dark ── */
-    --bg:              240 9% 4%;         /* #09090B — deep space black */
-    --surface:         232 17% 9%;        /* #12131A */
-    --surface-2:       230 16% 13%;       /* #1A1C24 */
+    /* ══════════════════════════════════════════════════════
+       ESPACIAL MINIMALISTA — Unified Palette v5
+       5 niveles de profundidad cósmica + 2 acentos lunares
+    ══════════════════════════════════════════════════════ */
+
+    /* ── Core depth scale (dark → less dark) ── */
+    --void:            234 22% 3%;        /* #050608 — abismo */
+    --ink:             232 22% 6%;        /* #0A0B12 — Hero base */
+    --deep:            230 23% 8%;        /* #0E1018 — secciones contenido */
+    --slate:           228 27% 12%;       /* #131725 — surfaces */
+    --cosmic:          226 26% 14%;       /* #1A1D2E — accents elevated */
+
+    /* ── Aliases (mantienen retro-compat) ── */
+    --bg:              var(--ink);
+    --surface:         var(--deep);
+    --surface-2:       var(--slate);
     --text:            225 100% 98%;      /* #F5F7FF */
     --muted:           223 12% 70%;       /* #A7ADBF */
-    --stroke:          226 19% 21%;       /* #2B3040 */
+    --stroke:          226 22% 18%;       /* sutil, alineado a cosmic */
 
-    /* ── Primary — Vibrant Purple & Night Blue ── */
-    --primary:         250 90% 60%;       /* #5B3DF5 */
+    /* ── Lunar Accents (Espacial Minimalista) ── */
+    --moon:            226 100% 89%;      /* #C7D2FE — acento principal icy-blue */
+    --moon-soft:       228 60% 75%;       /* #A8B5E5 — moon hover */
+    --primary:         247 100% 70%;      /* #7C66FF — cosmic violet (acento secundario) */
     --primary-foreground: 0 0% 98%;
-    --primary-vivid:   249 100% 70%;      /* #7C66FF */
-    --amber:           231 66% 39%;       /* #2232A8 */
+    --primary-vivid:   var(--moon);       /* alias: vivid ahora = moon */
+    --amber:           226 80% 70%;       /* alias deprecado: ahora es un moon-light */
 
     /* ── Aliases for shadcn ── */
     --background:      var(--bg);
@@ -51,12 +65,19 @@
     --font-modern:  'Outfit', sans-serif;
     --font-mono:    'JetBrains Mono', monospace;
 
-    /* ── Raw refs for JS/Canvas ── */
-    --primary-color:  #5B3DF5;
-    --primary-glow:   rgba(91, 61, 245, 0.25);
-    --primary-subtle: rgba(91, 61, 245, 0.08);
-    --amber-color:    #2232A8;
-    --amber-glow:     rgba(34, 50, 168, 0.2);
+    /* ── Raw refs for JS/Canvas (Espacial Minimalista) ── */
+    --primary-color:  #7C66FF;            /* cosmic violet */
+    --primary-glow:   rgba(199, 210, 254, 0.22);   /* moon glow */
+    --primary-subtle: rgba(199, 210, 254, 0.06);
+    --moon-color:     #C7D2FE;
+    --moon-glow:      rgba(199, 210, 254, 0.30);
+    --void-color:     #050608;
+    --ink-color:      #0A0B12;
+    --deep-color:     #0E1018;
+    --slate-color:    #131725;
+    --cosmic-color:   #1A1D2E;
+    --amber-color:    #C7D2FE;            /* deprecated alias = moon */
+    --amber-glow:     rgba(199, 210, 254, 0.18);
 
     /* ── Glass tokens ── */
     --glass-bg:     rgba(255, 255, 255, 0.022);
@@ -64,10 +85,34 @@
     --glass-hover:  rgba(255, 255, 255, 0.04);
 
     /* ── Nav / Hero tokens ── */
-    --nav-button:  240 4% 10%;
-    --hero-bg:     240 9% 4%;
+    --nav-button:  232 22% 8%;
+    --hero-bg:     var(--ink);
     --hero-sub:    0 0% 91%;
   }
+}
+
+/* ══════════════════════════════════════════════════════
+   SECTION TONES — Espacial Minimalista
+   Each section uses one of 5 depth levels, alternating
+   to create rhythm without breaking visual unity.
+══════════════════════════════════════════════════════ */
+.tone-void   { background: linear-gradient(180deg, #050608 0%, #07080d 50%, #050608 100%); }
+.tone-ink    { background: linear-gradient(180deg, #0A0B12 0%, #0C0D15 50%, #0A0B12 100%); }
+.tone-deep   { background: linear-gradient(180deg, #0E1018 0%, #101320 50%, #0E1018 100%); }
+.tone-slate  { background: linear-gradient(180deg, #131725 0%, #161A2A 50%, #131725 100%); }
+.tone-cosmic { background: linear-gradient(180deg, #1A1D2E 0%, #1D2235 50%, #1A1D2E 100%); }
+
+/* Smooth transitions between consecutive sections */
+.tone-bridge-deep    { background: linear-gradient(180deg, #0A0B12 0%, #0E1018 100%); }
+.tone-bridge-slate   { background: linear-gradient(180deg, #0E1018 0%, #131725 100%); }
+.tone-bridge-cosmic  { background: linear-gradient(180deg, #131725 0%, #1A1D2E 100%); }
+.tone-bridge-back    { background: linear-gradient(180deg, #1A1D2E 0%, #0A0B12 100%); }
+
+/* Sutil moon-glow accent (use as overlay) */
+.moon-accent {
+  position: absolute;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(199,210,254,0.06) 0%, transparent 70%);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -218,7 +263,7 @@
     font-family: var(--font-body);
     @apply bg-background text-foreground antialiased;
     overflow-x: hidden;
-    background-color: #09090B;
+    background-color: #0A0B12;
   }
 
   /* ── Scrollbar ── */
@@ -332,14 +377,14 @@
     z-index: -1;
   }
 
-  /* ══ AURORA TEXT ════════════════════════════════ */
+  /* ══ AURORA TEXT — Espacial Minimalista (icy moonlight) ══════ */
   .aurora-text {
     background: linear-gradient(
       90deg,
       #FFFFFF 0%,
-      #CCCCCC 28%,
-      #FFFFFF 55%,
-      #999999 78%,
+      #C7D2FE 30%,
+      #A8B5E5 50%,
+      #C7D2FE 70%,
       #FFFFFF 100%
     );
     background-size: 300% 300%;

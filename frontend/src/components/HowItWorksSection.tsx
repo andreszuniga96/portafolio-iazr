@@ -198,7 +198,7 @@ const HowItWorksSection = () => {
     <section
       id="proceso"
       className="relative py-20 md:py-28 border-t border-white/5"
-      style={{ background: "#08090e" }}
+      style={{ background: "transparent" }}
     >
       {/* Background grain */}
       <div

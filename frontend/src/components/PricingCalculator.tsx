@@ -210,7 +210,7 @@ export default function PricingCalculator() {
     <section
       id="pricing"
       className="relative py-24 md:py-32 overflow-hidden border-t border-white/5"
-      style={{ background: "linear-gradient(180deg, #09090B 0%, #12131A 100%)" }}
+      style={{ background: "transparent" }}
     >
       {/* Ambient */}
       <div

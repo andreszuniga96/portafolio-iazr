@@ -215,7 +215,7 @@ const WorksSection = () => {
       id="proyectos"
       ref={sectionRef}
       className="py-24 md:py-32 relative overflow-visible border-t border-white/5"
-      style={{ background: "#09090B" }}
+      style={{ background: "transparent" }}
     >
       {/* Background grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02]" aria-hidden>

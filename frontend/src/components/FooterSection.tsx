@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Youtube, Linkedin, Github, Instagram, Mail, ArrowUpRight, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import LogoLoop from "@/components/LogoLoop";
+import OrbitalLogo from "@/components/ui/OrbitalLogo";
 
 const marqueeText = "INGENIERÍA · INTELIGENCIA ARTIFICIAL · INNOVACIÓN · FULL-STACK · IA · COLOMBIA · ";
 
@@ -48,7 +49,7 @@ const FooterSection = () => {
   return (
     <section id="contact"
       className="relative pt-20 md:pt-28 pb-8 md:pb-10 overflow-hidden border-t"
-      style={{ backgroundColor: "#09090B", borderColor: "rgba(43,48,64,0.75)" }}
+      style={{ background: "transparent", borderTop: "1px solid rgba(199,210,254,0.10)" }}
     >
       {/* Ambient glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] pointer-events-none"
@@ -72,15 +73,12 @@ const FooterSection = () => {
 
           {/* Col 1: Brand */}
           <div className="lg:col-span-1">
-            {/* Logo */}
+            {/* Logo — OrbitalLogo Espacial Minimalista */}
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-full border flex items-center justify-center"
-                style={{ borderColor: "rgba(124,102,255,0.5)", background: "rgba(91,61,245,0.15)" }}>
-                <span className="font-display italic text-white text-lg">I</span>
-              </div>
+              <OrbitalLogo size={40} />
               <div>
-                <p className="font-poppins font-bold tracking-widest uppercase text-sm" style={{ color: "#f0ede8" }}>IAZR</p>
-                <p className="text-[10px] font-poppins" style={{ color: "#8a857c" }}>Ivan Zuñiga</p>
+                <p className="font-poppins font-bold tracking-widest uppercase text-sm" style={{ color: "#F5F7FF" }}>IAZR</p>
+                <p className="text-[10px] font-poppins" style={{ color: "#A7ADBF" }}>Ivan Zuñiga</p>
               </div>
             </div>
 

@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { MessageSquare, Coins, Globe2, ShieldCheck, Brain, HeartHandshake } from "lucide-react";
 
-const PRIMARY = "#FFFFFF";
+const PRIMARY = "#C7D2FE"; /* Moon — Espacial Minimalista */
 
 const faqs = [
   {
@@ -152,8 +152,8 @@ const FAQSection = () => {
   return (
     <section
       id="faq"
-      className="relative py-24 md:py-32 overflow-hidden border-t border-white/5"
-      style={{ background: "linear-gradient(180deg, #070a12 0%, #0a0c14 100%)" }}
+      className="relative py-24 md:py-32 overflow-hidden"
+      style={{ background: "transparent" }}
     >
       {/* Ambient */}
       <div
@@ -196,30 +196,97 @@ const FAQSection = () => {
           ))}
         </div>
 
-        {/* CTA below */}
+        {/* CTA premium — fusión con CTASection (cupos limitados + acción principal) */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="mt-12 text-center"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-20 relative"
         >
-          <p className="font-poppins text-sm mb-5" style={{ color: "rgba(240,237,232,0.35)" }}>
-            ¿Tienes una pregunta que no está aquí?
-          </p>
-          <a
-            href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20tengo%20una%20pregunta%20sobre%20tus%20servicios."
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
+          <div
+            className="relative rounded-3xl overflow-hidden p-10 md:p-14 text-center"
             style={{
-              background: "rgba(255,255,255,0.12)",
-              border: "1px solid rgba(255,255,255,0.3)",
-              color: PRIMARY,
+              background:
+                "linear-gradient(140deg, rgba(124,102,255,0.10) 0%, rgba(199,210,254,0.04) 50%, rgba(10,11,18,0) 100%)",
+              border: "1px solid rgba(199,210,254,0.18)",
+              boxShadow:
+                "0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(199,210,254,0.08)",
             }}
           >
-            Contáctame directamente →
-          </a>
+            {/* moon glow */}
+            <div
+              aria-hidden="true"
+              className="absolute -top-24 left-1/2 -translate-x-1/2 w-[420px] h-[420px] pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(199,210,254,0.18) 0%, transparent 65%)",
+                filter: "blur(20px)",
+              }}
+            />
+
+            <span
+              className="relative z-10 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-poppins uppercase tracking-[0.3em] font-bold mb-7"
+              style={{
+                color: "#C7D2FE",
+                background: "rgba(199,210,254,0.06)",
+                border: "1px solid rgba(199,210,254,0.22)",
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C7D2FE] animate-pulse" />
+              Solo 3 cupos disponibles este mes
+            </span>
+
+            <h3
+              className="relative z-10 text-3xl md:text-5xl font-sora font-semibold leading-[1.05] mb-6"
+              style={{ color: "#F5F7FF" }}
+            >
+              Tu próxima ventaja competitiva{" "}
+              <span className="font-display italic font-light text-[#C7D2FE]">
+                empieza con una conversación
+              </span>
+            </h3>
+
+            <p
+              className="relative z-10 font-poppins text-base md:text-lg max-w-xl mx-auto mb-9"
+              style={{ color: "rgba(245,247,255,0.65)" }}
+            >
+              Análisis estratégico de 30 minutos, sin costo. Salimos con un diagnóstico claro
+              y un primer roadmap de impacto para tu negocio.
+            </p>
+
+            <div className="relative z-10 flex flex-col sm:flex-row gap-4 items-center justify-center">
+              <a
+                href="https://wa.me/573229132643?text=Hola%20Iv%C3%A1n%2C%20quiero%20agendar%20la%20sesi%C3%B3n%20estrat%C3%A9gica%20gratuita."
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-3 px-9 py-4 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-[1.03] active:scale-95"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #C7D2FE 0%, #A8B5E5 100%)",
+                  color: "#0A0B12",
+                  boxShadow:
+                    "0 12px 32px rgba(199,210,254,0.28), 0 0 0 1px rgba(199,210,254,0.4)",
+                }}
+              >
+                Agendar sesión estratégica
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </a>
+              <a
+                href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20tengo%20una%20pregunta%20sobre%20tus%20servicios."
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sora font-medium text-sm uppercase tracking-wider transition-all hover:scale-[1.03] active:scale-95"
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(199,210,254,0.22)",
+                  color: "#C7D2FE",
+                }}
+              >
+                Tengo una pregunta
+              </a>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
