@@ -95,12 +95,14 @@
    SECTION TONES — Espacial Minimalista
    Each section uses one of 5 depth levels, alternating
    to create rhythm without breaking visual unity.
+   Alpha 0.88-0.92 so the GlobalCosmicBackground bleeds through
+   subtly, creating an immersive WebGL substrate beneath every section.
 ══════════════════════════════════════════════════════ */
-.tone-void   { background: linear-gradient(180deg, #050608 0%, #07080d 50%, #050608 100%); }
-.tone-ink    { background: linear-gradient(180deg, #0A0B12 0%, #0C0D15 50%, #0A0B12 100%); }
-.tone-deep   { background: linear-gradient(180deg, #0E1018 0%, #101320 50%, #0E1018 100%); }
-.tone-slate  { background: linear-gradient(180deg, #131725 0%, #161A2A 50%, #131725 100%); }
-.tone-cosmic { background: linear-gradient(180deg, #1A1D2E 0%, #1D2235 50%, #1A1D2E 100%); }
+.tone-void   { background: linear-gradient(180deg, rgba(5,6,8,0.92) 0%, rgba(7,8,13,0.88) 50%, rgba(5,6,8,0.92) 100%); }
+.tone-ink    { background: linear-gradient(180deg, rgba(10,11,18,0.92) 0%, rgba(12,13,21,0.88) 50%, rgba(10,11,18,0.92) 100%); }
+.tone-deep   { background: linear-gradient(180deg, rgba(14,16,24,0.90) 0%, rgba(16,19,32,0.86) 50%, rgba(14,16,24,0.90) 100%); }
+.tone-slate  { background: linear-gradient(180deg, rgba(19,23,37,0.88) 0%, rgba(22,26,42,0.84) 50%, rgba(19,23,37,0.88) 100%); }
+.tone-cosmic { background: linear-gradient(180deg, rgba(26,29,46,0.86) 0%, rgba(29,34,53,0.82) 50%, rgba(26,29,46,0.86) 100%); }
 
 /* Smooth transitions between consecutive sections */
 .tone-bridge-deep    { background: linear-gradient(180deg, #0A0B12 0%, #0E1018 100%); }

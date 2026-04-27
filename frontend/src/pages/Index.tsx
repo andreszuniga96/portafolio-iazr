@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import LoadingScreen from "@/components/LoadingScreen";
 import CursorFollower from "@/components/CursorFollower";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import GlobalCosmicBackground from "@/components/ui/GlobalCosmicBackground";
 import { useImmersiveScroll } from "@/hooks/useImmersiveScroll";
 import { useAppearOnScroll } from "@/hooks/useAppearOnScroll";
 
@@ -20,18 +21,19 @@ import { useAppearOnScroll } from "@/hooks/useAppearOnScroll";
    • TestimonialsSection→ se mantiene compacta antes de FAQ+CTA
    ──────────────────────────────────────────────────────────────────────────── */
 
-const HeroImmersive      = lazy(() => import("@/components/HeroImmersive"));
-const AITerminalSection  = lazy(() => import("@/components/AITerminalSection"));
-const ServicesSection    = lazy(() => import("@/components/ServicesSection"));
-const WorksSection       = lazy(() => import("@/components/WorksSection"));
-const HowItWorksSection  = lazy(() => import("@/components/HowItWorksSection"));
-const PricingCalculator  = lazy(() => import("@/components/PricingCalculator"));
-const AboutSection       = lazy(() => import("@/components/AboutSection"));
-const JournalSection     = lazy(() => import("@/components/JournalSection"));
-const TestimonialsSection= lazy(() => import("@/components/TestimonialsSection"));
-const FAQSection         = lazy(() => import("@/components/FAQSection"));
-const FooterSection      = lazy(() => import("@/components/FooterSection"));
-const ChatbotWidget      = lazy(() => import("@/components/ChatbotWidget"));
+const HeroImmersive          = lazy(() => import("@/components/HeroImmersive"));
+const AITerminalSection      = lazy(() => import("@/components/AITerminalSection"));
+const ServicesSection        = lazy(() => import("@/components/ServicesSection"));
+const WorksSection           = lazy(() => import("@/components/WorksSection"));
+const HowItWorksSection      = lazy(() => import("@/components/HowItWorksSection"));
+const PricingCalculator      = lazy(() => import("@/components/PricingCalculator"));
+const InteractiveLabSection  = lazy(() => import("@/components/InteractiveLabSection"));
+const AboutSection           = lazy(() => import("@/components/AboutSection"));
+const JournalSection         = lazy(() => import("@/components/JournalSection"));
+const TestimonialsSection    = lazy(() => import("@/components/TestimonialsSection"));
+const FAQSection             = lazy(() => import("@/components/FAQSection"));
+const FooterSection          = lazy(() => import("@/components/FooterSection"));
+const ChatbotWidget          = lazy(() => import("@/components/ChatbotWidget"));
 
 const SectionSkeleton = () => (
   <div className="w-full py-24 flex items-center justify-center" aria-hidden="true">
@@ -74,6 +76,8 @@ const Index = () => {
 
   return (
     <>
+      {/* Capa WebGL global persistente — Espacial Minimalista */}
+      <GlobalCosmicBackground />
       <CursorFollower />
       <div className="grain-overlay" aria-hidden="true" />
       <Navbar />
@@ -111,18 +115,23 @@ const Index = () => {
             <PricingCalculator />
           </ToneWrapper>
 
-          {/* ⑥ CREDIBILIDAD — bio + stats + clientes + experiencia profesional (tono deep) */}
+          {/* ⑥ INTERACTIVE LAB — 4 demos en vivo: Threat / Cloud / Blockchain / Sentiment */}
+          <ToneWrapper tone="ink" withGlow>
+            <InteractiveLabSection />
+          </ToneWrapper>
+
+          {/* ⑦ CREDIBILIDAD — bio + stats + clientes + experiencia profesional (tono deep) */}
           <ToneWrapper tone="deep">
             <AboutSection />
             <JournalSection />
           </ToneWrapper>
 
-          {/* ⑦ TESTIMONIOS — voz de clientes (tono cosmic, compacto) */}
+          {/* ⑧ TESTIMONIOS — voz de clientes (tono cosmic, compacto) */}
           <ToneWrapper tone="cosmic">
             <TestimonialsSection />
           </ToneWrapper>
 
-          {/* ⑧ FAQ + CTA fusionados — cierre con acción (tono void, máximo contraste) */}
+          {/* ⑨ FAQ + CTA fusionados — cierre con acción (tono void, máximo contraste) */}
           <ToneWrapper tone="void" withGlow>
             <FAQSection />
           </ToneWrapper>
