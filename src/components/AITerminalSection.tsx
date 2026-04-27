@@ -123,7 +123,7 @@ const AITerminalSection = () => {
 
   const getLineColor = (type: TermLine["type"]) => {
     switch (type) {
-      case "prompt":  return "#FF6B2B";
+      case "prompt":  return "#FFFFFF";
       case "success": return "#22c55e";
       case "info":    return "#60a5fa";
       case "warn":    return "#F59E0B";
@@ -139,7 +139,7 @@ const AITerminalSection = () => {
     >
       {/* Background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: "rgba(255,107,43,0.04)" }} />
+        style={{ background: "rgba(255,255,255,0.04)" }} />
 
       {/* Data stream lines */}
       {[15, 35, 55, 75, 90].map((left, i) => (
@@ -155,10 +155,10 @@ const AITerminalSection = () => {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center"
-              style={{ background: "rgba(255,107,43,0.12)", border: "1px solid rgba(255,107,43,0.25)" }}>
-              <Terminal className="w-4 h-4" style={{ color: "#FF6B2B" }} />
+              style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.25)" }}>
+              <Terminal className="w-4 h-4" style={{ color: "#FFFFFF" }} />
             </div>
-            <span className="text-xs font-poppins text-primary uppercase tracking-[0.3em] font-bold">
+            <span className="text-xs font-poppins text-white uppercase tracking-[0.3em] font-bold">
               IA en Acción · Live Demo
             </span>
           </div>
@@ -187,9 +187,9 @@ const AITerminalSection = () => {
                   onClick={() => { setSessionIdx(i); runSession(i); }}
                   className="px-3 py-1.5 rounded-full text-[10px] font-poppins uppercase tracking-wider transition-all"
                   style={{
-                    background: sessionIdx === i ? "rgba(255,107,43,0.15)" : "rgba(255,255,255,0.03)",
-                    border: `1px solid ${sessionIdx === i ? "rgba(255,107,43,0.4)" : "rgba(255,255,255,0.06)"}`,
-                    color: sessionIdx === i ? "#FF6B2B" : "rgba(255,255,255,0.35)",
+                    background: sessionIdx === i ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.03)",
+                    border: `1px solid ${sessionIdx === i ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.06)"}`,
+                    color: sessionIdx === i ? "#FFFFFF" : "rgba(255,255,255,0.35)",
                   }}
                 >
                   {label}
@@ -268,13 +268,13 @@ const AITerminalSection = () => {
             {/* Live AI Metrics */}
             <div className="bento-card">
               <div className="flex items-center gap-2 mb-5">
-                <Activity className="w-4 h-4" style={{ color: "#FF6B2B" }} />
-                <span className="text-[10px] font-poppins uppercase tracking-widest font-bold" style={{ color: "#FF6B2B" }}>
+                <Activity className="w-4 h-4" style={{ color: "#FFFFFF" }} />
+                <span className="text-[10px] font-poppins uppercase tracking-widest font-bold" style={{ color: "#FFFFFF" }}>
                   Métricas en Producción
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-4">
-                <MetricCounter target={12} unit="+" label="Modelos en prod." color="#FF6B2B" />
+                <MetricCounter target={12} unit="+" label="Modelos en prod." color="#FFFFFF" />
                 <MetricCounter target={2400000} unit="+" label="Tokens / mes" color="#F59E0B" />
                 <MetricCounter target={312} unit="ms" label="Latencia prom." color="#22c55e" />
               </div>
@@ -284,7 +284,7 @@ const AITerminalSection = () => {
             <div className="grid gap-3">
               {[
                 { icon: <Cpu className="w-4 h-4" />, color: "#8B5CF6", title: "Arquitecturas Multi-Agente", desc: "Sistemas donde varios agentes LLM colaboran en paralelo para resolver tareas complejas." },
-                { icon: <Zap className="w-4 h-4" />, color: "#FF6B2B", title: "Pipelines RAG de Alta Precisión", desc: "Recuperación semántica sobre tus datos privados con embeddings y vectores." },
+                { icon: <Zap className="w-4 h-4" />, color: "#FFFFFF", title: "Pipelines RAG de Alta Precisión", desc: "Recuperación semántica sobre tus datos privados con embeddings y vectores." },
                 { icon: <Check className="w-4 h-4" />, color: "#22c55e", title: "Evaluación y Fine-tuning", desc: "Métricas de calidad, RLHF y ajuste fino para máxima precisión en tu dominio." },
               ].map((item, i) => (
                 <motion.div
@@ -310,7 +310,7 @@ const AITerminalSection = () => {
               href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20quiero%20implementar%20un%20pipeline%20de%20IA%20en%20mi%20empresa."
               target="_blank" rel="noreferrer"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-              className="btn-glow flex items-center justify-center gap-2 py-4 rounded-2xl bg-primary text-black font-sora font-bold text-sm uppercase tracking-wider"
+              className="btn-glow flex items-center justify-center gap-2 py-4 rounded-2xl bg-primary text-primary-foreground font-sora font-bold text-sm uppercase tracking-wider"
             >
               <Terminal className="w-4 h-4" />
               Implementar IA en mi empresa

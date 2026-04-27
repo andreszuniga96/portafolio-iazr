@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Calendar, FileCheck, Rocket, MessageSquareHeart } from "lucide-react";
 
-const PRIMARY = "#FF6B2B";
+const PRIMARY = "#FFFFFF";
 
 const steps = [
   {
@@ -11,8 +11,8 @@ const steps = [
     title: "Cuentame tu idea",
     desc: "Contactame por WhatsApp o usa Nova AI. No necesitas saber de tecnologia — yo traduzco tu vision al lenguaje de codigo.",
     color: PRIMARY,
-    accent: "rgba(255,107,43,0.10)",
-    border: "rgba(255,107,43,0.22)",
+    accent: "rgba(255,255,255,0.10)",
+    border: "rgba(255,255,255,0.22)",
     tag: "Paso 01",
   },
   {
@@ -178,7 +178,7 @@ const StepCard = ({
                 className="inline-flex items-center gap-3 mt-7 px-7 py-4 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95 text-black"
                 style={{
                   background: PRIMARY,
-                  boxShadow: `0 0 32px rgba(255,107,43,0.35)`,
+                  boxShadow: `0 0 32px rgba(255,255,255,0.35)`,
                 }}
               >
                 <Calendar className="w-4 h-4" />

@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useSpring, useMotionValue, useMotionTemplate }
 import { X } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import CircularGallery from "@/components/CircularGallery";
 
 import projectCyber from "@/assets/cyber.png";
 import projectDev from "@/assets/zolaris.png";
@@ -21,7 +22,7 @@ const projects = [
     desc: "Plataforma SaaS para ecosistemas solares IoT, utilizando modelos LLM y análisis predictivos.",
     fullDesc: "Zolaris es un ecosistema inmersivo. Utiliza gemelos digitales para visualizar la generación y consumo en tiempo real de inversores solares globales. El backend, potenciado por IA generativa, optimiza la matriz energética automáticamente.",
     img: projectDev,
-    color: "#FF6B2B",
+    color: "#5337E5", // Vibrant Purple
   },
   {
     id: 2,
@@ -30,7 +31,7 @@ const projects = [
     desc: "Aseguramiento de infraestructuras críticas para escrutinio.",
     fullDesc: "Auditoría integral, hardening e implementación de arquitecturas Zero-Trust en los centros de datos electorales de Nariño, mitigando la superficie de ataque y garantizando integridad en transmisión de datos.",
     img: projectCyber,
-    color: "#FFA500",
+    color: "#3B28CC", // Glow Purple
   },
   {
     id: 3,
@@ -39,7 +40,7 @@ const projects = [
     desc: "Bootcamps de IA & Data Analytics en ecosistemas interactivos.",
     fullDesc: "Conceptualización tecnológica para el programa nacional del MinTIC. Los estudiantes incursionan en análisis de datos intensivo y modelos de LLM usando infraestructuras escalables en la nube.",
     img: projectInnovation,
-    color: "#FF8C42",
+    color: "#1D1B50", // Navy Blue
   },
   {
     id: 4,
@@ -48,7 +49,7 @@ const projects = [
     desc: "Proyectos de impacto regional formulados bajo MGA.",
     fullDesc: "Intersección entre finanzas públicas y desarrollo tecnológico privado. Facilitación de orquestación técnica, predimensionamiento de presupuestos e infraestructura de big data aplicada a regiones.",
     img: projectConsulting,
-    color: "#FF6B2B",
+    color: "#FFFFFF",
   },
 ];
 
@@ -213,7 +214,8 @@ const WorksSection = () => {
     <section
       id="proyectos"
       ref={sectionRef}
-      className="bg-[#0b0c10] py-24 md:py-32 relative overflow-visible border-t border-white/5"
+      className="py-24 md:py-32 relative overflow-visible border-t border-white/5"
+      style={{ background: "#09090B" }}
     >
       {/* Background grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02]" aria-hidden>
@@ -258,7 +260,7 @@ const WorksSection = () => {
                   color: filter === cat ? "#000" : "rgba(255,255,255,0.5)",
                   borderColor: filter === cat ? "var(--primary-color)" : "rgba(255,255,255,0.1)",
                   fontWeight: filter === cat ? 700 : 400,
-                  boxShadow: filter === cat ? `0 0 20px rgba(255,107,43,0.3)` : "none",
+                  boxShadow: filter === cat ? `0 0 20px rgba(255,255,255,0.3)` : "none",
                 }}
               >
                 {cat}
@@ -266,6 +268,22 @@ const WorksSection = () => {
             ))}
           </div>
         </motion.div>
+
+        {/* ── Circular Gallery showcase ── */}
+        <div className="w-full mb-12" style={{ height: '420px' }}>
+          <CircularGallery
+            items={[
+              { image: projectDev as string,          text: 'Zolaris Platform' },
+              { image: projectCyber as string,         text: 'Ciberseguridad' },
+              { image: projectInnovation as string,    text: 'Talento Tech' },
+              { image: projectConsulting as string,    text: 'MGA Startups' },
+            ]}
+            bend={3}
+            textColor="#FFFFFF"
+            borderRadius={0.05}
+            scrollSpeed={2}
+          />
+        </div>
 
         {/* Gallery */}
         {isGridView ? (

@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { MessageSquare, Coins, Globe2, ShieldCheck, Brain, HeartHandshake } from "lucide-react";
 
-const PRIMARY = "#FF6B2B";
+const PRIMARY = "#FFFFFF";
 
 const faqs = [
   {
@@ -10,8 +10,8 @@ const faqs = [
     question: "¿Cuánto tarda en entregarse un proyecto?",
     answer: "Depende del alcance. Una landing page: 5–7 días. Una plataforma web completa: 4–8 semanas. Un agente de IA o automatización: 1–2 semanas. Siempre defino tiempos exactos con hitos claros en la propuesta técnica.",
     color: PRIMARY,
-    accent: "rgba(255,107,43,0.10)",
-    border: "rgba(255,107,43,0.22)",
+    accent: "rgba(255,255,255,0.10)",
+    border: "rgba(255,255,255,0.22)",
     num: "01",
   },
   {
@@ -158,7 +158,7 @@ const FAQSection = () => {
       {/* Ambient */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 60% 50% at 30% 60%, rgba(255,107,43,0.05), transparent)" }}
+        style={{ background: "radial-gradient(ellipse 60% 50% at 30% 60%, rgba(255,255,255,0.05), transparent)" }}
       />
 
       <div className="max-w-[900px] mx-auto px-6 md:px-10 relative z-10">
@@ -213,8 +213,8 @@ const FAQSection = () => {
             rel="noreferrer"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
             style={{
-              background: "rgba(255,107,43,0.12)",
-              border: "1px solid rgba(255,107,43,0.3)",
+              background: "rgba(255,255,255,0.12)",
+              border: "1px solid rgba(255,255,255,0.3)",
               color: PRIMARY,
             }}
           >

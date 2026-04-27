@@ -5,14 +5,14 @@ import {
   CheckCircle2, AlertTriangle, CalendarCheck, Zap, Clock, Star
 } from "lucide-react";
 
-const PRIMARY = "#FF6B2B";
+const PRIMARY = "#FFFFFF";
 
 // ─── Service definitions ──────────────────────────────────────────────────────
 const services = [
   {
     id: "web",
     icon: <Globe className="w-6 h-6" />,
-    color: "#4da4ff",
+    color: "#5B3DF5",
     label: "Página Web Profesional",
     tagline: "Hasta 6 páginas · Diseño premium",
     basePrice: "Desde $1.200.000 COP",
@@ -69,7 +69,7 @@ const services = [
   {
     id: "ai",
     icon: <Bot className="w-6 h-6" />,
-    color: "#a855f7",
+    color: "#7C66FF",
     label: "Automatización con IA",
     tagline: "Agentes LLM, RAG, n8n, pipelines",
     basePrice: "Desde $2.800.000 COP",
@@ -95,7 +95,7 @@ const services = [
   {
     id: "mentorship",
     icon: <BookOpen className="w-6 h-6" />,
-    color: "#22c55e",
+    color: "#2DD4BF",
     label: "Mentoría 1 a 1",
     tagline: "Sesiones personalizadas por Google Meet",
     basePrice: "$70.000 – $90.000 COP / hora",
@@ -145,7 +145,7 @@ const services = [
   {
     id: "mga",
     icon: <FileText className="w-6 h-6" />,
-    color: "#F59E0B",
+    color: "#2232A8",
     label: "Formulación MGA",
     tagline: "Proyectos de inversión pública",
     basePrice: "Cotización personalizada",
@@ -210,12 +210,12 @@ export default function PricingCalculator() {
     <section
       id="pricing"
       className="relative py-24 md:py-32 overflow-hidden border-t border-white/5"
-      style={{ background: "linear-gradient(180deg, #03050a 0%, #050812 100%)" }}
+      style={{ background: "linear-gradient(180deg, #09090B 0%, #12131A 100%)" }}
     >
       {/* Ambient */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full blur-[150px] pointer-events-none"
-        style={{ background: "rgba(255,107,43,0.04)" }}
+        style={{ background: "rgba(255,255,255,0.04)" }}
       />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">

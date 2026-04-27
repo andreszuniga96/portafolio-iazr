@@ -1,49 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap } from "lucide-react";
 import { SectionLabel, TextReveal } from "@/components/ui/AnimatedElements";
-
-// ── Particle field background ──────────────────────────────────────────────────
-const ParticleField = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const particles: { x: number; y: number; vx: number; vy: number; size: number; opacity: number }[] = Array.from({ length: 55 }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      size: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.4 + 0.1,
-    }));
-
-    let raf: number;
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,107,43,${p.opacity})`;
-        ctx.fill();
-      });
-      raf = requestAnimationFrame(draw);
-    };
-    draw();
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
-  }, []);
-  return <canvas ref={canvasRef} className="neural-canvas opacity-60" />;
-};
-
 const CTASection = () => {
   const slotsLeft = 3;
   const mouseX = useRef(0);
@@ -55,7 +13,7 @@ const CTASection = () => {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     if (spotRef.current) {
-      spotRef.current.style.background = `radial-gradient(400px circle at ${x}px ${y}px, rgba(255,107,43,0.09), transparent 70%)`;
+      spotRef.current.style.background = `radial-gradient(400px circle at ${x}px ${y}px, rgba(255,255,255,0.09), transparent 70%)`;
       spotRef.current.style.opacity = '1';
     }
   };
@@ -71,7 +29,20 @@ const CTASection = () => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
-      <ParticleField />
+      {/* CSS-only particle dots — no WebGL */}
+      {[...Array(20)].map((_, i) => (
+        <div key={i} className="absolute rounded-full pointer-events-none"
+          style={{
+            width: 2 + (i % 3), height: 2 + (i % 3),
+            background: i % 2 === 0 ? '#FFFFFF' : '#F59E0B',
+            opacity: 0.15 + (i % 4) * 0.05,
+            left: `${5 + (i * 17) % 90}%`,
+            top: `${10 + (i * 23) % 80}%`,
+            boxShadow: `0 0 ${6 + i % 4 * 3}px ${i % 2 === 0 ? '#FFFFFF' : '#F59E0B'}60`,
+            animation: `aurora-float-${i % 4} ${5 + (i % 5)}s ease-in-out ${i * 0.4}s infinite`,
+          }}
+        />
+      ))}
 
       {/* Spotlight layer */}
       <div
@@ -82,7 +53,7 @@ const CTASection = () => {
 
       {/* Radial warm glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,107,43,0.06), transparent 70%)" }} />
+        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.06), transparent 70%)" }} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {/* Badge */}
@@ -90,10 +61,10 @@ const CTASection = () => {
           initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
-          style={{ background: "rgba(255,107,43,0.1)", border: "1px solid rgba(255,107,43,0.25)" }}
+          style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)" }}
         >
-          <Zap className="w-3.5 h-3.5 text-primary" />
-          <span className="text-xs font-outfit uppercase tracking-[0.25em] font-bold text-primary">
+          <Zap className="w-3.5 h-3.5 text-white" />
+          <span className="text-xs font-outfit uppercase tracking-[0.25em] font-bold text-white">
             {slotsLeft} slots disponibles este mes
           </span>
           <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
@@ -141,7 +112,7 @@ const CTASection = () => {
           <a
             href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%20%F0%9F%91%8B%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20virtual%20para%20hablar%20de%20mi%20proyecto."
             target="_blank" rel="noreferrer"
-            className="relative btn-glow inline-flex items-center gap-2.5 px-9 py-5 rounded-full bg-primary text-black font-outfit font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all overflow-hidden group"
+            className="relative btn-glow inline-flex items-center gap-2.5 px-9 py-5 rounded-full bg-primary text-primary-foreground font-outfit font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all overflow-hidden group"
           >
             {/* Shimmer sweep */}
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none" />
@@ -166,7 +137,7 @@ const CTASection = () => {
           style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}
         >
           <div className="flex -space-x-2">
-            {["#FF6B2B", "#3B82F6", "#22C55E"].map((c, i) => (
+            {["#FFFFFF", "#3B82F6", "#22C55E"].map((c, i) => (
               <div key={i} className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold"
                 style={{ background: `${c}25`, borderColor: "#0c0c0e", color: c }}>
                 {["C", "M", "L"][i]}

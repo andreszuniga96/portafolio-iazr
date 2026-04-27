@@ -115,30 +115,30 @@ const CursorFollower = () => {
             position: "absolute",
             inset: 0,
             borderRadius: "50%",
-            border: "1.5px solid rgba(255,107,43,0.75)",
-            boxShadow: "0 0 12px rgba(255,107,43,0.3), inset 0 0 8px rgba(255,107,43,0.06)",
+            border: "1.5px solid rgba(255,255,255,0.75)",
+            boxShadow: "0 0 12px rgba(255,255,255,0.3), inset 0 0 8px rgba(255,255,255,0.06)",
           }}
         />
         {/* Crosshair lines */}
         {/* Top */}
         <div style={{
           position: "absolute", left: "50%", top: -7, width: 1, height: 5,
-          background: "rgba(255,107,43,0.6)", transform: "translateX(-50%)", borderRadius: 1,
+          background: "rgba(255,255,255,0.6)", transform: "translateX(-50%)", borderRadius: 1,
         }} />
         {/* Bottom */}
         <div style={{
           position: "absolute", left: "50%", bottom: -7, width: 1, height: 5,
-          background: "rgba(255,107,43,0.6)", transform: "translateX(-50%)", borderRadius: 1,
+          background: "rgba(255,255,255,0.6)", transform: "translateX(-50%)", borderRadius: 1,
         }} />
         {/* Left */}
         <div style={{
           position: "absolute", top: "50%", left: -7, height: 1, width: 5,
-          background: "rgba(255,107,43,0.6)", transform: "translateY(-50%)", borderRadius: 1,
+          background: "rgba(255,255,255,0.6)", transform: "translateY(-50%)", borderRadius: 1,
         }} />
         {/* Right */}
         <div style={{
           position: "absolute", top: "50%", right: -7, height: 1, width: 5,
-          background: "rgba(255,107,43,0.6)", transform: "translateY(-50%)", borderRadius: 1,
+          background: "rgba(255,255,255,0.6)", transform: "translateY(-50%)", borderRadius: 1,
         }} />
       </motion.div>
 
@@ -156,8 +156,8 @@ const CursorFollower = () => {
           width: 4,
           height: 4,
           borderRadius: "50%",
-          backgroundColor: "#FF6B2B",
-          boxShadow: "0 0 6px rgba(255,107,43,0.9)",
+          backgroundColor: "#FFFFFF",
+          boxShadow: "0 0 6px rgba(255,255,255,0.9)",
           pointerEvents: "none",
           zIndex: 99999,
         }}

@@ -18,20 +18,20 @@ interface Service {
   featured?: boolean;
 }
 
-const PRIMARY = "#FF6B2B";
+const PRIMARY = "#FFFFFF";
 
 const services: Service[] = [
   {
     num: "01",
     title: "Desarrollo Full-Stack",
     category: "Ingeniería",
-    categoryColor: "#3B82F6",
+    categoryColor: "#5337E5", // Vibrant Purple
     icon: <Code2 className="w-7 h-7" />,
     desc: "Plataformas web escalables con React, Node.js y bases de datos cloud.",
     fullDesc: "Diseño y desarrollo de aplicaciones web completas desde cero. Implemento arquitecturas modernas (microservicios, REST APIs, GraphQL), bases de datos NoSQL y SQL, autenticación segura, despliegue en Vercel/AWS y optimización de rendimiento.",
     price: "Frontend: $800k – $2.5M COP\nFull-Stack: $4M – $6M COP",
     tags: ["React", "Node.js", "Python", "PostgreSQL", "AWS"],
-    tagColors: ["#3B82F6", "#22C55E", "#F59E0B", "#8B5CF6", "#EF4444"],
+    tagColors: ["#3B28CC", "#5337E5", "#1D1B50", "#18181A", "#FFFFFF"],
     ctaText: "Cotizar mi proyecto",
     featured: true,
   },
@@ -39,13 +39,13 @@ const services: Service[] = [
     num: "02",
     title: "IA & Automatización",
     category: "IA",
-    categoryColor: "#8B5CF6",
+    categoryColor: "#3B28CC", // Glow Purple
     icon: <BrainCircuit className="w-7 h-7" />,
     desc: "Bots, agentes LLM y flujos de automatización para ahorrar tiempo y dinero.",
     fullDesc: "Implemento soluciones de Inteligencia Artificial adaptadas a tu negocio: chatbots con memoria, agentes autónomos que procesan datos, automatizan decisiones y se integran con tus sistemas existentes. Trabajo con OpenAI, Gemini, LangChain y herramientas de RPA.",
     price: "Desde $3.500.000 COP",
     tags: ["LangChain", "OpenAI", "Gemini", "n8n", "Python"],
-    tagColors: ["#8B5CF6", "#10B981", "#F59E0B", "#3B82F6", "#F59E0B"],
+    tagColors: ["#5337E5", "#3B28CC", "#FFFFFF", "#1D1B50", "#18181A"],
     ctaText: "Automatizar mi negocio",
     featured: true,
   },
@@ -53,52 +53,52 @@ const services: Service[] = [
     num: "03",
     title: "Mentoría Tecnológica",
     category: "Educación",
-    categoryColor: "#10B981",
+    categoryColor: "#1D1B50", // Navy Blue
     icon: <GraduationCap className="w-7 h-7" />,
     desc: "Sesiones 1 a 1 para acelerar tu aprendizaje en programación o IA.",
     fullDesc: "Sesiones personalizadas de mentoría técnica por videollamada. Analizo tu nivel actual, identifico puntos débiles y creo un plan de estudio o proyecto práctico a medida.",
     price: "$60.000 – $80.000 COP / hora\n(Pago previo: Nequi, DaviPlata)",
     tags: ["1 a 1", "Google Meet", "Full-Stack", "IA"],
-    tagColors: ["#10B981", "#3B82F6", "#F59E0B", "#8B5CF6"],
+    tagColors: ["#1D1B50", "#5337E5", "#3B28CC", "#18181A"],
     ctaText: "Reservar sesión",
   },
   {
     num: "04",
     title: "Ciberseguridad",
     category: "Infraestructura",
-    categoryColor: "#EF4444",
+    categoryColor: "#18181A", // Anthracite
     icon: <ShieldAlert className="w-7 h-7" />,
     desc: "Auditorías, hardening y arquitecturas Zero-Trust para proteger tus sistemas.",
     fullDesc: "Evaluación integral de la seguridad de tus sistemas: pentesting de aplicaciones web, hardening de servidores Linux, análisis de vulnerabilidades y diseño de políticas Zero-Trust.",
     price: "Auditoría: Desde $800.000 COP",
     tags: ["Pentesting", "Linux", "Zero-Trust", "OWASP"],
-    tagColors: ["#EF4444", "#F59E0B", "#8B5CF6", "#3B82F6"],
+    tagColors: ["#3B28CC", "#1D1B50", "#5337E5", "#18181A"],
     ctaText: "Auditar mi sistema",
   },
   {
     num: "05",
     title: "Analítica de Datos",
     category: "Big Data",
-    categoryColor: "#F59E0B",
+    categoryColor: "#3B28CC",
     icon: <LineChart className="w-7 h-7" />,
     desc: "Dashboards, modelos predictivos y storytelling de datos para decisiones.",
     fullDesc: "Transformo datos en ventajas competitivas. Construyo pipelines ETL, dashboards interactivos, modelos de predicción y reportes ejecutivos.",
     price: "A cotizar según alcance",
     tags: ["Power BI", "Python", "SQL", "Scikit-learn"],
-    tagColors: ["#F59E0B", "#3B82F6", "#8B5CF6", "#10B981"],
+    tagColors: ["#1D1B50", "#5337E5", "#3B28CC", "#18181A"],
     ctaText: "Analizar mis datos",
   },
   {
     num: "06",
     title: "Formulación MGA",
     category: "Consultoría",
-    categoryColor: "#6366F1",
+    categoryColor: "#5337E5",
     icon: <Briefcase className="w-7 h-7" />,
     desc: "Estructuración de proyectos de inversión pública bajo la metodología MGA.",
     fullDesc: "Consultoría especializada en formulación y evaluación de proyectos del sector público bajo la Metodología General Ajustada. Incluye diagnóstico, árbol de problemas, cadena de valor y viabilidad.",
     price: "A cotizar (según alcance)",
     tags: ["MGA", "DNP", "Inversión Pública", "Viabilidad"],
-    tagColors: ["#6366F1", "#3B82F6", "#10B981", "#F59E0B"],
+    tagColors: ["#18181A", "#3B28CC", "#1D1B50", "#5337E5"],
     ctaText: "Formular mi proyecto",
   },
 ];
@@ -166,7 +166,7 @@ const ServiceModal = ({ service, onClose }: { service: Service; onClose: () => v
         </div>
 
         <a href={`https://wa.me/573229132643?text=${waMsg}`} target="_blank" rel="noreferrer"
-          className="w-full py-4 bg-primary text-black font-sora font-bold text-sm uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 hover:brightness-110 hover:scale-[1.02] active:scale-95 transition-all">
+          className="w-full py-4 bg-primary text-primary-foreground font-sora font-bold text-sm uppercase tracking-wider rounded-xl flex items-center justify-center gap-2 hover:brightness-110 hover:scale-[1.02] active:scale-95 transition-all">
           {service.ctaText} <ArrowUpRight className="w-4 h-4" />
         </a>
       </motion.div>
@@ -189,7 +189,7 @@ const ServiceCard = ({ service, index, onClick, isFocused, isDimmed }: {
   const rotateY = useMotionTemplate`${springRotY}deg`;
   const spotX   = useSpring(mouseX, { stiffness: 300, damping: 40 });
   const spotY   = useSpring(mouseY, { stiffness: 300, damping: 40 });
-  const spotBg  = useMotionTemplate`radial-gradient(260px circle at ${spotX}px ${spotY}px, rgba(255,107,43,0.09), transparent 70%)`;
+  const spotBg  = useMotionTemplate`radial-gradient(260px circle at ${spotX}px ${spotY}px, rgba(255,255,255,0.06), transparent 70%)`;
   const [borderPos, setBorderPos] = useState({ x: 50, y: 50 });
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -286,7 +286,7 @@ const ServiceCard = ({ service, index, onClick, isFocused, isDimmed }: {
           {/* Footer */}
           <div className="mt-5 pt-4 border-t flex items-center justify-between relative z-10"
             style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-            <span className="text-primary font-outfit text-xs uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 flex items-center gap-1.5">
+            <span className="text-white font-outfit text-xs uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 flex items-center gap-1.5">
               Explorar <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
             <span className="text-xs font-outfit" style={{ color: "rgba(255,255,255,0.2)" }}>
@@ -305,8 +305,8 @@ const ServicesSection = () => {
 
   return (
     <>
-      <section id="servicios" className="relative py-24 md:py-32 overflow-hidden border-t"
-        style={{ backgroundColor: "#0d0d10", borderColor: "rgba(42,39,36,0.6)" }}>
+      <section id="servicios" className="relative py-24 md:py-32 overflow-hidden border-t section-tone-brand"
+        style={{ borderColor: "rgba(255,255,255,0.05)" }}>
         {/* Grid bg */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
           <div className="absolute inset-0"
@@ -337,6 +337,8 @@ const ServicesSection = () => {
               </p>
             </div>
           </motion.div>
+
+
 
           {/* Bento Grid — with Focus effect */}
           <div
@@ -369,7 +371,7 @@ const ServicesSection = () => {
               href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20cotizar%20un%20servicio."
               target="_blank" rel="noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-sora font-semibold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
-              style={{ border: "1px solid rgba(255,107,43,0.3)", color: "#FF6B2B", background: "rgba(255,107,43,0.06)" }}
+              style={{ border: "1px solid rgba(255,255,255,0.3)", color: "#FFFFFF", background: "rgba(255,255,255,0.06)" }}
             >
               Cotizar servicio personalizado <ArrowUpRight className="w-4 h-4" />
             </a>

@@ -67,7 +67,7 @@ const TestimonialCard = React.memo(
                 )}
                 <AvatarFallback
                   className="text-[10px] font-bold"
-                  style={{ background: 'rgba(255,107,43,0.15)', color: '#FF6B2B' }}
+                  style={{ background: 'rgba(255,255,255,0.15)', color: '#FFFFFF' }}
                 >
                   {testimonial.initials}
                 </AvatarFallback>

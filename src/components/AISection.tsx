@@ -3,14 +3,14 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Brain, Zap, BarChart3, Globe2, ShieldCheck, ArrowRight } from "lucide-react";
 import { SectionLabel, TextReveal } from "@/components/ui/AnimatedElements";
 
-const PRIMARY = "#FF6B2B";
+const PRIMARY = "#FFFFFF";
 
 const aiCapabilities = [
   {
     icon: <Brain className="w-8 h-8" />,
     title: "LLMs & Agentes Autónomos",
     desc: "Integración de modelos de lenguaje (GPT-4, Gemini, Llama) que toman decisiones, ejecutan tareas y aprenden de la conversación.",
-    color: "#8B5CF6",
+    color: "#5337E5", // Vibrant Purple
   },
   {
     icon: <Zap className="w-8 h-8" />,
@@ -22,19 +22,19 @@ const aiCapabilities = [
     icon: <BarChart3 className="w-8 h-8" />,
     title: "Predicción & Analytics",
     desc: "Modelos de Machine Learning que anticipan tendencias, optimizan precios y detectan anomalías en tiempo real.",
-    color: "#22C55E",
+    color: "#3B28CC", // Glow Purple
   },
   {
     icon: <Globe2 className="w-8 h-8" />,
     title: "IA en tu Plataforma Web",
     desc: "Asistentes integrados, búsqueda semántica y personalización de contenido impulsada por IA directamente en tu aplicación.",
-    color: "#3B82F6",
+    color: "#18181A", // Anthracite
   },
   {
     icon: <ShieldCheck className="w-8 h-8" />,
     title: "Ciberseguridad con IA",
     desc: "Detección de amenazas en tiempo real, análisis de comportamientos anómalos y hardening asistido por modelos especializados.",
-    color: "#EF4444",
+    color: "#1D1B50", // Navy Blue
   },
 ];
 
@@ -43,13 +43,13 @@ const SkillConstellation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const skills = useMemo(() => [
-    { label: "Gemini", x: 0.5, y: 0.22, size: 14, color: "#8B5CF6", connections: [1, 2, 4] },
-    { label: "React",  x: 0.2, y: 0.45, size: 12, color: "#61DAFB", connections: [0, 3, 5] },
-    { label: "Python", x: 0.78, y: 0.42, size: 13, color: "#F59E0B", connections: [0, 4, 6] },
-    { label: "Node",   x: 0.22, y: 0.72, size: 10, color: "#22C55E", connections: [1, 5] },
-    { label: "n8n",    x: 0.78, y: 0.7, size: 10, color: "#EF4444", connections: [2, 6] },
-    { label: "AWS",    x: 0.5, y: 0.82, size: 11, color: "#F97316", connections: [3, 4] },
-    { label: "SQL",    x: 0.5, y: 0.54, size: 9, color: "#3B82F6", connections: [2, 5] },
+    { label: "Gemini", x: 0.5, y: 0.22, size: 14, color: "#5337E5", connections: [1, 2, 4] },
+    { label: "React",  x: 0.2, y: 0.45, size: 12, color: "#FFFFFF", connections: [0, 3, 5] },
+    { label: "Python", x: 0.78, y: 0.42, size: 13, color: "#3B28CC", connections: [0, 4, 6] },
+    { label: "Node",   x: 0.22, y: 0.72, size: 10, color: "#1D1B50", connections: [1, 5] },
+    { label: "n8n",    x: 0.78, y: 0.7, size: 10, color: "#5337E5", connections: [2, 6] },
+    { label: "AWS",    x: 0.5, y: 0.82, size: 11, color: "#3B28CC", connections: [3, 4] },
+    { label: "SQL",    x: 0.5, y: 0.54, size: 9, color: "#FFFFFF", connections: [2, 5] },
   ], []);
 
   useEffect(() => {
@@ -136,43 +136,10 @@ const SkillConstellation = () => {
   return (
     <canvas ref={canvasRef}
       className="w-full h-full"
-      style={{ filter: "drop-shadow(0 0 20px rgba(255,107,43,0.15))" }} />
+      style={{ filter: "drop-shadow(0 0 20px rgba(255,255,255,0.08))" }} />
   );
 };
 
-// ─── Neural dot background ────────────────────────────────────────────────────
-const NeuralBackground = () => {
-  const dots = useMemo(() => Array.from({ length: 30 }, (_, i) => ({
-    x: Math.random() * 100, y: Math.random() * 100,
-    size: Math.random() * 2 + 0.5, delay: Math.random() * 3,
-  })), []);
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-        {dots.map((dot, i) =>
-          dots.slice(i + 1, i + 4).map((target, j) => (
-            <motion.line key={`l-${i}-${j}`}
-              x1={dot.x} y1={dot.y} x2={target.x} y2={target.y}
-              stroke="rgba(255,107,43,0.07)" strokeWidth="0.15"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: [0, 1, 0] }}
-              transition={{ duration: 4, delay: dot.delay, repeat: Infinity, repeatDelay: 2 }}
-            />
-          ))
-        )}
-        {dots.map((dot, i) => (
-          <motion.circle key={`d-${i}`}
-            cx={dot.x} cy={dot.y} r={dot.size * 0.12}
-            fill="rgba(255,107,43,0.45)"
-            animate={{ scale: [0, 1, 0], opacity: [0, 0.8, 0] }}
-            transition={{ duration: 3.5, delay: dot.delay, repeat: Infinity, repeatDelay: 1.5 }}
-          />
-        ))}
-      </svg>
-    </div>
-  );
-};
 
 const AISection = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -181,12 +148,11 @@ const AISection = () => {
   const [focusedCap, setFocusedCap] = useState<number | null>(null);
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden border-t"
-      style={{ backgroundColor: "#0d0d10", borderColor: "rgba(42,39,36,0.6)" }}>
-      <NeuralBackground />
+    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden border-t section-tone-deep"
+      style={{ borderColor: "rgba(255,255,255,0.05)" }}>
       {/* Central glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none"
-        style={{ background: "rgba(255,107,43,0.05)" }} />
+        style={{ background: "rgba(255,255,255,0.03)" }} />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
         {/* Header with SectionLabel + TextReveal */}
@@ -214,7 +180,7 @@ const AISection = () => {
             </p>
             <a href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%2C%20quiero%20implementar%20IA%20en%20mi%20negocio."
               target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-primary text-black font-sora font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all">
+              className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-primary text-primary-foreground font-sora font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all">
               Implementar IA en mi negocio <ArrowRight className="w-4 h-4" />
             </a>
           </motion.div>
@@ -288,7 +254,7 @@ const AISection = () => {
               viewport={{ once: true }} transition={{ delay: 0.15 + i * 0.1 }}
               className="bento-card text-center"
             >
-              <p className="font-sora text-primary font-bold text-lg">{s.n}</p>
+              <p className="font-sora text-white font-bold text-lg">{s.n}</p>
               <p className="text-[10px] uppercase tracking-widest font-poppins mt-1" style={{ color: "#8a857c" }}>{s.l}</p>
             </motion.div>
           ))}

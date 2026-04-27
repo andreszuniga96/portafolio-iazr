@@ -55,7 +55,7 @@ const FloatingOrb = () => (
       width: 600, height: 600,
       top: "50%", left: "50%",
       transform: "translate(-50%, -50%)",
-      background: "radial-gradient(circle, rgba(255,107,43,0.10) 0%, rgba(255,107,43,0.03) 50%, transparent 70%)",
+      background: "radial-gradient(circle, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.03) 50%, transparent 70%)",
       filter: "blur(50px)",
     }}
   />
@@ -123,7 +123,7 @@ const GlobalPresenceSection = () => {
               style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}
             >
               <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,107,43,0.10), transparent 70%)" }}
+                style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.10), transparent 70%)" }}
               />
               <p className="text-3xl md:text-4xl font-sora font-bold mb-1 relative z-10"
                 style={{ color: "var(--primary-color)" }}>
@@ -156,7 +156,7 @@ const GlobalPresenceSection = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.06 }}
-                whileHover={{ scale: 1.06, borderColor: "rgba(255,107,43,0.4)" }}
+                whileHover={{ scale: 1.06, borderColor: "rgba(255,255,255,0.4)" }}
                 className="px-5 py-2.5 rounded-full text-sm font-poppins cursor-default transition-all duration-300"
                 style={{
                   background: "rgba(255,255,255,0.03)",
@@ -178,14 +178,14 @@ const GlobalPresenceSection = () => {
           transition={{ duration: 0.7 }}
           className="relative rounded-[2.5rem] overflow-hidden p-10 md:p-16 text-center"
           style={{
-            background: "linear-gradient(135deg, rgba(255,107,43,0.08) 0%, rgba(255,107,43,0.03) 50%, rgba(255,255,255,0.02) 100%)",
-            border: "1px solid rgba(255,107,43,0.2)",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.02) 100%)",
+            border: "1px solid rgba(255,255,255,0.2)",
           }}
         >
           <div className="absolute top-0 right-0 w-80 h-80 pointer-events-none"
-            style={{ background: "radial-gradient(circle at 80% 20%, rgba(255,107,43,0.15), transparent 70%)" }} />
+            style={{ background: "radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15), transparent 70%)" }} />
           <div className="absolute bottom-0 left-0 w-80 h-80 pointer-events-none"
-            style={{ background: "radial-gradient(circle at 20% 80%, rgba(255,107,43,0.08), transparent 70%)" }} />
+            style={{ background: "radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08), transparent 70%)" }} />
 
           <span className="text-xs font-poppins uppercase tracking-[0.3em] font-bold block mb-4"
             style={{ color: "var(--primary-color)" }}>
@@ -201,7 +201,7 @@ const GlobalPresenceSection = () => {
             <a href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20quiero%20hablar%20sobre%20un%20proyecto"
               target="_blank" rel="noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95 shadow-xl text-black"
-              style={{ background: "var(--primary-color)", boxShadow: "0 0 40px rgba(255,107,43,0.4)" }}>
+              style={{ background: "var(--primary-color)", boxShadow: "0 0 40px rgba(255,255,255,0.4)" }}>
               Iniciar conversación
             </a>
             <a href="#servicios"

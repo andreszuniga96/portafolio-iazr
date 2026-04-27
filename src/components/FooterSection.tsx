@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useRef } from "react";
 import { Youtube, Linkedin, Github, Instagram, Mail, ArrowUpRight, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
+import LogoLoop from "@/components/LogoLoop";
 
 const marqueeText = "INGENIERÍA · INTELIGENCIA ARTIFICIAL · INNOVACIÓN · FULL-STACK · IA · COLOMBIA · ";
 
@@ -28,36 +28,42 @@ const footerLinks = {
   ],
 };
 
-const FooterSection = () => {
-  const marqueeRef = useRef<HTMLDivElement>(null);
+const techLogos = [
+  { src: '', alt: 'React' }, { src: '', alt: 'Next.js' }, { src: '', alt: 'Python' },
+  { src: '', alt: 'Node.js' }, { src: '', alt: 'TailwindCSS' }, { src: '', alt: 'Three.js' },
+  { src: '', alt: 'AWS' }, { src: '', alt: 'PostgreSQL' }, { src: '', alt: 'LangChain' },
+  { src: '', alt: 'n8n' }, { src: '', alt: 'Supabase' }, { src: '', alt: 'Vercel' },
+];
 
-  useEffect(() => {
-    if (!marqueeRef.current) return;
-    gsap.to(marqueeRef.current, {
-      xPercent: -50,
-      duration: 35,
-      ease: "none",
-      repeat: -1,
-    });
-  }, []);
+const techLogoNodes = techLogos.map(t => ({
+  node: (
+    <span className="text-sm font-outfit font-semibold px-2" style={{ color: 'rgba(240,237,232,0.35)' }}>
+      {t.alt}
+    </span>
+  )
+}));
+
+const FooterSection = () => {
 
   return (
     <section id="contact"
       className="relative pt-20 md:pt-28 pb-8 md:pb-10 overflow-hidden border-t"
-      style={{ backgroundColor: "#0c0c0e", borderColor: "rgba(42,39,36,0.6)" }}
+      style={{ backgroundColor: "#09090B", borderColor: "rgba(43,48,64,0.75)" }}
     >
       {/* Ambient glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: "rgba(255,107,43,0.04)" }} />
+        style={{ background: "rgba(255,255,255,0.04)" }} />
 
-      {/* Marquee */}
-      <div className="overflow-hidden mb-16 md:mb-24 select-none pointer-events-none">
-        <div ref={marqueeRef} className="whitespace-nowrap flex">
-          <span className="text-[4rem] md:text-[7rem] lg:text-[9rem] leading-none font-display"
-            style={{ color: "rgba(240,237,232,0.04)" }}>
-            {marqueeText.repeat(6)}
-          </span>
-        </div>
+      {/* LogoLoop tech strip */}
+      <div className="mb-16 md:mb-24 py-4 border-y" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+        <LogoLoop
+          logos={techLogoNodes}
+          speed={60}
+          direction="left"
+          pauseOnHover
+          logoHeight={20}
+          gap={24}
+        />
       </div>
 
       {/* Main Footer Grid */}
@@ -69,8 +75,8 @@ const FooterSection = () => {
             {/* Logo */}
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-full border flex items-center justify-center"
-                style={{ borderColor: "rgba(255,107,43,0.4)", background: "rgba(255,107,43,0.08)" }}>
-                <span className="font-display italic text-primary text-lg">I</span>
+                style={{ borderColor: "rgba(124,102,255,0.5)", background: "rgba(91,61,245,0.15)" }}>
+                <span className="font-display italic text-white text-lg">I</span>
               </div>
               <div>
                 <p className="font-poppins font-bold tracking-widest uppercase text-sm" style={{ color: "#f0ede8" }}>IAZR</p>
@@ -105,7 +111,7 @@ const FooterSection = () => {
           {/* Col 2: Servicios */}
           <div>
             <p className="text-[10px] font-poppins uppercase tracking-[0.28em] font-bold mb-5"
-              style={{ color: "#FF6B2B" }}>Servicios</p>
+              style={{ color: "#FFFFFF" }}>Servicios</p>
             <ul className="space-y-3">
               {footerLinks.servicios.map(l => (
                 <li key={l.label}>
@@ -114,7 +120,7 @@ const FooterSection = () => {
                     style={{ color: "rgba(240,237,232,0.45)" }}
                     onMouseEnter={e => (e.currentTarget.style.color = "#f0ede8")}
                     onMouseLeave={e => (e.currentTarget.style.color = "rgba(240,237,232,0.45)")}>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-primary">›</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white">›</span>
                     {l.label}
                   </a>
                 </li>
@@ -125,7 +131,7 @@ const FooterSection = () => {
           {/* Col 3: Recursos */}
           <div>
             <p className="text-[10px] font-poppins uppercase tracking-[0.28em] font-bold mb-5"
-              style={{ color: "#FF6B2B" }}>Recursos</p>
+              style={{ color: "#FFFFFF" }}>Recursos</p>
             <ul className="space-y-3">
               {footerLinks.recursos.map(l => (
                 <li key={l.label}>
@@ -136,7 +142,7 @@ const FooterSection = () => {
                     style={{ color: "rgba(240,237,232,0.45)" }}
                     onMouseEnter={e => (e.currentTarget.style.color = "#f0ede8")}
                     onMouseLeave={e => (e.currentTarget.style.color = "rgba(240,237,232,0.45)")}>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-primary">›</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white">›</span>
                     {l.label}
                     {l.external && <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />}
                   </a>
@@ -148,7 +154,7 @@ const FooterSection = () => {
           {/* Col 4: Contacto */}
           <div>
             <p className="text-[10px] font-poppins uppercase tracking-[0.28em] font-bold mb-5"
-              style={{ color: "#FF6B2B" }}>Contacto</p>
+              style={{ color: "#FFFFFF" }}>Contacto</p>
             <ul className="space-y-3">
               {footerLinks.contacto.map(l => (
                 <li key={l.label}>
@@ -159,7 +165,7 @@ const FooterSection = () => {
                     style={{ color: "rgba(240,237,232,0.45)" }}
                     onMouseEnter={e => (e.currentTarget.style.color = "#f0ede8")}
                     onMouseLeave={e => (e.currentTarget.style.color = "rgba(240,237,232,0.45)")}>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-primary">›</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white">›</span>
                     {l.label}
                     {l.external && <ArrowUpRight className="w-3 h-3 opacity-40 group-hover:opacity-100 transition-opacity" />}
                   </a>
@@ -173,7 +179,7 @@ const FooterSection = () => {
               target="_blank" rel="noreferrer"
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="mt-6 w-full py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-poppins font-semibold uppercase tracking-wider transition-all"
-              style={{ background: "rgba(255,107,43,0.1)", border: "1px solid rgba(255,107,43,0.25)", color: "#FF6B2B" }}
+              style={{ background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.25)", color: "#FFFFFF" }}
             >
               <MessageSquare className="w-3.5 h-3.5" />
               Hablemos ahora ↗
@@ -186,7 +192,7 @@ const FooterSection = () => {
           style={{ borderColor: "rgba(42,39,36,0.8)" }}>
           <div className="flex items-center gap-3">
             {/* Gradient separator line */}
-            <div className="h-px w-16 rounded-full" style={{ background: "linear-gradient(90deg, #FF6B2B, transparent)" }} />
+            <div className="h-px w-16 rounded-full" style={{ background: "linear-gradient(90deg, #FFFFFF, transparent)" }} />
             <p className="text-[11px] font-poppins" style={{ color: "#8a857c" }}>
               © {new Date().getFullYear()} Ivan Zuñiga · IAZR · Hecho en Colombia 🇨🇴 · React + GSAP + Three.js
             </p>
@@ -211,7 +217,7 @@ const FooterSection = () => {
           aria-hidden="true"
           style={{
             fontSize: "clamp(5rem, 22vw, 18rem)",
-            WebkitTextStroke: "1.5px rgba(255,107,43,0.18)",
+            WebkitTextStroke: "1.5px rgba(255,255,255,0.18)",
             color: "transparent",
             fontFamily: "var(--font-modern)",
             fontWeight: 900,

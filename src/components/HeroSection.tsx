@@ -115,7 +115,7 @@ const HeroSection = () => {
 
       {/* Hero Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6 mt-10">
-        <span className="blur-in text-xs font-outfit text-primary font-bold uppercase tracking-[0.4em] mb-6">
+        <span className="blur-in text-xs font-outfit text-white font-bold uppercase tracking-[0.4em] mb-6">
           PORTAFOLIO DE SERVICIOS
         </span>
 
@@ -143,7 +143,7 @@ const HeroSection = () => {
             href="https://wa.me/573229132643"
             target="_blank"
             rel="noreferrer"
-            className="group relative rounded-full text-sm font-outfit font-semibold px-8 py-4 bg-primary text-background hover:scale-105 transition-all shadow-[0_0_20px_rgba(77,164,255,0.4)] hover:shadow-[0_0_30px_rgba(77,164,255,0.6)]"
+            className="group relative rounded-full text-sm font-outfit font-semibold px-8 py-4 bg-white text-background hover:scale-105 transition-all shadow-[0_0_20px_rgba(77,164,255,0.4)] hover:shadow-[0_0_30px_rgba(77,164,255,0.6)]"
           >
             Iniciar Proyecto en WhatsApp
           </a>

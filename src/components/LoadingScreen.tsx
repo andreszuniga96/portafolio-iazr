@@ -44,7 +44,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
     <motion.div
       exit={{ opacity: 0, filter: "blur(8px)" }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="fixed inset-0 z-[9999] bg-[#0c0d10] flex flex-col justify-between overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[#09090B] flex flex-col justify-between overflow-hidden"
       aria-label="Cargando portafolio"
       role="status"
     >
@@ -54,7 +54,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         <div
           className="absolute w-[600px] h-[600px] rounded-full opacity-20"
           style={{
-            background: "radial-gradient(circle, rgba(255,107,43,0.35) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%)",
             top: "50%",
             left: "50%",
             transform: "translate(-50%,-50%)",
@@ -64,7 +64,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         <div
           className="absolute w-[300px] h-[300px] rounded-full opacity-10"
           style={{
-            background: "radial-gradient(circle, rgba(245,158,11,0.4) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(91,61,245,0.35) 0%, transparent 70%)",
             top: "20%",
             left: "15%",
             animation: "loading-pulse 4s ease-in-out infinite reverse",
@@ -73,7 +73,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         <div
           className="absolute w-[200px] h-[200px] rounded-full opacity-10"
           style={{
-            background: "radial-gradient(circle, rgba(255,107,43,0.3) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)",
             bottom: "25%",
             right: "10%",
             animation: "loading-pulse 3.5s ease-in-out 1s infinite",
@@ -97,7 +97,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
             style={{
               width: "1px",
               height: `${60 + i * 20}px`,
-              background: "linear-gradient(to bottom, transparent, rgba(255,107,43,0.35), transparent)",
+              background: "linear-gradient(to bottom, transparent, rgba(255,255,255,0.35), transparent)",
               left: `${12 + i * 16}%`,
               top: `${10 + (i % 3) * 30}%`,
               animation: `loading-stream ${2.5 + i * 0.4}s ease-in-out ${i * 0.3}s infinite`,
@@ -114,7 +114,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         transition={{ duration: 0.5 }}
         className="p-6 md:p-8 z-20 relative"
       >
-        <span className="text-xs text-primary uppercase font-outfit tracking-[0.3em]">
+        <span className="text-xs text-white uppercase font-outfit tracking-[0.3em]">
           Portfolio 2026
         </span>
       </motion.div>
@@ -149,11 +149,11 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       {/* ── Progress bar ── */}
       <div className="h-[3px] bg-white/5 w-full z-20 relative">
         <div
-          className="h-full bg-gradient-to-r from-primary via-amber-400 to-primary"
+          className="h-full bg-gradient-to-r from-primary via-[#7C66FF] to-[#2232A8]"
           style={{
             transform: `scaleX(${count / 100})`,
             transformOrigin: "left",
-            boxShadow: "0 0 12px rgba(255,107,43,0.6)",
+            boxShadow: "0 0 12px rgba(255,255,255,0.6)",
             transition: "transform 0.05s linear",
           }}
         />

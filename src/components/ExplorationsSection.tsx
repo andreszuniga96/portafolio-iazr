@@ -60,7 +60,7 @@ const ExplorationsSection = () => {
 
       {/* Ambient glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,107,43,0.04), transparent)" }} />
+        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,255,255,0.04), transparent)" }} />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
 
@@ -73,7 +73,7 @@ const ExplorationsSection = () => {
           className="text-center mb-14"
         >
           <span className="text-xs font-poppins uppercase tracking-[0.3em] font-bold block mb-4"
-            style={{ color: "#FF6B2B" }}>
+            style={{ color: "#FFFFFF" }}>
             Ecosistema Técnico
           </span>
           <h2 className="text-4xl md:text-6xl font-sora leading-none" style={{ color: "#f0ede8" }}>
@@ -142,10 +142,10 @@ const ExplorationsSection = () => {
                     background: "rgba(255,255,255,0.025)",
                     border: "1px solid rgba(255,255,255,0.07)",
                   }}
-                  onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,107,43,0.3)")}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)")}
                   onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")}
                 >
-                  <div className="text-primary shrink-0">{cert.icon}</div>
+                  <div className="text-white shrink-0">{cert.icon}</div>
                   <span className="text-xs font-poppins font-medium" style={{ color: "rgba(240,237,232,0.7)" }}>
                     {cert.name}
                   </span>

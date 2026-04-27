@@ -91,7 +91,7 @@ interface SectionLabelProps {
   className?: string;
 }
 
-export const SectionLabel = ({ text, color = "#FF6B2B", delay = 0, className = "" }: SectionLabelProps) => {
+export const SectionLabel = ({ text, color = "#FFFFFF", delay = 0, className = "" }: SectionLabelProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
@@ -132,7 +132,7 @@ interface SpotlightCardProps {
   style?: React.CSSProperties;
 }
 
-export const SpotlightCard = ({ children, className = "", spotColor = "rgba(255,107,43,0.12)", style }: SpotlightCardProps) => {
+export const SpotlightCard = ({ children, className = "", spotColor = "rgba(255,255,255,0.12)", style }: SpotlightCardProps) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const spotX = useSpring(mouseX, { stiffness: 300, damping: 40 });
@@ -162,7 +162,7 @@ export const SpotlightCard = ({ children, className = "", spotColor = "rgba(255,
 };
 
 // ── Animated gradient border ──────────────────────────────────────────────────
-export const GradientBorder = ({ children, className = "", color = "#FF6B2B" }: {
+export const GradientBorder = ({ children, className = "", color = "#FFFFFF" }: {
   children: React.ReactNode;
   className?: string;
   color?: string;

@@ -5,10 +5,9 @@ import { Menu, X, Instagram, Linkedin, Github } from "lucide-react";
 const navLinks = [
   { name: "Servicios",   href: "#servicios",   id: "servicios" },
   { name: "Proyectos",   href: "#proyectos",   id: "proyectos" },
-  { name: "Precios",     href: "#pricing",     id: "pricing" },
-  { name: "Proceso",     href: "#proceso",     id: "proceso" },
-  { name: "Sobre mi",   href: "#about",       id: "about" },
-  { name: "Experiencia", href: "#experiencia", id: "experiencia" },
+  { name: "Oferta",      href: "#pricing",     id: "pricing" },
+  { name: "Credibilidad", href: "#about",      id: "about" },
+  { name: "FAQ",         href: "#faq",         id: "faq" },
   { name: "Contacto",    href: "#contact",     id: "contact" },
 ];
 
@@ -92,8 +91,9 @@ const Navbar = () => {
       >
         {/* Logo */}
         <a href="/" className="flex items-center px-3 sm:px-4 group flex-shrink-0">
-          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-primary/50 flex items-center justify-center bg-black group-hover:border-primary group-hover:shadow-[0_0_12px_rgba(255,107,43,0.4)] transition-all duration-300 flex-shrink-0">
-            <span className="font-display italic text-xs sm:text-sm text-primary">I</span>
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center bg-background group-hover:shadow-[0_0_12px_rgba(124,102,255,0.4)] transition-all duration-300 flex-shrink-0"
+            style={{ borderColor: "rgba(124,102,255,0.45)" }}>
+            <span className="font-display italic text-xs sm:text-sm text-white">I</span>
           </div>
           <div className="ml-2 sm:ml-3 overflow-hidden hidden xs:block">
             <span className="font-outfit font-semibold text-white tracking-widest uppercase text-xs sm:text-sm block leading-tight">
@@ -110,7 +110,7 @@ const Navbar = () => {
           {/* Active Pill Indicator */}
           {activeSection && (
             <motion.div
-              className="absolute top-1/2 -translate-y-1/2 h-8 rounded-full bg-primary/15 border border-primary/30"
+              className="absolute top-1/2 -translate-y-1/2 h-8 rounded-full bg-white/15 border border-white/20/30"
               animate={indicatorStyle}
               transition={{ type: "spring", stiffness: 400, damping: 35 }}
               style={{ zIndex: 0 }}
@@ -123,7 +123,7 @@ const Navbar = () => {
               href={link.href}
               onClick={(e) => handleNavClick(e, link.id)}
               className={`relative z-10 text-xs font-outfit px-4 py-2 rounded-full transition-colors duration-200 uppercase tracking-wider ${
-                activeSection === link.id ? "text-primary font-semibold" : "text-white/50 hover:text-white"
+                activeSection === link.id ? "text-white font-semibold" : "text-white/50 hover:text-white"
               }`}
             >
               {link.name}
@@ -140,7 +140,7 @@ const Navbar = () => {
             href="https://wa.me/573229132643?text=Hola%20Ivan%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
             target="_blank"
             rel="noreferrer"
-            className="btn-glow flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-black font-outfit font-semibold text-xs tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all"
+            className="btn-glow flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-outfit font-semibold text-xs tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all"
           >
             Hablemos <span className="text-[10px]">↗</span>
           </a>
@@ -180,7 +180,7 @@ const Navbar = () => {
                 transition={{ delay: i * 0.04 }}
                 className={`text-sm font-outfit min-h-[48px] flex items-center justify-center px-4 py-3 rounded-xl transition-colors uppercase tracking-wider text-center ${
                   activeSection === link.id
-                    ? "text-primary bg-primary/10 font-semibold"
+                    ? "text-white bg-white/10 font-semibold"
                     : "text-white/70 hover:text-white hover:bg-white/8"
                 }`}
                 onClick={(e) => handleNavClick(e, link.id)}
@@ -193,17 +193,17 @@ const Navbar = () => {
             <div className="flex items-center justify-center gap-4 py-3 mt-1 border-t border-white/8">
               <a href="https://www.linkedin.com/in/iazr96/" target="_blank" rel="noreferrer"
                 aria-label="LinkedIn de Ivan Zuñiga"
-                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
                 <Linkedin size={18} />
               </a>
               <a href="https://www.instagram.com/iazr96/" target="_blank" rel="noreferrer"
                 aria-label="Instagram de Ivan Zuñiga"
-                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
                 <Instagram size={18} />
               </a>
               <a href="https://github.com/andreszuniga96" target="_blank" rel="noreferrer"
                 aria-label="GitHub de Ivan Zuñiga"
-                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-primary hover:bg-primary/10 transition-all">
+                className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
                 <Github size={18} />
               </a>
             </div>
@@ -215,7 +215,7 @@ const Navbar = () => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navLinks.length * 0.04 + 0.05 }}
-              className="mt-2 px-6 py-4 rounded-2xl bg-primary text-black font-outfit font-semibold text-center text-sm tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all min-h-[52px] flex items-center justify-center"
+              className="mt-2 px-6 py-4 rounded-2xl bg-primary text-primary-foreground font-outfit font-semibold text-center text-sm tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all min-h-[52px] flex items-center justify-center"
               onClick={() => setMobileMenuOpen(false)}
             >
               Hablemos ↗

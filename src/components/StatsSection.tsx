@@ -41,7 +41,7 @@ const NeuralCanvas = () => {
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
           if (dist < 120) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(255,107,43,${0.12 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(255,255,255,${0.12 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.8;
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
@@ -50,7 +50,7 @@ const NeuralCanvas = () => {
         });
         ctx.beginPath();
         ctx.arc(a.x, a.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,107,43,0.35)";
+        ctx.fillStyle = "rgba(255,255,255,0.35)";
         ctx.fill();
       });
       raf = requestAnimationFrame(draw);
@@ -71,7 +71,7 @@ const StatsSection = () => {
       <NeuralCanvas />
       {/* Radial glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,107,43,0.04), transparent)" }} />
+        style={{ background: "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,0.04), transparent)" }} />
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Section label */}
@@ -80,7 +80,7 @@ const StatsSection = () => {
           className="text-center mb-16"
         >
           <span className="text-xs font-poppins uppercase tracking-[0.3em] font-bold block mb-3"
-            style={{ color: "#FF6B2B" }}>
+            style={{ color: "#FFFFFF" }}>
             Métricas de Impacto
           </span>
           <h2 className="text-3xl md:text-5xl font-display" style={{ color: "#f0ede8" }}>
@@ -101,7 +101,7 @@ const StatsSection = () => {
             >
               {/* Glow blob */}
               <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl"
-                style={{ background: "rgba(255,107,43,0.08)" }} />
+                style={{ background: "rgba(255,255,255,0.08)" }} />
 
               <div className="relative z-10">
                 <div className="text-4xl md:text-[3.5rem] font-display italic mb-2 leading-none"
@@ -120,7 +120,7 @@ const StatsSection = () => {
                       }}
                     />
                   ) : "0"}
-                  <span style={{ color: "#FF6B2B" }}>{s.suffix}</span>
+                  <span style={{ color: "#FFFFFF" }}>{s.suffix}</span>
                 </div>
                 <p className="text-xs font-poppins uppercase tracking-widest" style={{ color: "#8a857c" }}>
                   {s.label}
@@ -129,7 +129,7 @@ const StatsSection = () => {
 
               {/* Bottom accent line */}
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px rounded-full opacity-0 group-hover:w-12 group-hover:opacity-100 transition-all duration-500"
-                style={{ background: "#FF6B2B" }} />
+                style={{ background: "#FFFFFF" }} />
             </motion.div>
           ))}
         </div>

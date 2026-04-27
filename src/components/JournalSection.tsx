@@ -13,7 +13,7 @@ const experiences = [
     org: "Zolaris",
     desc: "Plataforma IoT Solar — IA & Blockchain",
     date: "Ene 2026 – Presente",
-    color: "#FF6B2B",
+    color: "#FFFFFF",
     icon: <MonitorPlay className="w-5 h-5" />,
     details: "Supervisión de arquitectura cloud (AWS/GCP), gemelos digitales y despliegue de modelos de IA predictivos para el sector solar en Colombia. Orquestación de equipos técnicos multidisciplinarios y definición de roadmap de producto.",
     tags: ["React", "Node.js", "Python", "AWS", "IA Generativa"]
@@ -253,7 +253,7 @@ const JournalSection = () => {
       className="py-24 md:py-32 bg-[#050810] relative overflow-hidden border-t border-white/5"
     >
       {/* Ambient blobs */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
@@ -274,11 +274,11 @@ const JournalSection = () => {
             className="flex items-center justify-center mb-6"
           >
             <div className="relative w-10 h-10">
-              <div className="absolute inset-0 rounded-full border border-primary/30" />
-              <div className="absolute inset-[4px] rounded-full border border-primary/20" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_rgba(255,107,43,0.8)]" />
-              <div className="absolute top-1/2 left-0 right-0 h-px bg-primary/20" />
-              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-primary/20" />
+              <div className="absolute inset-0 rounded-full border border-white/20/30" />
+              <div className="absolute inset-[4px] rounded-full border border-white/20/20" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+              <div className="absolute top-1/2 left-0 right-0 h-px bg-white/20" />
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/20" />
             </div>
           </motion.div>
 
@@ -287,7 +287,7 @@ const JournalSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-sm font-outfit text-primary font-bold uppercase tracking-[0.3em] block mb-4"
+            className="text-sm font-outfit text-white font-bold uppercase tracking-[0.3em] block mb-4"
           >
             Trayectoria Profesional
           </motion.span>
@@ -300,7 +300,7 @@ const JournalSection = () => {
             className="text-5xl sm:text-6xl md:text-7xl font-outfit font-bold text-white leading-[0.95] tracking-tight"
           >
             Experiencia{" "}
-            <span className="text-primary">2023&nbsp;–&nbsp;2026</span>
+            <span className="text-white">2023&nbsp;–&nbsp;2026</span>
           </motion.h2>
 
           <motion.p

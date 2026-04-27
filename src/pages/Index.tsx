@@ -1,7 +1,6 @@
 import { useState, Suspense, lazy } from "react";
 import Navbar from "@/components/Navbar";
 import LoadingScreen from "@/components/LoadingScreen";
-import HeroImmersive from "@/components/HeroImmersive";
 import CursorFollower from "@/components/CursorFollower";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { useImmersiveScroll } from "@/hooks/useImmersiveScroll";
@@ -12,6 +11,7 @@ import { useAppearOnScroll } from "@/hooks/useAppearOnScroll";
 // REMOVED: AIStackSection (merged into SkillsSection)
 // REMOVED: ExplorationsSection (merged into SkillsSection)
 // REMOVED: GlobeSection (stats + clients merged into AboutSection)
+const HeroImmersive      = lazy(() => import("@/components/HeroImmersive"));
 const AISection          = lazy(() => import("@/components/AISection"));
 const ServicesSection    = lazy(() => import("@/components/ServicesSection"));
 const WorksSection       = lazy(() => import("@/components/WorksSection"));
@@ -19,7 +19,6 @@ const PricingCalculator  = lazy(() => import("@/components/PricingCalculator"));
 const HowItWorksSection  = lazy(() => import("@/components/HowItWorksSection"));
 const AITerminalSection  = lazy(() => import("@/components/AITerminalSection"));
 const AboutSection       = lazy(() => import("@/components/AboutSection"));
-const SkillsSection      = lazy(() => import("@/components/SkillsSection"));
 const JournalSection     = lazy(() => import("@/components/JournalSection"));
 const TestimonialsSection= lazy(() => import("@/components/TestimonialsSection"));
 const FAQSection         = lazy(() => import("@/components/FAQSection"));
@@ -29,7 +28,7 @@ const ChatbotWidget      = lazy(() => import("@/components/ChatbotWidget"));
 
 const SectionSkeleton = () => (
   <div className="w-full py-24 flex items-center justify-center" aria-hidden="true">
-    <div className="w-8 h-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+    <div className="w-8 h-8 rounded-full border-2 border-white/20/30 border-t-primary animate-spin" />
   </div>
 );
 
@@ -48,7 +47,9 @@ const Index = () => {
       <div className={isLoading ? "h-screen overflow-hidden" : ""}>
 
         {/* ① Hero — Hook & primera impresión WOW */}
-        <HeroImmersive />
+        <Suspense fallback={<div className="h-screen w-full bg-[#0c0c0e]" />}>
+          <HeroImmersive />
+        </Suspense>
 
         <Suspense fallback={<SectionSkeleton />}>
 
@@ -56,40 +57,35 @@ const Index = () => {
           <AISection />
 
           {/* ③ Services — Qué ofrezco exactamente · Conversión directa */}
-          <div id="servicios"><ServicesSection /></div>
+          <ServicesSection />
 
           {/* ④ Works — Proyectos reales · Prueba tangible */}
-          <div id="proyectos"><WorksSection /></div>
+          <WorksSection />
 
-          {/* ⑤ Pricing — Transparencia total · Calculadora de inversión */}
-          <div id="pricing"><PricingCalculator /></div>
+          {/* ⑤ Proceso + Oferta — primero claridad, luego inversión */}
+          <HowItWorksSection />
 
-          {/* ⑥ How It Works — Proceso sin fricción · 4 pasos */}
-          <div id="proceso"><HowItWorksSection /></div>
+          {/* ⑥ Pricing — transparencia total · calculadora de inversión */}
+          <PricingCalculator />
 
           {/* ⑦ AI Terminal — Demo viva · Diferenciador técnico memorable */}
           <AITerminalSection />
 
-          {/* ⑧ About — Hub de credibilidad: bio + stats + clientes */}
-          <div id="about"><AboutSection /></div>
+          {/* ⑧ Credibilidad — bio + stats + clientes */}
+          <AboutSection />
 
-          {/* ⑨ Skills — Ecosistema técnico: FlipFlow + tools + certs */}
-          <SkillsSection />
-
-          {/* ⑩ Journal — Trayectoria profesional 2023-2026 */}
-          <div id="experiencia"><JournalSection /></div>
-
-          {/* ⑪ Testimonials — Prueba social · Kinetic vertical marquee */}
+          {/* ⑨ Experiencia + prueba social */}
+          <JournalSection />
           <TestimonialsSection />
 
-          {/* ⑫ FAQ — Resuelve dudas antes del CTA */}
-          <div id="faq"><FAQSection /></div>
+          {/* ⑩ FAQ — Resuelve dudas antes del CTA */}
+          <FAQSection />
 
-          {/* ⑬ CTA — Acción final sin dudas pendientes */}
+          {/* ⑪ CTA — Acción final sin dudas pendientes */}
           <CTASection />
 
-          {/* ⑭ Footer — Cierre premium IAZR */}
-          <div id="contact"><FooterSection /></div>
+          {/* ⑫ Footer — Cierre premium IAZR */}
+          <FooterSection />
 
           {/* Floating: Nova AI */}
           <ChatbotWidget />

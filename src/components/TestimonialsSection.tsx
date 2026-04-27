@@ -49,7 +49,7 @@ const TestimonialsSection = () => {
       {/* Header */}
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 relative z-20 mb-12">
         <div className="text-center">
-          <span className="text-sm font-outfit text-primary font-bold uppercase tracking-[0.2em] block mb-4">
+          <span className="text-sm font-outfit text-white font-bold uppercase tracking-[0.2em] block mb-4">
             Testimonios
           </span>
           <h2 className="text-4xl md:text-5xl text-foreground font-display">
@@ -96,7 +96,7 @@ const TestimonialsSection = () => {
 
       {/* Bottom quote accent */}
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16 relative z-20 mt-10 text-center">
-        <Quote className="w-6 h-6 text-primary/30 mx-auto" />
+        <Quote className="w-6 h-6 text-white/30 mx-auto" />
       </div>
     </section>
   );

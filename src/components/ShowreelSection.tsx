@@ -111,7 +111,7 @@ const ShowreelSection = () => {
         {/* Top UI */}
         <div className="flex justify-between items-start pt-4 md:pt-12">
           <div className="pointer-events-auto">
-            <span className="text-xs font-outfit text-primary font-bold uppercase tracking-[0.2em] bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
+            <span className="text-xs font-outfit text-white font-bold uppercase tracking-[0.2em] bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">
               Showreel 2026
             </span>
           </div>
@@ -151,7 +151,7 @@ const ShowreelSection = () => {
           <div className="flex items-center gap-4 w-full md:w-auto bg-black/40 backdrop-blur-md p-2 rounded-full border border-white/10">
              <button
                onClick={() => setIsPlaying(!isPlaying)}
-               className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-background hover:scale-105 transition-transform"
+               className="w-12 h-12 rounded-full bg-white flex items-center justify-center text-background hover:scale-105 transition-transform"
              >
                {isPlaying ? <Pause className="w-5 h-5" fill="currentColor" /> : <Play className="w-5 h-5 ml-1" fill="currentColor" />}
              </button>
@@ -163,7 +163,7 @@ const ShowreelSection = () => {
                     onClick={() => setActiveVideo(i)}
                     className="relative py-2 group cursor-pointer"
                   >
-                    <div className={`h-1 rounded-full transition-all duration-300 ${activeVideo === i ? "w-8 bg-primary" : "w-2 bg-white/30 group-hover:bg-white/60"}`} />
+                    <div className={`h-1 rounded-full transition-all duration-300 ${activeVideo === i ? "w-8 bg-white" : "w-2 bg-white/30 group-hover:bg-white/60"}`} />
                   </button>
                 ))}
              </div>

@@ -24,7 +24,7 @@ const groups = [
   },
   {
     label: "Frameworks & Orquestación",
-    color: "#FF6B2B",
+    color: "#FFFFFF",
     tools: [
       { name: "LangChain", logo: "⬡", color: "#1C7C54", mastery: 96, desc: "Chains, agents y memory management" },
       { name: "n8n", logo: "⟂", color: "#EA4B71", mastery: 94, desc: "Flujos low-code + webhooks" },
@@ -77,7 +77,7 @@ const SkillsSection = () => {
     >
       {/* Ambient */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 50% 40% at 50% 0%, rgba(255,107,43,0.05), transparent)" }} />
+        style={{ background: "radial-gradient(ellipse 50% 40% at 50% 0%, rgba(255,255,255,0.05), transparent)" }} />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 relative z-10">
 

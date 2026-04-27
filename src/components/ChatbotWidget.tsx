@@ -3,21 +3,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import { jsPDF } from "jspdf";
 import {
   X, Send, User, ChevronRight, Mic, MicOff,
-  Download, Volume2, VolumeX, Globe, Sparkles,
+  Download, Volume2, VolumeX, Sparkles,
   Zap, ArrowUpRight, CheckCircle2, Clock, DollarSign,
   Briefcase, Code2, Brain, Shield, BarChart3, BookOpen,
 } from "lucide-react";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
-const PRIMARY   = "#FF6B2B";
-const P_DIM     = "rgba(255,107,43,0.12)";
-const P_GLOW    = "rgba(255,107,43,0.28)";
+const PRIMARY   = "#FFFFFF";
+const P_DIM     = "rgba(255,255,255,0.12)";
+const P_GLOW    = "rgba(124,102,255,0.38)";
 const AMBER     = "#F59E0B";
 const BG_CARD   = "rgba(255,255,255,0.032)";
 const BG_BORDER = "rgba(255,255,255,0.07)";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
-type Lang = "es" | "en";
+type Lang = "es";
 
 type Stage =
   | "greeting"
@@ -27,6 +27,7 @@ type Stage =
   | "budget"
   | "timeline"
   | "proposal"
+  | "lead_capture"
   | "close"
   | "open";
 
@@ -40,6 +41,10 @@ interface ConvState {
   sentiment: number;
   lang: Lang;
   msgCount: number;
+  leadName: string | null;
+  leadCompany: string | null;
+  leadContact: string | null;
+  leadStep: 0 | 1 | 2;
 }
 
 interface Message {
@@ -171,8 +176,7 @@ const TIMELINES: Record<string, { phase: string; weeks: string; color: string }[
 };
 
 // ─── Util helpers ─────────────────────────────────────────────────────────────
-const detectLang = (t: string): Lang =>
-  /\b(hello|hi|what|how|need|want|can|please|project|website|app|price|cost|i\s)/i.test(t) ? "en" : "es";
+const detectLang = (): Lang => "es";
 
 const detectService = (t: string): string | null => {
   const s = t.toLowerCase();
@@ -195,10 +199,23 @@ const calcSentiment = (t: string, cur: number): number => {
   return Math.min(100, Math.max(0, cur + d));
 };
 
+const getSmartRecommendation = (state: ConvState): string => {
+  if (state.service === "ia" && /pronto|asap|antes posible|urg/.test((state.timeline || "").toLowerCase())) {
+    return "Recomendación: iniciar con un MVP de automatización en 2 semanas y luego escalar por fases.";
+  }
+  if (state.service === "web" && /no lo se|no definido/.test((state.budget || "").toLowerCase())) {
+    return "Recomendación: empezar por landing de conversión y medición, luego expandir a plataforma completa.";
+  }
+  if (state.service === "auditoria") {
+    return "Recomendación: ejecutar auditoría base + plan de hardening antes de nuevas funcionalidades.";
+  }
+  return "Recomendación: priorizar una fase 1 de alto impacto comercial y una fase 2 de escalamiento técnico.";
+};
+
 // ─── PDF Generator ────────────────────────────────────────────────────────────
 const generatePDF = (state: ConvState) => {
   const kb = state.service ? KB[state.service] : null;
-  const isEn = state.lang === "en";
+  const isEn = false;
   const date = new Date().toLocaleDateString(isEn ? "en-US" : "es-CO", {
     year: "numeric", month: "long", day: "numeric",
   });
@@ -218,7 +235,7 @@ const generatePDF = (state: ConvState) => {
     y += size * 0.38 * lines.length + 2.5;
   };
   const sp = (h = 5) => { y += h; };
-  const rule = (rgb: [number,number,number] = [255,107,43]) => {
+  const rule = (rgb: [number,number,number] = [255,255,255]) => {
     doc.setDrawColor(...rgb);
     doc.setLineWidth(0.35);
     doc.line(margin, y, W - margin, y);
@@ -230,7 +247,7 @@ const generatePDF = (state: ConvState) => {
   doc.rect(0, 0, W, H, "F");
 
   // Header band
-  doc.setFillColor(255, 107, 43);
+  doc.setFillColor(255,255,255);
   doc.rect(0, 0, W, 24, "F");
   doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.setTextColor(0, 0, 0);
   doc.text("IAZR · Ivan Zuñiga — Propuesta Tecnica", margin, 15);
@@ -240,45 +257,45 @@ const generatePDF = (state: ConvState) => {
   y = 34;
 
   if (kb) {
-    line(isEn ? kb.nameEn : kb.name, 20, true, [255, 107, 43]);
+    line(isEn ? kb.nameEn : kb.name, 20, true, [255,255,255]);
     sp(2); rule();
-    line(isEn ? "Proposed solution" : "Solucion propuesta", 9, true, [255,107,43]);
+    line(isEn ? "Proposed solution" : "Solucion propuesta", 9, true, [255,255,255]);
     line(isEn ? kb.detailEn : kb.detail, 9, false, [180,175,168]);
     sp(4);
-    line(isEn ? "Tech Stack" : "Stack tecnologico", 9, true, [255,107,43]);
+    line(isEn ? "Tech Stack" : "Stack tecnologico", 9, true, [255,255,255]);
     kb.tech.forEach(t => line(`  •  ${t}`, 9, false, [180,175,168]));
     sp(4);
-    line(isEn ? "Estimated time" : "Tiempo estimado", 9, true, [255,107,43]);
+    line(isEn ? "Estimated time" : "Tiempo estimado", 9, true, [255,255,255]);
     line(isEn ? kb.durationEn : kb.duration, 9, false, [180,175,168]);
     sp(4);
-    line(isEn ? "Reference investment" : "Inversion de referencia", 9, true, [255,107,43]);
+    line(isEn ? "Reference investment" : "Inversion de referencia", 9, true, [255,255,255]);
     line(isEn ? kb.basePriceEn : kb.basePrice, 9, false, [180,175,168]);
     line(isEn ? "(Exact value confirmed in virtual meeting)" : "(Valor exacto confirmado en reunion virtual)", 7, false, [100,95,90]);
     sp(6); rule([60,55,50]);
   }
 
   if (state.scope) {
-    line(isEn ? "Project scope" : "Alcance del proyecto", 9, true, [255,107,43]);
+    line(isEn ? "Project scope" : "Alcance del proyecto", 9, true, [255,255,255]);
     line(state.scope, 9, false, [180,175,168]);
     sp(4);
   }
   if (state.budget) {
-    line(isEn ? "Budget range" : "Rango de inversion", 9, true, [255,107,43]);
+    line(isEn ? "Budget range" : "Rango de inversion", 9, true, [255,255,255]);
     line(state.budget, 9, false, [180,175,168]);
     sp(4);
   }
   if (state.timeline) {
-    line(isEn ? "Delivery timeline" : "Plazo de entrega", 9, true, [255,107,43]);
+    line(isEn ? "Delivery timeline" : "Plazo de entrega", 9, true, [255,255,255]);
     line(state.timeline, 9, false, [180,175,168]);
     sp(6);
   }
 
-  line(isEn ? "Roadmap" : "Roadmap del proyecto", 9, true, [255,107,43]);
+  line(isEn ? "Roadmap" : "Roadmap del proyecto", 9, true, [255,255,255]);
   const tl = TIMELINES[state.service || "web"] || TIMELINES.web;
   tl.forEach(t => line(`  ·  ${t.weeks}  —  ${t.phase}`, 9, false, [180,175,168]));
 
   sp(8); rule();
-  line(isEn ? "Next steps" : "Proximos pasos", 9, true, [255,107,43]);
+  line(isEn ? "Next steps" : "Proximos pasos", 9, true, [255,255,255]);
   [
     isEn ? "1. Schedule virtual meeting via WhatsApp" : "1. Agendar reunion virtual via WhatsApp",
     isEn ? "2. Define exact scope (30 min)" : "2. Definir alcance exacto (30 min)",
@@ -286,7 +303,7 @@ const generatePDF = (state: ConvState) => {
   ].forEach(s => line(s, 9, false, [180,175,168]));
 
   sp(8); rule();
-  line("Contacto", 9, true, [255,107,43]);
+  line("Contacto", 9, true, [255,255,255]);
   ["WhatsApp: +57 322 913 2643", "Email: ivan@iazr.dev", "LinkedIn: linkedin.com/in/iazr96", "Web: iazr.dev"].forEach(s =>
     line(s, 9, false, [180,175,168])
   );
@@ -301,7 +318,7 @@ const generatePDF = (state: ConvState) => {
 // ─── Nova Avatar — Small (in messages) ───────────────────────────────────────
 const NovaAvatarSmall = () => (
   <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-    style={{ background: "linear-gradient(135deg, #FF6B2B, #c94d14)", boxShadow: `0 0 12px ${P_GLOW}` }}>
+    style={{ background: "linear-gradient(135deg, #5B3DF5, #7C66FF)", boxShadow: `0 0 12px ${P_GLOW}` }}>
     <svg viewBox="0 0 20 20" width={14} height={14} fill="none">
       <circle cx="7" cy="9" r="2" fill="white" opacity={0.9} />
       <circle cx="13" cy="9" r="2" fill="white" opacity={0.9} />
@@ -316,14 +333,14 @@ const NovaAvatarLarge = () => (
     {/* Ping ring */}
     <div style={{
       position: "absolute", inset: -5, borderRadius: "50%",
-      border: "1.5px solid rgba(255,107,43,0.3)",
+      border: "1.5px solid rgba(255,255,255,0.3)",
       animation: "badge-ping 3s ease-out infinite",
       pointerEvents: "none",
     }} />
     {/* Core */}
     <div style={{
       position: "absolute", inset: 0, borderRadius: "50%",
-      background: "linear-gradient(135deg, #FF6B2B 0%, #c94d14 100%)",
+      background: "linear-gradient(135deg, #5B3DF5 0%, #7C66FF 100%)",
       boxShadow: `0 0 20px ${P_GLOW}`,
       display: "flex", alignItems: "center", justifyContent: "center",
     }}>
@@ -391,7 +408,8 @@ const ThinkingBubble = () => {
 const ProposalCard = ({ state }: { state: ConvState }) => {
   const kb = state.service ? KB[state.service] : null;
   const tl = TIMELINES[state.service || "web"] || TIMELINES.web;
-  const isEn = state.lang === "en";
+  const isEn = false;
+  const recommendation = getSmartRecommendation(state);
   if (!kb) return null;
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
@@ -525,6 +543,15 @@ const ProposalCard = ({ state }: { state: ConvState }) => {
               <span className="text-[10px] font-poppins" style={{ color: "rgba(240,237,232,0.65)" }}>{s}</span>
             </div>
           ))}
+        </div>
+
+        <div className="rounded-xl p-3" style={{ background: `${PRIMARY}08`, border: `1px solid ${PRIMARY}20` }}>
+          <p className="text-[9px] font-poppins uppercase tracking-widest mb-1" style={{ color: `${PRIMARY}80` }}>
+            Recomendación inteligente
+          </p>
+          <p className="text-[10px] font-poppins" style={{ color: "rgba(240,237,232,0.72)" }}>
+            {recommendation}
+          </p>
         </div>
       </div>
     </motion.div>
@@ -805,13 +832,11 @@ const getResponse = (userText: string, state: ConvState, setState: (s: ConvState
   // ── 6. POST PROPOSAL (CLOSE) ──
   if (state.stage === "proposal") {
     if (/si|si\b|claro|perfecto|ok|yes|sure|adelante|agenda|reuni|whatsapp/.test(t)) {
-      ns = { ...ns, stage: "close", sentiment: 100 };
+      ns = { ...ns, stage: "lead_capture", sentiment: 100, leadStep: 0 };
       setState(ns);
       return {
         newState: ns,
-        text: isEn
-          ? `Excellent! 🎉 I've pre-filled your project details in the WhatsApp message.\n\nJust press "Confirm with Ivan" below — Ivan will confirm the virtual meeting within a few hours.\n\nSee you soon!`
-          : `¡Excelente! 🎉 He preparado el mensaje de WhatsApp con todos los detalles de tu proyecto.\n\nPresiona "Confirmar con Ivan" abajo — Ivan confirmara la reunion virtual en pocas horas.\n\n¡Nos vemos pronto!`,
+        text: `Excelente. Antes de cerrar la propuesta, te haré 3 preguntas rápidas para preparar mejor la reunión.\n\n1) ¿Cuál es tu nombre completo?`,
         chips: [],
       };
     }
@@ -822,6 +847,32 @@ const getResponse = (userText: string, state: ConvState, setState: (s: ConvState
       text: isEn
         ? `No worries! The proposal I shared is a solid starting point.\n\nFor the exact investment and custom scope, Ivan does a free 30-min virtual diagnostic — zero commitment.\n\nShall we schedule it?`
         : `¡Sin problema! La propuesta es un punto de partida solido.\n\nPara la inversion exacta y el alcance personalizado, Ivan hace un diagnostico virtual gratuito de 30 min — cero compromiso.\n\n¿Agendamos?`,
+    };
+  }
+
+  if (state.stage === "lead_capture") {
+    if (state.leadStep === 0) {
+      ns = { ...ns, leadName: userText, leadStep: 1 };
+      setState(ns);
+      return {
+        newState: ns,
+        text: "2) ¿Cuál es tu empresa o proyecto?",
+      };
+    }
+    if (state.leadStep === 1) {
+      ns = { ...ns, leadCompany: userText, leadStep: 2 };
+      setState(ns);
+      return {
+        newState: ns,
+        text: "3) ¿Cuál es el mejor WhatsApp o correo para contactarte?",
+      };
+    }
+
+    ns = { ...ns, leadContact: userText, stage: "close" };
+    setState(ns);
+    return {
+      newState: ns,
+      text: "Perfecto. Ya tengo tu información y la propuesta lista.\n\nPresiona \"Confirmar con Ivan · WhatsApp\" para enviar todo en un solo mensaje y agendar la reunión.",
     };
   }
 
@@ -857,6 +908,7 @@ const ChatbotWidget = () => {
   const [convState, setConvState] = useState<ConvState>({
     stage: "greeting", service: null, bizType: null, scope: null,
     budget: null, timeline: null, sentiment: 0, lang: "es", msgCount: 0,
+    leadName: null, leadCompany: null, leadContact: null, leadStep: 0,
   });
 
   const endRef     = useRef<HTMLDivElement>(null);
@@ -883,12 +935,15 @@ const ChatbotWidget = () => {
     const kb = convState.service ? KB[convState.service] : null;
     let msg = `Hola Ivan Zuñiga 👋, acabo de hablar con Nova (IA) en tu portafolio:\n\n`;
     if (kb) {
-      msg += `📋 *Servicio de interes:* ${convState.lang === "en" ? kb.nameEn : kb.name}\n`;
+      msg += `📋 *Servicio de interes:* ${kb.name}\n`;
       if (convState.scope) msg += `📝 *Mi proyecto:* ${convState.scope}\n`;
       if (convState.budget) msg += `💰 *Presupuesto:* ${convState.budget}\n`;
       if (convState.timeline) msg += `⏱ *Plazo:* ${convState.timeline}\n`;
+      if (convState.leadName) msg += `👤 *Nombre:* ${convState.leadName}\n`;
+      if (convState.leadCompany) msg += `🏢 *Empresa:* ${convState.leadCompany}\n`;
+      if (convState.leadContact) msg += `📲 *Contacto:* ${convState.leadContact}\n`;
       msg += `⚙️ *Stack propuesto:* ${kb.tech.join(" · ")}\n`;
-      msg += `💵 *Inversion ref.:* ${convState.lang === "en" ? kb.basePriceEn : kb.basePrice}\n`;
+      msg += `💵 *Inversion ref.:* ${kb.basePrice}\n`;
     }
     msg += `\n¿Podemos agendar la reunion virtual de 30 min para confirmar el alcance exacto?`;
     return encodeURIComponent(msg);
@@ -935,7 +990,7 @@ const ChatbotWidget = () => {
     setInput("");
     setCurrentChips([]);
 
-    const lang = detectLang(userText);
+    const lang = detectLang();
     const userMsg: Message = { id: genId(), role: "user", content: userText };
     setMessages(prev => [...prev, userMsg]);
     setIsThinking(true);
@@ -958,9 +1013,7 @@ const ChatbotWidget = () => {
       setTimeout(() => {
         const followId = genId();
         setMessages(prev => [...prev, { id: followId, role: "assistant", content: "", isStreaming: true }]);
-        const followText = convState.lang === "en"
-          ? "Here's your personalized proposal! 👆\n\nYou can download it as PDF or send it directly to Ivan via WhatsApp. What would you prefer?"
-          : "¡Aqui esta tu propuesta personalizada! 👆\n\nPuedes descargarla en PDF o enviarla directamente a Ivan por WhatsApp. ¿Que prefieres?";
+        const followText = "¡Aquí está tu propuesta personalizada! 👆\n\nIncluye una recomendación según tus respuestas. Puedes descargarla en PDF o enviarla directamente a Ivan por WhatsApp.";
         streamText(followText, followId);
         if (!isOpen) setHasUnread(true);
       }, 600);
@@ -982,14 +1035,14 @@ const ChatbotWidget = () => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) return;
     const rec = new SR();
-    rec.lang = convState.lang === "en" ? "en-US" : "es-CO";
+    rec.lang = "es-CO";
     rec.onresult = (e: any) => { setInput(e.results[0][0].transcript); setIsListening(false); };
     rec.onerror = () => setIsListening(false);
     rec.onend = () => setIsListening(false);
     speechRef.current = rec;
     rec.start();
     setIsListening(true);
-  }, [convState.lang]);
+  }, []);
 
   const stopListen = useCallback(() => { speechRef.current?.stop(); setIsListening(false); }, []);
 
@@ -1001,11 +1054,11 @@ const ChatbotWidget = () => {
     if (!last) return;
     const plain = last.content.replace(/[·•\n]/g, " ").replace(/\s+/g, " ").slice(0, 250);
     const utt = new SpeechSynthesisUtterance(plain);
-    utt.lang = convState.lang === "en" ? "en-US" : "es-CO";
+    utt.lang = "es-CO";
     utt.onstart = () => setIsSpeaking(true);
     utt.onend = () => setIsSpeaking(false);
     synth.current.speak(utt);
-  }, [messages, convState.lang, isSpeaking]);
+  }, [messages, isSpeaking]);
 
   const hour = new Date().getHours();
   const isAvail = hour >= 8 && hour < 22;
@@ -1030,7 +1083,7 @@ const ChatbotWidget = () => {
               </motion.div>
             : <motion.div key="o" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }}
                 className="relative w-14 h-14 rounded-2xl flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg,#1e1108,#150f06)", border: `1.5px solid ${PRIMARY}50`, boxShadow: `0 0 20px ${P_GLOW}, 0 8px 32px rgba(0,0,0,0.6)` }}>
+                style={{ background: "linear-gradient(135deg,#12131A,#1A1C24)", border: `1.5px solid ${PRIMARY}50`, boxShadow: `0 0 20px ${P_GLOW}, 0 8px 32px rgba(0,0,0,0.6)` }}>
                 <div className="nova-trigger-ring" />
                 {/* Robot icon */}
                 <svg viewBox="0 0 24 24" className="w-6 h-6 relative z-10" fill="none" stroke={PRIMARY} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -1105,14 +1158,6 @@ const ChatbotWidget = () => {
                 </div>
 
                 <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
-                  {/* Lang toggle */}
-                  <button onClick={() => setConvState(p => ({ ...p, lang: p.lang === "es" ? "en" : "es" }))}
-                    className="p-2 rounded-xl transition-all"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.45)" }}
-                    aria-label={convState.lang === "es" ? "Switch to English" : "Cambiar a Español"}
-                    title={convState.lang === "es" ? "Switch to English" : "Cambiar a Español"}>
-                    <Globe className="w-3.5 h-3.5" />
-                  </button>
                   {/* Download */}
                   {convState.stage === "proposal" || convState.stage === "close" ? (
                     <button onClick={() => generatePDF(convState)}
