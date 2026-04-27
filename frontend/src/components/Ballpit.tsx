@@ -476,17 +476,22 @@ class Y extends MeshPhysicalMaterial {
   onBeforeCompile2?: (shader: any) => void;
 }
 
+// ──────────────────────────────────────────────────────────────────────────────
+// Espacial Minimalista — paleta por defecto
+// Esferas muy oscuras (casi negras) con un acento sutil de luz lunar para
+// evocar polvo estelar contra un cosmos profundo. Iluminación contenida.
+// ──────────────────────────────────────────────────────────────────────────────
 const XConfig = {
   count: 200,
-  colors: [0, 0, 0],
+  colors: [0x0d0e16, 0x1a1d2e, 0x2c3050, 0x4a5078, 0xe2e8f0],
   ambientColor: 0xffffff,
-  ambientIntensity: 1,
-  lightIntensity: 200,
+  ambientIntensity: 0.4,
+  lightIntensity: 80,
   materialParams: {
-    metalness: 0.5,
-    roughness: 0.5,
+    metalness: 0.7,
+    roughness: 0.35,
     clearcoat: 1,
-    clearcoatRoughness: 0.15
+    clearcoatRoughness: 0.1
   },
   minSize: 0.5,
   maxSize: 1,
@@ -690,7 +695,11 @@ class Z extends InstancedMesh {
     const pmrem = new PMREMGenerator(renderer);
     const envTexture = pmrem.fromScene(roomEnv).texture;
     const geometry = new SphereGeometry();
-    const material = new Y({ envMap: envTexture, ...config.materialParams });
+    // NOTE: The custom subsurface-scattering material (class Y) shader injection
+    // is incompatible with three@0.183.x (RE_Direct signature changed). We fall
+    // back to a vanilla MeshPhysicalMaterial — visual quality is preserved via
+    // the PMREM RoomEnvironment env map and clearcoat.
+    const material = new MeshPhysicalMaterial({ envMap: envTexture, ...config.materialParams });
     material.envMapRotation.x = -Math.PI / 2;
     super(geometry, material, config.count);
     this.config = config;

@@ -70,22 +70,28 @@ const HeroImmersive = () => {
             <Ballpit
               className="absolute inset-0"
               followCursor={!isMobile}
-              count={isMobile ? 120 : 180}
-              gravity={0.55}
+              count={isMobile ? 80 : 120}
+              gravity={0.45}
               friction={0.996}
-              wallBounce={0.95}
-              maxVelocity={0.15}
-              colors={[0x5b3df5, 0x7c66ff, 0x2232a8, 0xf5f7ff, 0x1a1c24]}
+              wallBounce={0.92}
+              maxVelocity={0.14}
+              colors={[0x1a1d2e, 0x2e334d, 0x4a5078, 0x8b95c1, 0xe8edf7]}
               ambientColor={0xffffff}
-              ambientIntensity={0.3}
-              lightIntensity={70}
-              minSize={0.5}
-              maxSize={1}
+              ambientIntensity={0.45}
+              lightIntensity={90}
+              materialParams={{
+                metalness: 0.5,
+                roughness: 0.45,
+                clearcoat: 1,
+                clearcoatRoughness: 0.12,
+              }}
+              minSize={0.6}
+              maxSize={1.2}
             />
           </div>
         </BallpitBoundary>
-        {/* Dark overlay so text stays readable */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-[#09090B]/78 to-[#09090B]/40 pointer-events-none" />
+        {/* Dark overlay so text stays readable — sutil para no ocultar el ballpit */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#09090B]/85 via-[#09090B]/45 to-[#09090B]/15 pointer-events-none" />
       </motion.div>
 
       {/* ── Layer 3: Text content ── */}
