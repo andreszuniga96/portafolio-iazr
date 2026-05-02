@@ -4,7 +4,6 @@ import { Menu, X, Instagram, Linkedin, Github } from "lucide-react";
 import OrbitalLogo from "@/components/ui/OrbitalLogo";
 
 const navLinks = [
-<<<<<<< HEAD:frontend/src/components/Navbar.tsx
   { name: "Servicios",   href: "#servicios",   id: "servicios" },
   { name: "Proyectos",   href: "#proyectos",   id: "proyectos" },
   { name: "Oferta",      href: "#pricing",     id: "pricing" },
@@ -12,17 +11,6 @@ const navLinks = [
   { name: "Credibilidad", href: "#about",      id: "about" },
   { name: "FAQ",         href: "#faq",         id: "faq" },
   { name: "Contacto",    href: "#contact",     id: "contact" },
-=======
-  { name: "IA & Soluciones", href: "#ai-section", id: "ai-section" },
-  { name: "Arsenal IA",      href: "#ai-tools",   id: "ai-tools"   },
-  { name: "Servicios",       href: "#servicios",  id: "servicios"  },
-  { name: "Proyectos",       href: "#proyectos",  id: "proyectos"  },
-  { name: "Impacto",         href: "#impacto",    id: "impacto"    },
-  { name: "¿Por qué IAZR?", href: "#brand",      id: "brand"      },
-  { name: "Cotizar",         href: "#pricing",    id: "pricing"    },
-  { name: "FAQ",             href: "#faq",        id: "faq"        },
-  { name: "Contacto",        href: "#contact",    id: "contact"    },
->>>>>>> 806e164 (Quinta modificacion):src/components/Navbar.tsx
 ];
 
 const Navbar = () => {

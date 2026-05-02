@@ -66,7 +66,6 @@ const HeroImmersive = () => {
         className="absolute inset-0 w-full h-full"
       >
         <BallpitBoundary>
-<<<<<<< HEAD:frontend/src/components/HeroImmersive.tsx
           <div className="absolute inset-0" style={{ pointerEvents: 'auto' }}>
             <Ballpit
               className="absolute inset-0"
@@ -93,53 +92,6 @@ const HeroImmersive = () => {
         </BallpitBoundary>
         {/* Dark overlay so text stays readable — sutil para no ocultar el ballpit */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#09090B]/85 via-[#09090B]/45 to-[#09090B]/15 pointer-events-none" />
-=======
-          {/* On desktop: full WebGL Ballpit — on mobile: CSS-only aurora orbs (no touch capture) */}
-          <div
-            className="absolute inset-0"
-            style={{ pointerEvents: isMobile ? 'none' : 'auto' }}
-          >
-            {!isMobile ? (
-              <Ballpit
-                className="absolute inset-0"
-                followCursor={true}
-                count={200}
-                gravity={0.45}
-                friction={0.997}
-                wallBounce={0.92}
-                maxVelocity={0.12}
-                colors={[0xA855F7, 0x7C3AED, 0x6366F1, 0xEC4899, 0xF472B6, 0xFBBF24, 0xffffff, 0x8B5CF6]}
-                ambientColor={0xffffff}
-                ambientIntensity={0.5}
-                lightIntensity={90}
-                minSize={0.4}
-                maxSize={1.1}
-              />
-            ) : (
-              /* Mobile: lightweight CSS aurora orbs — zero JS overhead, full scroll freedom */
-              <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-                {[...Array(8)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="hero-mobile-orb"
-                    style={{
-                      '--orb-idx': i,
-                      '--orb-x': `${10 + (i * 11) % 80}%`,
-                      '--orb-y': `${5 + (i * 17) % 85}%`,
-                      '--orb-size': `${60 + (i * 23) % 120}px`,
-                      '--orb-hue': `${260 + (i * 40) % 100}`,
-                      '--orb-dur': `${3 + (i * 0.7) % 4}s`,
-                      '--orb-delay': `${(i * 0.4) % 2}s`,
-                    } as React.CSSProperties}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-        </BallpitBoundary>
-        {/* Lighter overlay so balls show through vividly */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-[#09090B]/52 to-transparent pointer-events-none" />
->>>>>>> 806e164 (Quinta modificacion):src/components/HeroImmersive.tsx
       </motion.div>
 
       {/* Radial ambient glow behind text — adds depth and warmth */}

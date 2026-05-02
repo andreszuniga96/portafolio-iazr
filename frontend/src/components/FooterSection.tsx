@@ -77,13 +77,8 @@ const FooterSection = () => {
             <div className="flex items-center gap-3 mb-5">
               <OrbitalLogo size={40} />
               <div>
-<<<<<<< HEAD:frontend/src/components/FooterSection.tsx
                 <p className="font-poppins font-bold tracking-widest uppercase text-sm" style={{ color: "#F5F7FF" }}>IAZR</p>
                 <p className="text-[10px] font-poppins" style={{ color: "#A7ADBF" }}>Ivan Zuñiga</p>
-=======
-                <p className="font-poppins font-bold tracking-widest uppercase text-sm" style={{ color: "#f0ede8" }}>IAZR</p>
-                <p className="text-[10px] font-poppins" style={{ color: "#8a857c" }}>CTO & Arquitecto de Soluciones</p>
->>>>>>> 806e164 (Quinta modificacion):src/components/FooterSection.tsx
               </div>
             </div>
 

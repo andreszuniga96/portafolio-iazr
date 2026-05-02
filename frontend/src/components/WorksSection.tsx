@@ -51,13 +51,8 @@ const WorksSection = () => {
     <section
       id="proyectos"
       ref={sectionRef}
-<<<<<<< HEAD:frontend/src/components/WorksSection.tsx
       className="py-24 md:py-32 relative overflow-visible border-t border-white/5"
       style={{ background: "transparent" }}
-=======
-      className="py-24 md:py-32 relative overflow-hidden border-t border-white/5"
-      style={{ background: "#09090B" }}
->>>>>>> 806e164 (Quinta modificacion):src/components/WorksSection.tsx
     >
       {/* Subtle background grid */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.02]" aria-hidden>

@@ -204,19 +204,8 @@ const FAQSection = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-20 relative"
         >
-<<<<<<< HEAD:frontend/src/components/FAQSection.tsx
           <div
             className="relative rounded-3xl overflow-hidden p-10 md:p-14 text-center"
-=======
-          <p className="font-poppins text-sm mb-5" style={{ color: "rgba(240,237,232,0.35)" }}>
-            ¿Tienes una pregunta que no está aquí?
-          </p>
-          <a
-            href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20tengo%20una%20pregunta%20sobre%20sus%20servicios."
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
->>>>>>> 806e164 (Quinta modificacion):src/components/FAQSection.tsx
             style={{
               background:
                 "linear-gradient(140deg, rgba(124,102,255,0.10) 0%, rgba(199,210,254,0.04) 50%, rgba(10,11,18,0) 100%)",
