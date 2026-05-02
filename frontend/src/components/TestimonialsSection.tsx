@@ -6,7 +6,7 @@ const testimonials = [
   {
     name: "Dr. Carlos Santamaria",
     handle: "Decano Ingeniería · UTP",
-    review: "La capacidad de Ivan para conectar conceptos complejos de IA con aplicaciones prácticas ha transformado nuestros programas de maestría.",
+    review: "La capacidad de IAZR para conectar conceptos complejos de IA con aplicaciones prácticas ha transformado nuestros programas de maestría.",
     initials: "CS",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format",
   },
@@ -34,7 +34,7 @@ const testimonials = [
   {
     name: "Equipo Zolaris",
     handle: "Directiva · Zolaris Platform",
-    review: "Ivan ha llevado nuestra visión tecnológica al siguiente nivel, integrando IA predictiva directamente en el corazón de nuestra plataforma IoT.",
+    review: "IAZR llevó nuestra visión tecnológica al siguiente nivel, integrando IA predictiva directamente en el corazón de nuestra plataforma IoT.",
     initials: "Z",
     avatar: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=80&q=80&auto=format",
   },

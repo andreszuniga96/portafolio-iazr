@@ -24,21 +24,22 @@ const CTASection = () => {
 
   return (
     <section
+      id="cta"
       className="relative py-24 md:py-36 overflow-hidden border-t"
-      style={{ backgroundColor: "#0c0c0e", borderColor: "rgba(42,39,36,0.6)" }}
+      style={{ backgroundColor: "#0a0814", borderColor: "rgba(124,58,237,0.15)" }}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
       {/* CSS-only particle dots — no WebGL */}
       {[...Array(20)].map((_, i) => (
-        <div key={i} className="absolute rounded-full pointer-events-none"
+        <div key={i} className="absolute rounded-full pointer-events-none cta-particle"
           style={{
             width: 2 + (i % 3), height: 2 + (i % 3),
-            background: i % 2 === 0 ? '#FFFFFF' : '#F59E0B',
-            opacity: 0.15 + (i % 4) * 0.05,
+            background: ["#A855F7", "#EC4899", "#6366F1", "#FBBF24"][i % 4],
+            opacity: 0.2 + (i % 4) * 0.06,
             left: `${5 + (i * 17) % 90}%`,
             top: `${10 + (i * 23) % 80}%`,
-            boxShadow: `0 0 ${6 + i % 4 * 3}px ${i % 2 === 0 ? '#FFFFFF' : '#F59E0B'}60`,
+            boxShadow: `0 0 ${6 + i % 4 * 3}px ${ ["#A855F7", "#EC4899", "#6366F1", "#FBBF24"][i % 4]}60`,
             animation: `aurora-float-${i % 4} ${5 + (i % 5)}s ease-in-out ${i * 0.4}s infinite`,
           }}
         />
@@ -53,7 +54,7 @@ const CTASection = () => {
 
       {/* Radial warm glow */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.06), transparent 70%)" }} />
+        style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(124,58,237,0.12), transparent 70%)" }} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {/* Badge */}
@@ -110,7 +111,7 @@ const CTASection = () => {
         >
           {/* Primary button — with shimmer on hover */}
           <a
-            href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%20%F0%9F%91%8B%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20virtual%20para%20hablar%20de%20mi%20proyecto."
+            href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20virtual%20para%20hablar%20de%20mi%20proyecto."
             target="_blank" rel="noreferrer"
             className="relative btn-glow inline-flex items-center gap-2.5 px-9 py-5 rounded-full bg-primary text-primary-foreground font-outfit font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all overflow-hidden group"
           >
@@ -146,7 +147,7 @@ const CTASection = () => {
           </div>
           <div className="text-left">
             <p className="text-xs font-outfit" style={{ color: "rgba(240,237,232,0.65)" }}>
-              "Ivan transformó nuestro proyecto en 4 semanas con IA real."
+              "IAZR transformó nuestro proyecto en 4 semanas con IA real."
             </p>
             <p className="text-[10px] font-outfit mt-0.5" style={{ color: "#8a857c" }}>
               — Clientes reales · Colombia

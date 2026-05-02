@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo, Suspense, lazy } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { jsPDF } from "jspdf";
 import {
@@ -7,6 +7,9 @@ import {
   Zap, ArrowUpRight, CheckCircle2, Clock, DollarSign,
   Briefcase, Code2, Brain, Shield, BarChart3, BookOpen,
 } from "lucide-react";
+
+// Lazy-load 3D orb (R3F) — falls back to SVG if WebGL unavailable
+const NovaOrb3D = lazy(() => import("@/components/NovaOrb3D"));
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 const PRIMARY   = "#FFFFFF";
@@ -180,11 +183,11 @@ const detectLang = (): Lang => "es";
 
 const detectService = (t: string): string | null => {
   const s = t.toLowerCase();
-  if (/web|pagina|pagina|sitio|landing|tienda|ecommerce|app\b|aplicacion|website|frontend|full.?stack/.test(s)) return "web";
-  if (/ia\b|bot|chatbot|automat|llm|inteligencia|ai\b|agent|n8n|gemini|openai/.test(s)) return "ia";
-  if (/mentor|aprender|estudiar|curso|clases|learn|teach|programar|programaci/.test(s)) return "mentoria";
-  if (/auditor|seguridad|hack|vulnerab|pentest|owasp|security/.test(s)) return "auditoria";
-  if (/datos|analytics|dashboard|power.?bi|reporting|predicci|data|bi\b/.test(s)) return "datos";
+  if (/web|pagina|p\u00e1gina|sitio|landing|tienda|ecommerce|app\b|aplicaci[o\u00f3]n|website|frontend|full.?stack|plataforma|portal|sistema/.test(s)) return "web";
+  if (/ia\b|bot|chatbot|automat|llm|inteligencia|ai\b|agent|n8n|gemini|openai|gpt|langchain|makea|make\b/.test(s)) return "ia";
+  if (/mentor|aprender|estudiar|curso|clases|learn|teach|programar|programaci|aprend|forma|bootcamp/.test(s)) return "mentoria";
+  if (/auditor|seguridad|hack|vulnerab|pentest|owasp|security|ciberseguridad|infraestructura/.test(s)) return "auditoria";
+  if (/datos|analytics|dashboard|power.?bi|reporting|predicci|data|bi\b|informe|reporte|visualizaci/.test(s)) return "datos";
   return null;
 };
 
@@ -250,7 +253,7 @@ const generatePDF = (state: ConvState) => {
   doc.setFillColor(255,255,255);
   doc.rect(0, 0, W, 24, "F");
   doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.setTextColor(0, 0, 0);
-  doc.text("IAZR · Ivan Zuñiga — Propuesta Tecnica", margin, 15);
+  doc.text("IAZR — Propuesta Tecnica", margin, 15);
   doc.setFontSize(8); doc.setFont("helvetica", "normal");
   doc.text(date, W - margin, 15, { align: "right" });
 
@@ -304,13 +307,13 @@ const generatePDF = (state: ConvState) => {
 
   sp(8); rule();
   line("Contacto", 9, true, [255,255,255]);
-  ["WhatsApp: +57 322 913 2643", "Email: ivan@iazr.dev", "LinkedIn: linkedin.com/in/iazr96", "Web: iazr.dev"].forEach(s =>
+  ["WhatsApp: +57 322 913 2643", "Email: hola@iazr.dev", "LinkedIn: linkedin.com/in/iazr96", "Web: iazr.dev"].forEach(s =>
     line(s, 9, false, [180,175,168])
   );
 
   // Footer
   doc.setFontSize(6.5); doc.setFont("helvetica", "italic"); doc.setTextColor(70,65,60);
-  doc.text(`© ${new Date().getFullYear()} Ivan Zuñiga · IAZR · Colombia — Generado por Nova AI`, W / 2, H - 9, { align: "center" });
+  doc.text(`© ${new Date().getFullYear()} IAZR · Colombia — Generado por Nova AI`, W / 2, H - 9, { align: "center" });
 
   doc.save(`propuesta-iazr-${Date.now()}.pdf`);
 };
@@ -606,7 +609,7 @@ const MessageBubble = ({ message, convState }: { message: Message; convState: Co
           </div>
       }
       <div className={`min-w-0 ${isBot ? "max-w-[90%]" : "max-w-[80%] flex flex-col items-end"}`}>
-        {isBot && <span className="text-[9px] font-poppins mb-1" style={{ color: `${PRIMARY}55` }}>Nova · IA de Ivan Zuñiga</span>}
+        {isBot && <span className="text-[9px] font-poppins mb-1" style={{ color: `${PRIMARY}55` }}>Nova · IA de IAZR</span>}
         {isProposal
           ? <ProposalCard state={convState} />
           : (
@@ -665,11 +668,25 @@ const getResponse = (userText: string, state: ConvState, setState: (s: ConvState
       return {
         newState: ns,
         text: isEn
-          ? `Perfect! ${kb.nameEn} is one of Ivan's top specialties.\n\n  · ${kb.tech.join("\n  · ")}\n\nTell me more:\n  1. Is this for a company or personal project?\n  2. Do you have an existing site/system?\n  3. Any references or inspiration?`
-          : `Excelente eleccion. ${kb.name} es una de las especialidades principales de Ivan.\n\n  · ${kb.tech.join("\n  · ")}\n\nCuentame mas:\n  1. ¿Es para empresa o proyecto personal?\n  2. ¿Tienes un sitio/sistema actual?\n  3. ¿Tienes referencias visuales o de funcionalidad?`,
+          ? `¡Perfecto! ${kb.nameEn} is one of IAZR's core specialties.\n\n  · ${kb.tech.join("\n  · ")}\n\nTell me more:\n  1. Is this for a company or personal project?\n  2. Do you have an existing site/system?\n  3. Any references or inspiration?`
+          : `Excelente elección. ${kb.name} es una de las especialidades principales de IAZR.\n\n  · ${kb.tech.join("\n  · ")}\n\nCuéntame más:\n  1. ¿Es para empresa o proyecto personal?\n  2. ¿Tienes un sitio/sistema actual?\n  3. ¿Tienes referencias visuales o de funcionalidad?`,
         chips: isEn
           ? [{ label: "Company", value: "Es para una empresa" }, { label: "Personal", value: "Es un proyecto personal" }, { label: "Startup", value: "Es una startup" }]
           : [{ label: "Empresa", value: "Es para una empresa" }, { label: "Personal", value: "Es un proyecto personal" }, { label: "Startup / Emprendimiento", value: "Es una startup" }],
+      };
+    }
+    // ── Portfolio/experience queries ──
+    if (/portafolio|portfolio|proyectos|experiencia|trabajos|quien es|quien eres|ivan|iazr|curriculum|cv|about/.test(t)) {
+      ns = { ...ns, stage: "service_select" };
+      setState(ns);
+      return {
+        newState: ns,
+        text: `IAZR — Arquitecto de Soluciones y CTO Externo con +8 a\u00f1os de experiencia.\n\n  \u00b7 40+ proyectos entregados en Colombia y LATAM\n  \u00b7 Director T\u00e9cnico en Zolaris S.A.S\n  \u00b7 Docente universitario en m\u00f3dulos de IA y Data\n  \u00b7 Especialista en React, Node.js, Python, LangChain\n  \u00b7 Certificado en Ciberseguridad (OWASP, Pentest)\n\n\u00bfEn qu\u00e9 proyecto puedo ayudarte?`,
+        chips: [
+          { label: "Web / App", value: "Necesito una pagina web o aplicacion", icon: <Code2 className="w-3 h-3" /> },
+          { label: "IA / Automatizaci\u00f3n", value: "Quiero automatizar con IA", icon: <Brain className="w-3 h-3" /> },
+          { label: "Ver precios", value: "\u00bfCuanto cobras?", icon: <DollarSign className="w-3 h-3" /> },
+        ],
       };
     }
     if (/hola|buenas|buenos|hey|hi\b|hello|inicio|empez/.test(t)) {
@@ -677,23 +694,21 @@ const getResponse = (userText: string, state: ConvState, setState: (s: ConvState
       setState(ns);
       return {
         newState: ns,
-        text: isEn
-          ? `Hi! I'm Nova, Ivan Zuñiga's AI assistant.\n\nI'll help you:\n  · Define your project requirements\n  · Get an investment estimate\n  · Generate a technical proposal\n  · Connect with Ivan on WhatsApp\n\nWhat do you need?`
-          : `¡Hola! Soy Nova, la IA de Ivan Zuñiga — Ingeniero Full-Stack con +6 años de experiencia.\n\nTe ayudare a:\n  · Definir los requerimientos de tu proyecto\n  · Obtener una estimacion de inversion\n  · Generar una propuesta tecnica\n  · Conectarte con Ivan por WhatsApp\n\n¿Que necesitas?`,
+        text: `\u00a1Hola! Soy Nova, la IA de IAZR \u2014 tu CTO Externo, Arquitecto y Desarrollador.\n\nPuedo ayudarte a:\n  \u00b7 Definir requerimientos de tu proyecto\n  \u00b7 Estimar inversi\u00f3n y tiempo de desarrollo\n  \u00b7 Generar una propuesta t\u00e9cnica PDF\n  \u00b7 Conectarte con Ivan por WhatsApp\n\n\u00bfQu\u00e9 necesitas hoy?`,
         chips: isEn
           ? [
               { label: "Website / App", value: "Necesito una pagina web o aplicacion", icon: <Code2 className="w-3 h-3" /> },
               { label: "AI Automation", value: "Quiero automatizar con IA", icon: <Brain className="w-3 h-3" /> },
               { label: "Mentorship", value: "Quiero mentoria en programacion", icon: <BookOpen className="w-3 h-3" /> },
               { label: "Security", value: "Necesito auditoria de seguridad", icon: <Shield className="w-3 h-3" /> },
-              { label: "Pricing", value: "¿Cuanto cobras?", icon: <DollarSign className="w-3 h-3" /> },
+              { label: "Pricing", value: "\u00bfCuanto cobras?", icon: <DollarSign className="w-3 h-3" /> },
             ]
           : [
               { label: "Web / App", value: "Necesito una pagina web o aplicacion", icon: <Code2 className="w-3 h-3" /> },
-              { label: "IA / Automatizacion", value: "Quiero automatizar con IA", icon: <Brain className="w-3 h-3" /> },
-              { label: "Mentoria", value: "Quiero mentoria en programacion", icon: <BookOpen className="w-3 h-3" /> },
+              { label: "IA / Automatizaci\u00f3n", value: "Quiero automatizar con IA", icon: <Brain className="w-3 h-3" /> },
+              { label: "Mentor\u00eda", value: "Quiero mentoria en programacion", icon: <BookOpen className="w-3 h-3" /> },
               { label: "Seguridad", value: "Necesito auditoria de seguridad", icon: <Shield className="w-3 h-3" /> },
-              { label: "Ver Precios", value: "¿Cuanto cobras?", icon: <DollarSign className="w-3 h-3" /> },
+              { label: "Ver Precios", value: "\u00bfCuanto cobras?", icon: <DollarSign className="w-3 h-3" /> },
             ],
       };
     }
@@ -845,8 +860,8 @@ const getResponse = (userText: string, state: ConvState, setState: (s: ConvState
     return {
       newState: ns,
       text: isEn
-        ? `No worries! The proposal I shared is a solid starting point.\n\nFor the exact investment and custom scope, Ivan does a free 30-min virtual diagnostic — zero commitment.\n\nShall we schedule it?`
-        : `¡Sin problema! La propuesta es un punto de partida solido.\n\nPara la inversion exacta y el alcance personalizado, Ivan hace un diagnostico virtual gratuito de 30 min — cero compromiso.\n\n¿Agendamos?`,
+        ? `No worries! The proposal I shared is a solid starting point.\n\nFor the exact investment and custom scope, IAZR does a free 30-min virtual diagnostic — zero commitment.\n\nShall we schedule it?`
+        : `¡Sin problema! La propuesta es un punto de partida solido.\n\nPara la inversion exacta y el alcance personalizado, IAZR hace un diagnostico virtual gratuito de 30 min — cero compromiso.\n\n¿Agendamos?`,
     };
   }
 
@@ -872,7 +887,7 @@ const getResponse = (userText: string, state: ConvState, setState: (s: ConvState
     setState(ns);
     return {
       newState: ns,
-      text: "Perfecto. Ya tengo tu información y la propuesta lista.\n\nPresiona \"Confirmar con Ivan · WhatsApp\" para enviar todo en un solo mensaje y agendar la reunión.",
+      text: "Perfecto. Ya tengo tu información y la propuesta lista.\n\nPresiona \"Contactar IAZR · WhatsApp\" para enviar todo en un solo mensaje y agendar la reunión.",
     };
   }
 
@@ -882,8 +897,8 @@ const getResponse = (userText: string, state: ConvState, setState: (s: ConvState
   return {
     newState: ns,
     text: isEn
-      ? `For any additional questions, Ivan is just one message away on WhatsApp. Would you like to connect now?`
-      : `Para cualquier duda adicional, Ivan esta a un mensaje de distancia en WhatsApp. ¿Conectamos ahora?`,
+      ? `For any additional questions, IAZR is just one message away on WhatsApp. Would you like to connect now?`
+      : `Para cualquier duda adicional, IAZR esta a un mensaje de distancia en WhatsApp. ¿Conectamos ahora?`,
   };
 };
 
@@ -892,7 +907,7 @@ const ChatbotWidget = () => {
   const [isOpen,      setIsOpen]      = useState(false);
   const [messages,    setMessages]    = useState<Message[]>([{
     id: "init", role: "assistant", type: "text",
-    content: "¡Bienvenido! Soy Nova, la IA de Ivan Zuñiga.\n\nEstoy aqui para orientarte, estructurar tu proyecto y generarte una propuesta de inversion personalizada.\n\n¿Que proyecto tienes en mente? Cuentame todo.",
+    content: "¡Bienvenido! Soy Nova, la IA de IAZR.\n\nEstoy aqui para orientarte, estructurar tu proyecto y generarte una propuesta de inversion personalizada.\n\n¿Que proyecto tienes en mente? Cuentame todo.",
   }]);
   const [input,        setInput]       = useState("");
   const [isThinking,   setIsThinking]  = useState(false);
@@ -933,7 +948,7 @@ const ChatbotWidget = () => {
   // ── WhatsApp message ──
   const buildWaMsg = useCallback(() => {
     const kb = convState.service ? KB[convState.service] : null;
-    let msg = `Hola Ivan Zuñiga 👋, acabo de hablar con Nova (IA) en tu portafolio:\n\n`;
+    let msg = `Hola IAZR 👋, acabo de hablar con Nova (IA) en tu portafolio:\n\n`;
     if (kb) {
       msg += `📋 *Servicio de interes:* ${kb.name}\n`;
       if (convState.scope) msg += `📝 *Mi proyecto:* ${convState.scope}\n`;
@@ -1013,7 +1028,7 @@ const ChatbotWidget = () => {
       setTimeout(() => {
         const followId = genId();
         setMessages(prev => [...prev, { id: followId, role: "assistant", content: "", isStreaming: true }]);
-        const followText = "¡Aquí está tu propuesta personalizada! 👆\n\nIncluye una recomendación según tus respuestas. Puedes descargarla en PDF o enviarla directamente a Ivan por WhatsApp.";
+        const followText = "¡Aquí está tu propuesta personalizada! 👆\n\nIncluye una recomendación según tus respuestas. Puedes descargarla en PDF o enviarla directamente a IAZR por WhatsApp.";
         streamText(followText, followId);
         if (!isOpen) setHasUnread(true);
       }, 600);
@@ -1068,10 +1083,10 @@ const ChatbotWidget = () => {
       {/* ── Floating trigger button ── */}
       <motion.button
         onClick={() => setIsOpen(v => !v)}
-        className="fixed bottom-20 right-4 z-40 md:bottom-10 md:right-10"
+        className="fixed bottom-24 right-4 z-[45] md:bottom-8 md:right-8"
         whileHover={{ scale: 1.08, y: -2 }}
         whileTap={{ scale: 0.93 }}
-        aria-label={isOpen ? "Cerrar Nova AI" : "Abrir Nova AI, asistente de Ivan Zuñiga"}
+        aria-label={isOpen ? "Cerrar Nova AI" : "Abrir Nova AI, asistente de IAZR"}
         aria-expanded={isOpen}
         aria-haspopup="dialog">
         <AnimatePresence mode="wait">
@@ -1082,18 +1097,20 @@ const ChatbotWidget = () => {
                 <X className="w-5 h-5 text-white/70" />
               </motion.div>
             : <motion.div key="o" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.8, opacity: 0 }}
-                className="relative w-14 h-14 rounded-2xl flex items-center justify-center"
+                className="relative w-14 h-14 rounded-2xl flex items-center justify-center overflow-hidden"
                 style={{ background: "linear-gradient(135deg,#12131A,#1A1C24)", border: `1.5px solid ${PRIMARY}50`, boxShadow: `0 0 20px ${P_GLOW}, 0 8px 32px rgba(0,0,0,0.6)` }}>
                 <div className="nova-trigger-ring" />
-                {/* Robot icon */}
-                <svg viewBox="0 0 24 24" className="w-6 h-6 relative z-10" fill="none" stroke={PRIMARY} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="8" width="18" height="12" rx="3" />
-                  <path d="M9 8V6a3 3 0 016 0v2" />
-                  <circle cx="9" cy="14" r="1.5" fill={PRIMARY} stroke="none" />
-                  <circle cx="15" cy="14" r="1.5" fill={PRIMARY} stroke="none" />
-                  <path d="M9 18h6" strokeWidth="1.5" />
-                  <path d="M12 2v2" />
-                </svg>
+                {/* 3D Nova Orb — lazy with SVG fallback */}
+                <Suspense fallback={
+                  <svg viewBox="0 0 24 24" className="w-6 h-6 relative z-10" fill="none" stroke={PRIMARY} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="9" />
+                    <circle cx="8.5" cy="11" r="1.5" fill={PRIMARY} stroke="none" />
+                    <circle cx="15.5" cy="11" r="1.5" fill={PRIMARY} stroke="none" />
+                    <path d="M8 15.5 Q12 18 16 15.5" strokeWidth="1.5" />
+                  </svg>
+                }>
+                  <NovaOrb3D isOpen={isOpen} size={56} />
+                </Suspense>
                 {/* Online dot */}
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2" style={{ borderColor: "#0e0f13" }}>
                   <div className="w-full h-full rounded-full bg-green-400 animate-ping opacity-60" />
@@ -1129,66 +1146,95 @@ const ChatbotWidget = () => {
               onClick={() => setIsOpen(false)}
               className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 md:hidden" />
 
+            {/* Chat Panel — desktop: constrained popup, mobile: fullscreen slide-in */}
             <motion.div
-              initial={{ x: "100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0 }}
-              transition={{ type: "spring", damping: 30, stiffness: 260 }}
-              className="fixed top-0 right-0 h-full w-full md:w-[500px] z-[60] flex flex-col"
-              style={{ background: "linear-gradient(160deg,#0f0e0c 0%,#0c0c0e 60%,#080808 100%)", borderLeft: "1px solid rgba(255,255,255,0.04)" }}>
+              role="dialog"
+              aria-label="Nova AI — Asistente de IAZR"
+              aria-modal="true"
+              initial={{ opacity: 0, y: 20, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.97 }}
+              transition={{ type: "spring", damping: 28, stiffness: 300 }}
+              className={[
+                // Mobile: full-screen slide from right
+                "fixed top-0 right-0 h-full w-full z-[60] flex flex-col",
+                // Desktop: floating popup — does NOT cover the top navbar
+                // Starts below navbar (~80px), bottom anchored 96px above trigger
+                "md:top-[88px] md:bottom-24 md:right-8 md:w-[420px] md:h-auto md:rounded-2xl md:max-h-[calc(100vh-120px)]",
+              ].join(" ")}
+              style={{
+                background: "linear-gradient(160deg,#0f0e0c 0%,#0c0c0e 60%,#080808 100%)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                boxShadow: "0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04)",
+              }}>
 
               {/* ── Header ── */}
-              <div className="flex items-center justify-between px-5 py-3.5 flex-shrink-0"
-                style={{ borderBottom: "1px solid rgba(255,255,255,0.05)", background: `${PRIMARY}06` }}>
-                <div className="flex items-center gap-3 min-w-0">
-                  <NovaAvatarLarge />
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-sora text-white text-sm font-bold tracking-wide">Nova</h3>
-                      <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-poppins font-bold uppercase tracking-wider flex-shrink-0"
-                        style={{ background: `${PRIMARY}18`, color: PRIMARY, border: `1px solid ${PRIMARY}30` }}>
-                        <Zap className="w-2.5 h-2.5" /> En linea
-                      </span>
-                      <SentimentPill value={convState.sentiment} />
+              <div className="flex-shrink-0">
+                {/* Top accent gradient bar */}
+                <div className="h-0.5 w-full" style={{
+                  background: "linear-gradient(90deg, #5B3DF5, #7C66FF, #EC4899, #5B3DF5)",
+                  backgroundSize: "200% 100%",
+                  animation: "aurora-shift 4s linear infinite",
+                }} />
+                <div className="flex items-center justify-between px-5 py-3.5"
+                  style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.03)" }}>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <NovaAvatarLarge />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-sora text-white text-sm font-bold tracking-wide">Nova</h3>
+                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-poppins font-bold uppercase tracking-wider flex-shrink-0"
+                          style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e", border: "1px solid rgba(34,197,94,0.3)" }}>
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block" />
+                          En línea
+                        </span>
+                        <SentimentPill value={convState.sentiment} />
+                      </div>
+                      <p className="text-[10px] font-poppins mt-0.5 truncate" style={{ color: "rgba(255,255,255,0.28)" }}>
+                        IA de IAZR · {isAvail ? "IAZR disponible ahora" : "Responde en ~2h"}
+                      </p>
                     </div>
-                    <p className="text-[10px] font-poppins mt-0.5 truncate" style={{ color: "rgba(255,255,255,0.28)" }}>
-                      IA de Ivan Zuñiga · {isAvail ? "Ivan disponible ahora" : "Responde en ~2h"}
-                    </p>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
-                  {/* Download */}
-                  {convState.stage === "proposal" || convState.stage === "close" ? (
-                    <button onClick={() => generatePDF(convState)}
-                      className="p-2 rounded-xl transition-all"
-                      style={{ background: `${PRIMARY}12`, border: `1px solid ${PRIMARY}25`, color: PRIMARY }}
-                      aria-label="Descargar propuesta como PDF"
-                      title="Descargar PDF">
-                      <Download className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
+                    {/* Download */}
+                    {convState.stage === "proposal" || convState.stage === "close" ? (
+                      <button onClick={() => generatePDF(convState)}
+                        className="p-2 rounded-xl transition-all"
+                        style={{ background: `${PRIMARY}12`, border: `1px solid ${PRIMARY}25`, color: PRIMARY }}
+                        aria-label="Descargar propuesta como PDF"
+                        title="Descargar PDF">
+                        <Download className="w-3.5 h-3.5" />
+                      </button>
+                    ) : null}
+                    {/* WhatsApp */}
+                    <a href={`https://wa.me/573229132643?text=${buildWaMsg()}`} target="_blank" rel="noreferrer"
+                      className="p-2 rounded-xl text-xs font-poppins flex items-center gap-1.5 transition-colors"
+                      style={{ background: `${PRIMARY}10`, border: `1px solid ${PRIMARY}25`, color: `${PRIMARY}cc` }}>
+                      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+                      </svg>
+                      <span className="hidden sm:block text-xs">WhatsApp</span>
+                    </a>
+                    <button onClick={() => setIsOpen(false)}
+                      className="p-2 rounded-xl transition-colors"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.4)" }}
+                      aria-label="Cerrar chat Nova AI">
+                      <X className="w-4 h-4" />
                     </button>
-                  ) : null}
-                  {/* WhatsApp */}
-                  <a href={`https://wa.me/573229132643?text=${buildWaMsg()}`} target="_blank" rel="noreferrer"
-                    className="p-2 rounded-xl text-xs font-poppins flex items-center gap-1.5 transition-colors"
-                    style={{ background: `${PRIMARY}10`, border: `1px solid ${PRIMARY}25`, color: `${PRIMARY}cc` }}>
-                    <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
-                    </svg>
-                    <span className="hidden sm:block text-xs">WhatsApp</span>
-                  </a>
-                  <button onClick={() => setIsOpen(false)}
-                    className="p-2 rounded-xl transition-colors"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.3)" }}
-                    aria-label="Cerrar chat Nova AI">
-                    <X className="w-4 h-4" />
-                  </button>
+                  </div>
                 </div>
               </div>
 
               {/* ── Messages ── */}
-              <div className="flex-1 overflow-y-auto p-5 space-y-4 min-h-0"
-                style={{ scrollbarWidth: "thin", scrollbarColor: "rgba(255,255,255,0.05) transparent" }}>
+              <div
+                className="flex-1 overflow-y-auto p-5 space-y-4 min-h-0"
+                style={{
+                  scrollbarWidth: "thin",
+                  scrollbarColor: "rgba(255,255,255,0.07) transparent",
+                  backgroundImage: "radial-gradient(circle at 50% 0%, rgba(91,61,245,0.04) 0%, transparent 60%)",
+                }}
+              >
                 {messages.map(msg => <MessageBubble key={msg.id} message={msg} convState={convState} />)}
 
                 <AnimatePresence>{isThinking && <ThinkingBubble />}</AnimatePresence>
@@ -1226,7 +1272,7 @@ const ChatbotWidget = () => {
                     <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
                       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
                     </svg>
-                    Confirmar con Ivan · WhatsApp
+                    Contactar IAZR · WhatsApp
                     <ArrowUpRight className="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" />
                   </motion.a>
                 </div>
@@ -1276,8 +1322,9 @@ const ChatbotWidget = () => {
                   </motion.button>
                 </form>
 
-                <p className="text-center text-[9px] font-poppins pb-2" style={{ color: "rgba(255,255,255,0.1)" }}>
-                  Nova AI · Asistente de Ivan Zuñiga (IAZR)
+                {/* Footer caption + safe area */}
+                <p className="text-center text-[9px] font-poppins pb-safe" style={{ color: "rgba(255,255,255,0.1)", paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}>
+                  Nova AI · Powered by IAZR
                 </p>
               </div>
             </motion.div>

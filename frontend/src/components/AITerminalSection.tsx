@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+﻿import { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Terminal, Cpu, Zap, Check, Activity } from "lucide-react";
 
-// ─── Terminal lines definition ────────────────────────────────────────────────
+// â”€â”€â”€ Terminal lines definition â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface TermLine {
   type: "prompt" | "output" | "success" | "info" | "warn" | "blank";
   text: string;
@@ -12,37 +12,37 @@ interface TermLine {
 const SESSIONS: TermLine[][] = [
   [
     { type: "prompt", text: "python agent_runner.py --model gemini-2.5-flash --task classify", delay: 0 },
-    { type: "output", text: "▶  Initializing IAZR Agent v2.1 ...", delay: 600 },
-    { type: "info",   text: "✦  Conectando a Gemini 2.5 Flash endpoint...", delay: 1100 },
-    { type: "output", text: "✦  Cargando base de conocimiento (1,482 docs)...", delay: 1600 },
-    { type: "success",text: "✔  Modelo listo · latencia: 312ms", delay: 2200 },
+    { type: "output", text: "â–¶  Initializing IAZR Agent v2.1 ...", delay: 600 },
+    { type: "info",   text: "âœ¦  Conectando a Gemini 2.5 Flash endpoint...", delay: 1100 },
+    { type: "output", text: "âœ¦  Cargando base de conocimiento (1,482 docs)...", delay: 1600 },
+    { type: "success",text: "âœ”  Modelo listo Â· latencia: 312ms", delay: 2200 },
     { type: "blank",  text: "", delay: 2500 },
-    { type: "prompt", text: "agent.run('clasifica las quejas del último sprint')", delay: 2700 },
-    { type: "output", text: "▶  Procesando 87 documentos...", delay: 3300 },
-    { type: "output", text: "▶  Embedding (dim=1536) · batch 4/4  ████████ 100%", delay: 3800 },
-    { type: "info",   text: "✦  Clusters detectados: Performance (34%), Bug (28%), UX (38%)", delay: 4500 },
-    { type: "success",text: "✔  Reporte generado → informe_sprint_2026.pdf", delay: 5100 },
+    { type: "prompt", text: "agent.run('clasifica las quejas del Ãºltimo sprint')", delay: 2700 },
+    { type: "output", text: "â–¶  Procesando 87 documentos...", delay: 3300 },
+    { type: "output", text: "â–¶  Embedding (dim=1536) Â· batch 4/4  â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ 100%", delay: 3800 },
+    { type: "info",   text: "âœ¦  Clusters detectados: Performance (34%), Bug (28%), UX (38%)", delay: 4500 },
+    { type: "success",text: "âœ”  Reporte generado â†’ informe_sprint_2026.pdf", delay: 5100 },
     { type: "blank",  text: "", delay: 5400 },
-    { type: "prompt", text: "# Next: n8n webhook auto-sends report to Slack ✦", delay: 5600 },
-    { type: "success",text: "✔  Webhook disparado · canal #product-analytics notificado", delay: 6200 },
+    { type: "prompt", text: "# Next: n8n webhook auto-sends report to Slack âœ¦", delay: 5600 },
+    { type: "success",text: "âœ”  Webhook disparado Â· canal #product-analytics notificado", delay: 6200 },
   ],
   [
     { type: "prompt", text: "langchain_rag.py --source crm_data --query 'leads calientes'", delay: 0 },
-    { type: "output", text: "▶  Cargando RAG pipeline (LangChain + Chroma DB)...", delay: 700 },
-    { type: "info",   text: "✦  Vectorizando 3,241 registros CRM...", delay: 1300 },
-    { type: "output", text: "▶  Retrieval top-8 chunks · similarity > 0.82", delay: 1900 },
-    { type: "success",text: "✔  Contexto enriquecido con historial de interacciones", delay: 2500 },
+    { type: "output", text: "â–¶  Cargando RAG pipeline (LangChain + Chroma DB)...", delay: 700 },
+    { type: "info",   text: "âœ¦  Vectorizando 3,241 registros CRM...", delay: 1300 },
+    { type: "output", text: "â–¶  Retrieval top-8 chunks Â· similarity > 0.82", delay: 1900 },
+    { type: "success",text: "âœ”  Contexto enriquecido con historial de interacciones", delay: 2500 },
     { type: "blank",  text: "", delay: 2800 },
     { type: "prompt", text: "llm.invoke('redacta email de seguimiento personalizado')", delay: 3000 },
-    { type: "output", text: "▶  Tokens procesados: 1,847  ·  costo: $0.0012 USD", delay: 3700 },
-    { type: "info",   text: "✦  Sentimiento detectado: positivo (84%) · acción: formalizar", delay: 4400 },
-    { type: "success",text: "✔  Email generado y enviado vía SendGrid API", delay: 5000 },
+    { type: "output", text: "â–¶  Tokens procesados: 1,847  Â·  costo: $0.0012 USD", delay: 3700 },
+    { type: "info",   text: "âœ¦  Sentimiento detectado: positivo (84%) Â· acciÃ³n: formalizar", delay: 4400 },
+    { type: "success",text: "âœ”  Email generado y enviado vÃ­a SendGrid API", delay: 5000 },
     { type: "blank",  text: "", delay: 5300 },
-    { type: "success",text: "✔  Pipeline completado · ahorro estimado: 3.2h/día", delay: 5600 },
+    { type: "success",text: "âœ”  Pipeline completado Â· ahorro estimado: 3.2h/dÃ­a", delay: 5600 },
   ],
 ];
 
-// ─── Animated metric counter ──────────────────────────────────────────────────
+// â”€â”€â”€ Animated metric counter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const MetricCounter = ({ target, unit, label, color }: { target: number; unit: string; label: string; color: string }) => {
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -78,7 +78,7 @@ const MetricCounter = ({ target, unit, label, color }: { target: number; unit: s
   );
 };
 
-// ─── Main Component ────────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const AITerminalSection = () => {
   const [sessionIdx, setSessionIdx] = useState(0);
   const [visibleLines, setVisibleLines] = useState<TermLine[]>([]);
@@ -159,11 +159,11 @@ const AITerminalSection = () => {
               <Terminal className="w-4 h-4" style={{ color: "#FFFFFF" }} />
             </div>
             <span className="text-xs font-poppins text-white uppercase tracking-[0.3em] font-bold">
-              IA en Acción · Live Demo
+              IA en AcciÃ³n Â· Live Demo
             </span>
           </div>
           <h2 className="text-4xl md:text-6xl font-sora leading-tight" style={{ color: "#f0ede8" }}>
-            Así trabaja la{" "}
+            AsÃ­ trabaja la{" "}
             <span className="aurora-text">inteligencia artificial</span>
             <br />en tus procesos
           </h2>
@@ -181,7 +181,7 @@ const AITerminalSection = () => {
           >
             {/* Session switcher */}
             <div className="flex gap-2 mb-3">
-              {["Análisis & Reporte IA", "RAG + CRM Automation"].map((label, i) => (
+              {["AnÃ¡lisis & Reporte IA", "RAG + CRM Automation"].map((label, i) => (
                 <button
                   key={i}
                   onClick={() => { setSessionIdx(i); runSession(i); }}
@@ -232,7 +232,7 @@ const AITerminalSection = () => {
                       className="terminal-line flex gap-2"
                     >
                       {line.type === "prompt" && (
-                        <span className="terminal-prompt flex-shrink-0">›</span>
+                        <span className="terminal-prompt flex-shrink-0">â€º</span>
                       )}
                       <span style={{ color: getLineColor(line.type) }}>{line.text}</span>
                     </motion.div>
@@ -240,7 +240,7 @@ const AITerminalSection = () => {
                 ))}
                 {!isDone && visibleLines.length > 0 && (
                   <div className="terminal-line flex gap-2">
-                    <span className="terminal-prompt">›</span>
+                    <span className="terminal-prompt">â€º</span>
                     <span className="terminal-cursor" />
                   </div>
                 )}
@@ -250,8 +250,8 @@ const AITerminalSection = () => {
                     animate={{ opacity: 1 }}
                     className="mt-3 flex items-center gap-2 terminal-line"
                   >
-                    <span className="terminal-prompt">›</span>
-                    <span className="terminal-success">Pipeline ejecutado con éxito ·</span>
+                    <span className="terminal-prompt">â€º</span>
+                    <span className="terminal-success">Pipeline ejecutado con Ã©xito Â·</span>
                     <span className="terminal-cursor" />
                   </motion.div>
                 )}
@@ -270,7 +270,7 @@ const AITerminalSection = () => {
               <div className="flex items-center gap-2 mb-5">
                 <Activity className="w-4 h-4" style={{ color: "#FFFFFF" }} />
                 <span className="text-[10px] font-poppins uppercase tracking-widest font-bold" style={{ color: "#FFFFFF" }}>
-                  Métricas en Producción
+                  MÃ©tricas en ProducciÃ³n
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-4">
@@ -284,8 +284,8 @@ const AITerminalSection = () => {
             <div className="grid gap-3">
               {[
                 { icon: <Cpu className="w-4 h-4" />, color: "#8B5CF6", title: "Arquitecturas Multi-Agente", desc: "Sistemas donde varios agentes LLM colaboran en paralelo para resolver tareas complejas." },
-                { icon: <Zap className="w-4 h-4" />, color: "#FFFFFF", title: "Pipelines RAG de Alta Precisión", desc: "Recuperación semántica sobre tus datos privados con embeddings y vectores." },
-                { icon: <Check className="w-4 h-4" />, color: "#22c55e", title: "Evaluación y Fine-tuning", desc: "Métricas de calidad, RLHF y ajuste fino para máxima precisión en tu dominio." },
+                { icon: <Zap className="w-4 h-4" />, color: "#FFFFFF", title: "Pipelines RAG de Alta PrecisiÃ³n", desc: "RecuperaciÃ³n semÃ¡ntica sobre tus datos privados con embeddings y vectores." },
+                { icon: <Check className="w-4 h-4" />, color: "#22c55e", title: "EvaluaciÃ³n y Fine-tuning", desc: "MÃ©tricas de calidad, RLHF y ajuste fino para mÃ¡xima precisiÃ³n en tu dominio." },
               ].map((item, i) => (
                 <motion.div
                   key={i}
@@ -307,7 +307,7 @@ const AITerminalSection = () => {
             </div>
 
             <motion.a
-              href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20quiero%20implementar%20un%20pipeline%20de%20IA%20en%20mi%20empresa."
+              href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20quiero%20implementar%20un%20pipeline%20de%20IA%20en%20mi%20empresa."
               target="_blank" rel="noreferrer"
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
               className="btn-glow flex items-center justify-center gap-2 py-4 rounded-2xl bg-primary text-primary-foreground font-sora font-bold text-sm uppercase tracking-wider"

@@ -452,7 +452,7 @@ class Y extends MeshPhysicalMaterial {
           vec3 scatteringHalf = normalize(directLight.direction + (geometryNormal * thicknessDistortion));
           float scatteringDot = pow(saturate(dot(geometryViewDir, -scatteringHalf)), thicknessPower) * thicknessScale;
           #ifdef USE_COLOR
-            vec3 scatteringIllu = (scatteringDot + thicknessAmbient) * vColor;
+            vec3 scatteringIllu = (scatteringDot + thicknessAmbient) * vColor.rgb;
           #else
             vec3 scatteringIllu = (scatteringDot + thicknessAmbient) * diffuse;
           #endif
@@ -546,16 +546,16 @@ function createPointerData(options: Partial<PointerData> & { domElement: HTMLEle
       document.body.addEventListener('click', onPointerClick as EventListener);
 
       document.body.addEventListener('touchstart', onTouchStart as EventListener, {
-        passive: false
+        passive: true  // passive:true so we never block scroll from document level
       });
       document.body.addEventListener('touchmove', onTouchMove as EventListener, {
-        passive: false
+        passive: true  // passive:true — only the canvas itself blocks scroll when touched
       });
       document.body.addEventListener('touchend', onTouchEnd as EventListener, {
-        passive: false
+        passive: true
       });
       document.body.addEventListener('touchcancel', onTouchEnd as EventListener, {
-        passive: false
+        passive: true
       });
       globalPointerActive = true;
     }
@@ -572,6 +572,7 @@ function createPointerData(options: Partial<PointerData> & { domElement: HTMLEle
       document.body.removeEventListener('touchend', onTouchEnd as EventListener);
       document.body.removeEventListener('touchcancel', onTouchEnd as EventListener);
       globalPointerActive = false;
+
     }
   };
   return defaultData;
@@ -599,13 +600,17 @@ function processPointerInteraction() {
   }
 }
 
+// Track whether the initial touch started inside a canvas element
+let touchStartedInside = false;
+
 function onTouchStart(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
     pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
+    touchStartedInside = false;
     for (const [elem, data] of pointerMap) {
       const rect = elem.getBoundingClientRect();
       if (isInside(rect)) {
+        touchStartedInside = true;
         data.touching = true;
         updatePointerData(data, rect);
         if (!data.hover) {
@@ -620,7 +625,8 @@ function onTouchStart(e: TouchEvent) {
 
 function onTouchMove(e: TouchEvent) {
   if (e.touches.length > 0) {
-    e.preventDefault();
+    // Only update ballpit physics — do NOT preventDefault unless touch started in canvas
+    // This preserves native vertical scroll on the rest of the page
     pointerPosition.set(e.touches[0].clientX, e.touches[0].clientY);
     for (const [elem, data] of pointerMap) {
       const rect = elem.getBoundingClientRect();
@@ -801,7 +807,9 @@ function createBallpit(canvas: HTMLCanvasElement, config: any = {}): CreateBallp
   const intersectionPoint = new Vector3();
   let isPaused = false;
 
-  canvas.style.touchAction = 'none';
+  // Allow vertical panning so the page can still scroll when user swipes vertically
+  // Only horizontal / pinch gestures on the canvas are handled by Ballpit
+  canvas.style.touchAction = 'pan-y';
   canvas.style.userSelect = 'none';
   (canvas.style as any).webkitUserSelect = 'none';
 

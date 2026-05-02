@@ -10,7 +10,7 @@ const aiCapabilities = [
     icon: <Brain className="w-8 h-8" />,
     title: "LLMs & Agentes Autónomos",
     desc: "Integración de modelos de lenguaje (GPT-4, Gemini, Llama) que toman decisiones, ejecutan tareas y aprenden de la conversación.",
-    color: "#5337E5", // Vibrant Purple
+    color: "#5337E5",
   },
   {
     icon: <Zap className="w-8 h-8" />,
@@ -22,34 +22,34 @@ const aiCapabilities = [
     icon: <BarChart3 className="w-8 h-8" />,
     title: "Predicción & Analytics",
     desc: "Modelos de Machine Learning que anticipan tendencias, optimizan precios y detectan anomalías en tiempo real.",
-    color: "#3B28CC", // Glow Purple
+    color: "#A855F7",
   },
   {
     icon: <Globe2 className="w-8 h-8" />,
     title: "IA en tu Plataforma Web",
     desc: "Asistentes integrados, búsqueda semántica y personalización de contenido impulsada por IA directamente en tu aplicación.",
-    color: "#18181A", // Anthracite
+    color: "#6366F1",
   },
   {
     icon: <ShieldCheck className="w-8 h-8" />,
     title: "Ciberseguridad con IA",
     desc: "Detección de amenazas en tiempo real, análisis de comportamientos anómalos y hardening asistido por modelos especializados.",
-    color: "#1D1B50", // Navy Blue
+    color: "#EC4899",
   },
 ];
 
-// ─── Skill Constellation (Canvas D3-like) ────────────────────────────────────
+// ── Skill Constellation (Canvas) ───────────────────────────────────────────────
 const SkillConstellation = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const skills = useMemo(() => [
-    { label: "Gemini", x: 0.5, y: 0.22, size: 14, color: "#5337E5", connections: [1, 2, 4] },
-    { label: "React",  x: 0.2, y: 0.45, size: 12, color: "#FFFFFF", connections: [0, 3, 5] },
-    { label: "Python", x: 0.78, y: 0.42, size: 13, color: "#3B28CC", connections: [0, 4, 6] },
-    { label: "Node",   x: 0.22, y: 0.72, size: 10, color: "#1D1B50", connections: [1, 5] },
-    { label: "n8n",    x: 0.78, y: 0.7, size: 10, color: "#5337E5", connections: [2, 6] },
-    { label: "AWS",    x: 0.5, y: 0.82, size: 11, color: "#3B28CC", connections: [3, 4] },
-    { label: "SQL",    x: 0.5, y: 0.54, size: 9, color: "#FFFFFF", connections: [2, 5] },
+    { label: "Gemini", x: 0.5,  y: 0.22, size: 14, color: "#5337E5", connections: [1, 2, 4] },
+    { label: "React",  x: 0.2,  y: 0.45, size: 12, color: "#FFFFFF", connections: [0, 3, 5] },
+    { label: "Python", x: 0.78, y: 0.42, size: 13, color: "#A855F7", connections: [0, 4, 6] },
+    { label: "Node",   x: 0.22, y: 0.72, size: 10, color: "#6366F1", connections: [1, 5] },
+    { label: "n8n",    x: 0.78, y: 0.7,  size: 10, color: "#5337E5", connections: [2, 6] },
+    { label: "AWS",    x: 0.5,  y: 0.82, size: 11, color: "#EC4899", connections: [3, 4] },
+    { label: "SQL",    x: 0.5,  y: 0.54, size: 9,  color: "#FFFFFF", connections: [2, 5] },
   ], []);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const SkillConstellation = () => {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    canvas.width = canvas.offsetWidth;
+    canvas.width  = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
     let pulse = 0;
@@ -73,7 +73,7 @@ const SkillConstellation = () => {
         py: s.y * canvas.height,
       }));
 
-      // Draw connections
+      // Connections
       pts.forEach((a, i) => {
         a.connections.forEach(j => {
           const b = pts[j];
@@ -87,8 +87,8 @@ const SkillConstellation = () => {
           ctx.lineTo(b.px, b.py);
           ctx.stroke();
 
-          // Traveling dot on connection
-          const t = (Math.sin(pulse + i * 0.8) * 0.5 + 0.5);
+          // Traveling dot
+          const t = Math.sin(pulse + i * 0.8) * 0.5 + 0.5;
           const dotX = a.px + (b.px - a.px) * t;
           const dotY = a.py + (b.py - a.py) * t;
           ctx.beginPath();
@@ -98,11 +98,9 @@ const SkillConstellation = () => {
         });
       });
 
-      // Draw nodes
+      // Nodes
       pts.forEach((p, i) => {
         const breathe = Math.sin(pulse * 1.2 + i * 0.7) * 2;
-
-        // Glow
         const grd = ctx.createRadialGradient(p.px, p.py, 0, p.px, p.py, p.size * 3 + breathe);
         grd.addColorStop(0, `${p.color}40`);
         grd.addColorStop(1, "transparent");
@@ -111,7 +109,6 @@ const SkillConstellation = () => {
         ctx.fillStyle = grd;
         ctx.fill();
 
-        // Node circle
         ctx.beginPath();
         ctx.arc(p.px, p.py, p.size + breathe * 0.4, 0, Math.PI * 2);
         ctx.fillStyle = `${p.color}25`;
@@ -120,7 +117,6 @@ const SkillConstellation = () => {
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
-        // Label
         ctx.fillStyle = "rgba(240,237,232,0.7)";
         ctx.font = `bold 10px 'Poppins', sans-serif`;
         ctx.textAlign = "center";
@@ -134,13 +130,15 @@ const SkillConstellation = () => {
   }, [skills]);
 
   return (
-    <canvas ref={canvasRef}
+    <canvas
+      ref={canvasRef}
       className="w-full h-full"
-      style={{ filter: "drop-shadow(0 0 20px rgba(255,255,255,0.08))" }} />
+      style={{ filter: "drop-shadow(0 0 20px rgba(255,255,255,0.08))" }}
+    />
   );
 };
 
-
+// ── Main Section ──────────────────────────────────────────────────────────────
 const AISection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
@@ -148,14 +146,20 @@ const AISection = () => {
   const [focusedCap, setFocusedCap] = useState<number | null>(null);
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden border-t section-tone-deep"
-      style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+    <section
+      ref={ref}
+      id="ai-section"
+      className="relative py-24 md:py-32 overflow-hidden border-t"
+      style={{ borderColor: "rgba(124,58,237,0.1)", background: "linear-gradient(180deg, #09090B 0%, #0b0a12 100%)" }}
+    >
       {/* Central glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[130px] pointer-events-none"
-        style={{ background: "rgba(255,255,255,0.03)" }} />
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none"
+        style={{ background: "rgba(83,55,229,0.10)" }}
+      />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
-        {/* Header with SectionLabel + TextReveal */}
+        {/* Header */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
           <motion.div
             initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }}
@@ -170,17 +174,21 @@ const AISection = () => {
               </span>
             </h2>
           </motion.div>
-          <motion.div style={{ y }}
+          <motion.div
+            style={{ y }}
             initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.2 }}
           >
-            <p className="font-poppins leading-relaxed text-lg mb-8"
-              style={{ color: "rgba(240,237,232,0.55)" }}>
-              La inteligencia artificial no es el futuro — es la ventaja competitiva de hoy. Implemento soluciones de IA que generan valor real: más eficiencia, mejores decisiones y nuevas fuentes de ingreso para tu negocio.
+            <p className="font-poppins leading-relaxed text-lg mb-8" style={{ color: "rgba(240,237,232,0.55)" }}>
+              La inteligencia artificial no es el futuro — es la ventaja competitiva de hoy.
+              Implementamos soluciones de IA que generan valor real: más eficiencia, mejores
+              decisiones y nuevas fuentes de ingreso para tu negocio.
             </p>
-            <a href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%2C%20quiero%20implementar%20IA%20en%20mi%20negocio."
+            <a
+              href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20quiero%20implementar%20IA%20en%20mi%20negocio."
               target="_blank" rel="noreferrer"
-              className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-primary text-primary-foreground font-sora font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all">
+              className="inline-flex items-center gap-3 px-7 py-4 rounded-full bg-primary text-primary-foreground font-sora font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all"
+            >
               Implementar IA en mi negocio <ArrowRight className="w-4 h-4" />
             </a>
           </motion.div>
@@ -188,13 +196,11 @@ const AISection = () => {
 
         {/* Two column: Cards + Constellation */}
         <div className="grid lg:grid-cols-2 gap-8 items-start">
-          {/* Capability cards — with Bento Focus */}
-          <div
-            className="grid gap-4"
-            onMouseLeave={() => setFocusedCap(null)}
-          >
+          {/* Capability cards */}
+          <div className="grid gap-4" onMouseLeave={() => setFocusedCap(null)}>
             {aiCapabilities.map((cap, i) => (
-              <motion.div key={i}
+              <motion.div
+                key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
@@ -208,11 +214,13 @@ const AISection = () => {
                 className="group flex items-start gap-4 p-5 rounded-2xl cursor-default transition-colors duration-300"
                 style={{
                   background: focusedCap === i ? `${cap.color}08` : "rgba(255,255,255,0.02)",
-                  border: `1px solid ${focusedCap === i ? cap.color + '25' : 'rgba(255,255,255,0.05)'}`,
+                  border: `1px solid ${focusedCap === i ? cap.color + "25" : "rgba(255,255,255,0.05)"}`,
                 }}
               >
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                  style={{ background: `${cap.color}15`, border: `1.5px solid ${cap.color}30`, color: cap.color }}>
+                <div
+                  className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                  style={{ background: `${cap.color}15`, border: `1.5px solid ${cap.color}30`, color: cap.color }}
+                >
                   {cap.icon}
                 </div>
                 <div>
@@ -245,11 +253,12 @@ const AISection = () => {
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { n: "GPT-4 / Gemini", l: "Modelos integrados" },
-            { n: "n8n + Python", l: "Stack de automatización" },
-            { n: "RAG + Agents", l: "Técnicas avanzadas" },
-            { n: "24/7", l: "Disponibilidad del sistema" },
+            { n: "n8n + Python",   l: "Stack de automatización" },
+            { n: "RAG + Agents",   l: "Técnicas avanzadas" },
+            { n: "24/7",           l: "Disponibilidad del sistema" },
           ].map((s, i) => (
-            <motion.div key={i}
+            <motion.div
+              key={i}
               initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }} transition={{ delay: 0.15 + i * 0.1 }}
               className="bento-card text-center"

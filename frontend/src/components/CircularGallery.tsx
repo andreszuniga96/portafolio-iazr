@@ -117,6 +117,16 @@ class App {
   camera!: Camera; scene!: Transform; planeGeometry!: Plane; medias: Media[] = [];
   screen!: any; viewport!: any; isDown = false; start = 0; scrollSpeed: number;
   onCheckDebounce!: () => void;
+  // Stored bound handlers for proper cleanup
+  _onResize!: () => void;
+  _onWheel!: (e: any) => void;
+  _onMouseDown!: (e: any) => void;
+  _onMouseMove!: (e: any) => void;
+  _onMouseUp!: () => void;
+  _onTouchStart!: (e: any) => void;
+  _onTouchMove!: (e: any) => void;
+  _onTouchEnd!: () => void;
+
 
   constructor(container: HTMLElement, opts: any) {
     this.container = container;
@@ -132,14 +142,26 @@ class App {
     this.planeGeometry = new Plane(this.gl, { heightSegments: 50, widthSegments: 100 });
     this.createMedias(opts);
     this.update();
-    window.addEventListener('resize', this.onResize.bind(this));
-    window.addEventListener('wheel', this.onWheel.bind(this));
-    window.addEventListener('mousedown', this.onTouchDown.bind(this));
-    window.addEventListener('mousemove', this.onTouchMove.bind(this));
-    window.addEventListener('mouseup', this.onTouchUp.bind(this));
-    window.addEventListener('touchstart', this.onTouchDown.bind(this));
-    window.addEventListener('touchmove', this.onTouchMove.bind(this));
-    window.addEventListener('touchend', this.onTouchUp.bind(this));
+    // Global: resize + wheel (passive, don't block scroll)
+    this._onResize = this.onResize.bind(this);
+    this._onWheel = this.onWheel.bind(this);
+    this._onMouseDown = this.onTouchDown.bind(this);
+    this._onMouseMove = this.onTouchMove.bind(this);
+    this._onMouseUp = this.onTouchUp.bind(this);
+    this._onTouchStart = this.onTouchDown.bind(this);
+    this._onTouchMove = this.onTouchMove.bind(this);
+    this._onTouchEnd = this.onTouchUp.bind(this);
+    window.addEventListener('resize', this._onResize);
+    // Wheel on container (not window) so other sections can scroll
+    container.addEventListener('wheel', this._onWheel, { passive: true });
+    // Mouse drag on container
+    container.addEventListener('mousedown', this._onMouseDown);
+    window.addEventListener('mousemove', this._onMouseMove);
+    window.addEventListener('mouseup', this._onMouseUp);
+    // Touch drag scoped to the container — does NOT block page scroll
+    container.addEventListener('touchstart', this._onTouchStart, { passive: true });
+    container.addEventListener('touchmove', this._onTouchMove, { passive: true });
+    container.addEventListener('touchend', this._onTouchEnd, { passive: true });
   }
 
   createMedias(opts: any) {
@@ -195,9 +217,14 @@ class App {
   }
   destroy() {
     cancelAnimationFrame(this.raf);
-    ['resize','wheel','mousedown','mousemove','mouseup','touchstart','touchmove','touchend'].forEach(ev => {
-      window.removeEventListener(ev, (this as any)[`on${ev.charAt(0).toUpperCase()+ev.slice(1)}`]?.bind(this));
-    });
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('mousemove', this._onMouseMove);
+    window.removeEventListener('mouseup', this._onMouseUp);
+    this.container.removeEventListener('wheel', this._onWheel);
+    this.container.removeEventListener('mousedown', this._onMouseDown);
+    this.container.removeEventListener('touchstart', this._onTouchStart);
+    this.container.removeEventListener('touchmove', this._onTouchMove);
+    this.container.removeEventListener('touchend', this._onTouchEnd);
     const c = this.renderer.gl.canvas as HTMLCanvasElement;
     c.parentNode?.removeChild(c);
   }

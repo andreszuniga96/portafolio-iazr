@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
+﻿import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
-// ─── AI Stack Data ────────────────────────────────────────────────────────────
+// â”€â”€â”€ AI Stack Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 interface AITool {
   name: string;
   category: string;
@@ -18,35 +18,35 @@ const AI_STACK: { group: string; color: string; tools: AITool[] }[] = [
     group: "Modelos de Lenguaje",
     color: "#8B5CF6",
     tools: [
-      { name: "GPT-4o", category: "LLM", logo: "⊛", color: "#10a37f", mastery: 95, projects: 8, desc: "Agentes, RAG y completions avanzadas" },
-      { name: "Gemini 2.5", category: "LLM", logo: "✦", color: "#4285F4", mastery: 92, projects: 6, desc: "Multimodal: texto, código e imagen" },
-      { name: "Llama 3", category: "LLM", logo: "◈", color: "#F97316", mastery: 78, projects: 4, desc: "Despliegue on-premise y fine-tuning" },
-      { name: "Claude 3.5", category: "LLM", logo: "◆", color: "#C87137", mastery: 80, projects: 3, desc: "Razonamiento y análisis de documentos" },
+      { name: "GPT-4o", category: "LLM", logo: "âŠ›", color: "#10a37f", mastery: 95, projects: 8, desc: "Agentes, RAG y completions avanzadas" },
+      { name: "Gemini 2.5", category: "LLM", logo: "âœ¦", color: "#4285F4", mastery: 92, projects: 6, desc: "Multimodal: texto, cÃ³digo e imagen" },
+      { name: "Llama 3", category: "LLM", logo: "â—ˆ", color: "#F97316", mastery: 78, projects: 4, desc: "Despliegue on-premise y fine-tuning" },
+      { name: "Claude 3.5", category: "LLM", logo: "â—†", color: "#C87137", mastery: 80, projects: 3, desc: "Razonamiento y anÃ¡lisis de documentos" },
     ],
   },
   {
-    group: "Frameworks & Orquestación",
+    group: "Frameworks & OrquestaciÃ³n",
     color: "#FFFFFF",
     tools: [
-      { name: "LangChain", category: "Framework", logo: "⬡", color: "#1C7C54", mastery: 96, projects: 12, desc: "Chains, agents y memory management" },
-      { name: "LlamaIndex", category: "RAG", logo: "▲", color: "#F59E0B", mastery: 85, projects: 7, desc: "Indexing y retrieval semántico" },
-      { name: "CrewAI", category: "Agentes", logo: "⚙", color: "#EF4444", mastery: 82, projects: 5, desc: "Equipos de agentes autónomos" },
-      { name: "n8n", category: "Automatización", logo: "⟂", color: "#EA4B71", mastery: 94, projects: 15, desc: "Flujos low-code + webhooks" },
+      { name: "LangChain", category: "Framework", logo: "â¬¡", color: "#1C7C54", mastery: 96, projects: 12, desc: "Chains, agents y memory management" },
+      { name: "LlamaIndex", category: "RAG", logo: "â–²", color: "#F59E0B", mastery: 85, projects: 7, desc: "Indexing y retrieval semÃ¡ntico" },
+      { name: "CrewAI", category: "Agentes", logo: "âš™", color: "#EF4444", mastery: 82, projects: 5, desc: "Equipos de agentes autÃ³nomos" },
+      { name: "n8n", category: "AutomatizaciÃ³n", logo: "âŸ‚", color: "#EA4B71", mastery: 94, projects: 15, desc: "Flujos low-code + webhooks" },
     ],
   },
   {
     group: "Infraestructura IA",
     color: "#22c55e",
     tools: [
-      { name: "AWS Bedrock", category: "Cloud IA", logo: "▣", color: "#FF9900", mastery: 80, projects: 5, desc: "Foundation Models en producción" },
-      { name: "Vertex AI", category: "Cloud IA", logo: "⬤", color: "#4285F4", mastery: 75, projects: 4, desc: "MLOps + Gemini en GCP" },
-      { name: "Pinecone", category: "Vector DB", logo: "◉", color: "#00C9B1", mastery: 88, projects: 8, desc: "Embeddings y búsqueda semántica" },
-      { name: "HuggingFace", category: "Modelos", logo: "🤗", color: "#FFD21E", mastery: 84, projects: 6, desc: "Fine-tuning y model hub" },
+      { name: "AWS Bedrock", category: "Cloud IA", logo: "â–£", color: "#FF9900", mastery: 80, projects: 5, desc: "Foundation Models en producciÃ³n" },
+      { name: "Vertex AI", category: "Cloud IA", logo: "â¬¤", color: "#4285F4", mastery: 75, projects: 4, desc: "MLOps + Gemini en GCP" },
+      { name: "Pinecone", category: "Vector DB", logo: "â—‰", color: "#00C9B1", mastery: 88, projects: 8, desc: "Embeddings y bÃºsqueda semÃ¡ntica" },
+      { name: "HuggingFace", category: "Modelos", logo: "ðŸ¤—", color: "#FFD21E", mastery: 84, projects: 6, desc: "Fine-tuning y model hub" },
     ],
   },
 ];
 
-// ─── Tool Card ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Tool Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ToolCard = ({ tool, groupColor, index }: { tool: AITool; groupColor: string; index: number }) => {
   const [hovered, setHovered] = useState(false);
 
@@ -111,7 +111,7 @@ const ToolCard = ({ tool, groupColor, index }: { tool: AITool; groupColor: strin
   );
 };
 
-// ─── Main Component ────────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const AIStackSection = () => {
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -149,7 +149,7 @@ const AIStackSection = () => {
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <span className="text-xs font-poppins text-white uppercase tracking-[0.3em] font-bold block mb-3">
-                Arsenal Tecnológico · IA
+                Arsenal TecnolÃ³gico Â· IA
               </span>
               <h2 className="text-4xl md:text-6xl font-sora leading-tight" style={{ color: "#f0ede8" }}>
                 Las herramientas con las
@@ -162,7 +162,7 @@ const AIStackSection = () => {
               className="hidden md:flex items-center gap-2 text-xs font-poppins uppercase tracking-widest px-5 py-2.5 rounded-full transition-all hover:scale-105"
               style={{ color: "#FFFFFF", border: "1px solid rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.06)" }}
             >
-              Ver en acción <ExternalLink className="w-3 h-3" />
+              Ver en acciÃ³n <ExternalLink className="w-3 h-3" />
             </a>
           </div>
         </motion.div>
@@ -224,14 +224,14 @@ const AIStackSection = () => {
           style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.15)" }}
         >
           <p className="font-sora text-lg text-center md:text-left" style={{ color: "#f0ede8" }}>
-            <span className="aurora-text font-bold">12+ herramientas IA</span> dominadas · deployadas en producción para clientes reales
+            <span className="aurora-text font-bold">12+ herramientas IA</span> dominadas Â· deployadas en producciÃ³n para clientes reales
           </p>
           <a
-            href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20quiero%20saber%20qu%C3%A9%20herramientas%20de%20IA%20aplicar%20a%20mi%20negocio."
+            href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20quiero%20saber%20qu%C3%A9%20herramientas%20de%20IA%20aplicar%20a%20mi%20negocio."
             target="_blank" rel="noreferrer"
             className="flex-shrink-0 px-6 py-3 rounded-full bg-primary text-primary-foreground font-sora font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all whitespace-nowrap"
           >
-            ¿Cuál necesitas? →
+            Â¿CuÃ¡l necesitas? â†’
           </a>
         </motion.div>
       </div>

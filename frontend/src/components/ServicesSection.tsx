@@ -11,11 +11,13 @@ interface Service {
   desc: string;
   fullDesc: string;
   price: string;
+  desdePrice: string;
   tags: string[];
   tagColors: string[];
   ctaText: string;
   num: string;
   featured?: boolean;
+  badge?: string;
 }
 
 const PRIMARY = "#FFFFFF";
@@ -25,13 +27,14 @@ const services: Service[] = [
     num: "01",
     title: "Desarrollo Full-Stack",
     category: "Ingeniería",
-    categoryColor: "#5337E5", // Vibrant Purple
+    categoryColor: "#7C3AED",
     icon: <Code2 className="w-7 h-7" />,
     desc: "Plataformas web escalables con React, Node.js y bases de datos cloud.",
     fullDesc: "Diseño y desarrollo de aplicaciones web completas desde cero. Implemento arquitecturas modernas (microservicios, REST APIs, GraphQL), bases de datos NoSQL y SQL, autenticación segura, despliegue en Vercel/AWS y optimización de rendimiento.",
-    price: "Frontend: $800k – $2.5M COP\nFull-Stack: $4M – $6M COP",
+    price: "Diseño a medida · cotización según alcance",
+    desdePrice: "Cotizar →",
     tags: ["React", "Node.js", "Python", "PostgreSQL", "AWS"],
-    tagColors: ["#3B28CC", "#5337E5", "#1D1B50", "#18181A", "#FFFFFF"],
+    tagColors: ["#7C3AED", "#A855F7", "#6366F1", "#EC4899", "#FFFFFF"],
     ctaText: "Cotizar mi proyecto",
     featured: true,
   },
@@ -39,73 +42,79 @@ const services: Service[] = [
     num: "02",
     title: "IA & Automatización",
     category: "IA",
-    categoryColor: "#3B28CC", // Glow Purple
+    categoryColor: "#EC4899",
     icon: <BrainCircuit className="w-7 h-7" />,
     desc: "Bots, agentes LLM y flujos de automatización para ahorrar tiempo y dinero.",
     fullDesc: "Implemento soluciones de Inteligencia Artificial adaptadas a tu negocio: chatbots con memoria, agentes autónomos que procesan datos, automatizan decisiones y se integran con tus sistemas existentes. Trabajo con OpenAI, Gemini, LangChain y herramientas de RPA.",
-    price: "Desde $3.500.000 COP",
+    price: "Cotización según complejidad del agente",
+    desdePrice: "Cotizar →",
     tags: ["LangChain", "OpenAI", "Gemini", "n8n", "Python"],
-    tagColors: ["#5337E5", "#3B28CC", "#FFFFFF", "#1D1B50", "#18181A"],
+    tagColors: ["#EC4899", "#A855F7", "#7C3AED", "#6366F1", "#FFFFFF"],
     ctaText: "Automatizar mi negocio",
     featured: true,
+    badge: "⭐ Más Solicitado",
   },
   {
     num: "03",
-    title: "Mentoría Tecnológica",
-    category: "Educación",
-    categoryColor: "#1D1B50", // Navy Blue
-    icon: <GraduationCap className="w-7 h-7" />,
-    desc: "Sesiones 1 a 1 para acelerar tu aprendizaje en programación o IA.",
-    fullDesc: "Sesiones personalizadas de mentoría técnica por videollamada. Analizo tu nivel actual, identifico puntos débiles y creo un plan de estudio o proyecto práctico a medida.",
-    price: "$60.000 – $80.000 COP / hora\n(Pago previo: Nequi, DaviPlata)",
-    tags: ["1 a 1", "Google Meet", "Full-Stack", "IA"],
-    tagColors: ["#1D1B50", "#5337E5", "#3B28CC", "#18181A"],
-    ctaText: "Reservar sesión",
-  },
-  {
-    num: "04",
-    title: "Ciberseguridad",
-    category: "Infraestructura",
-    categoryColor: "#18181A", // Anthracite
-    icon: <ShieldAlert className="w-7 h-7" />,
-    desc: "Auditorías, hardening y arquitecturas Zero-Trust para proteger tus sistemas.",
-    fullDesc: "Evaluación integral de la seguridad de tus sistemas: pentesting de aplicaciones web, hardening de servidores Linux, análisis de vulnerabilidades y diseño de políticas Zero-Trust.",
-    price: "Auditoría: Desde $800.000 COP",
-    tags: ["Pentesting", "Linux", "Zero-Trust", "OWASP"],
-    tagColors: ["#3B28CC", "#1D1B50", "#5337E5", "#18181A"],
-    ctaText: "Auditar mi sistema",
-  },
-  {
-    num: "05",
     title: "Analítica de Datos",
     category: "Big Data",
-    categoryColor: "#3B28CC",
+    categoryColor: "#6366F1",
     icon: <LineChart className="w-7 h-7" />,
     desc: "Dashboards, modelos predictivos y storytelling de datos para decisiones.",
     fullDesc: "Transformo datos en ventajas competitivas. Construyo pipelines ETL, dashboards interactivos, modelos de predicción y reportes ejecutivos.",
-    price: "A cotizar según alcance",
+    price: "Cotización según volumen de datos",
+    desdePrice: "Cotizar →",
     tags: ["Power BI", "Python", "SQL", "Scikit-learn"],
-    tagColors: ["#1D1B50", "#5337E5", "#3B28CC", "#18181A"],
+    tagColors: ["#6366F1", "#7C3AED", "#A855F7", "#EC4899"],
     ctaText: "Analizar mis datos",
+  },
+  {
+    num: "04",
+    title: "Mentoría Tecnológica",
+    category: "Educación",
+    categoryColor: "#A855F7",
+    icon: <GraduationCap className="w-7 h-7" />,
+    desc: "Sesiones 1 a 1 para acelerar tu aprendizaje en programación o IA.",
+    fullDesc: "Sesiones personalizadas de mentoría técnica por videollamada. Analizo tu nivel actual, identifico puntos débiles y creo un plan de estudio o proyecto práctico a medida.",
+    price: "Cotización por sesión o paquete",
+    desdePrice: "Cotizar →",
+    tags: ["1 a 1", "Google Meet", "Full-Stack", "IA"],
+    tagColors: ["#A855F7", "#7C3AED", "#6366F1", "#EC4899"],
+    ctaText: "Reservar sesión",
+  },
+  {
+    num: "05",
+    title: "Ciberseguridad",
+    category: "Infraestructura",
+    categoryColor: "#F472B6",
+    icon: <ShieldAlert className="w-7 h-7" />,
+    desc: "Auditorías, hardening y arquitecturas Zero-Trust para proteger tus sistemas.",
+    fullDesc: "Evaluación integral de la seguridad de tus sistemas: pentesting de aplicaciones web, hardening de servidores Linux, análisis de vulnerabilidades y diseño de políticas Zero-Trust.",
+    price: "Cotización según tamaño del sistema",
+    desdePrice: "Cotizar →",
+    tags: ["Pentesting", "Linux", "Zero-Trust", "OWASP"],
+    tagColors: ["#F472B6", "#EC4899", "#A855F7", "#7C3AED"],
+    ctaText: "Auditar mi sistema",
   },
   {
     num: "06",
     title: "Formulación MGA",
     category: "Consultoría",
-    categoryColor: "#5337E5",
+    categoryColor: "#8B5CF6",
     icon: <Briefcase className="w-7 h-7" />,
     desc: "Estructuración de proyectos de inversión pública bajo la metodología MGA.",
     fullDesc: "Consultoría especializada en formulación y evaluación de proyectos del sector público bajo la Metodología General Ajustada. Incluye diagnóstico, árbol de problemas, cadena de valor y viabilidad.",
-    price: "A cotizar (según alcance)",
+    price: "Cotización personalizada",
+    desdePrice: "Cotizar",
     tags: ["MGA", "DNP", "Inversión Pública", "Viabilidad"],
-    tagColors: ["#18181A", "#3B28CC", "#1D1B50", "#5337E5"],
+    tagColors: ["#8B5CF6", "#7C3AED", "#A855F7", "#6366F1"],
     ctaText: "Formular mi proyecto",
   },
 ];
 
 // ── Service Modal ─────────────────────────────────────────────────────────────
 const ServiceModal = ({ service, onClose }: { service: Service; onClose: () => void }) => {
-  const waMsg = encodeURIComponent(`Hola Ivan Zuñiga 👋, quiero cotizar el servicio de *${service.title}*.\n\n¿Podemos agendar una sesión?`);
+  const waMsg = encodeURIComponent(`Hola IAZR 👋, quiero cotizar el servicio de *${service.title}*.\n\n¿Podemos agendar una sesión?`);
   return (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -149,10 +158,11 @@ const ServiceModal = ({ service, onClose }: { service: Service; onClose: () => v
         </p>
 
         <div className="p-4 rounded-2xl mb-6" style={{ background: `${PRIMARY}08`, border: `1px solid ${PRIMARY}20` }}>
-          <p className="text-[10px] font-poppins uppercase tracking-widest font-bold mb-2" style={{ color: PRIMARY }}>Inversión</p>
+          <p className="text-[10px] font-poppins uppercase tracking-widest font-bold mb-2" style={{ color: PRIMARY }}>Inversión Referencial</p>
           {service.price.split("\n").map((line, i) => (
             <p key={i} className="font-sora text-base" style={{ color: "#f0ede8" }}>{line}</p>
           ))}
+          <p className="text-[10px] font-poppins mt-2" style={{ color: 'rgba(240,237,232,0.35)' }}>El precio final se confirma en reunión de kickoff gratuita.</p>
         </div>
 
         <div className="flex flex-wrap gap-1.5 mb-6">
@@ -249,11 +259,21 @@ const ServiceCard = ({ service, index, onClick, isFocused, isDimmed }: {
             {service.num}
           </div>
 
+          {/* Badge */}
+          {service.badge && (
+            <div className="absolute top-5 left-5 z-10">
+              <span className="text-[9px] font-outfit font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                style={{ background: `${service.categoryColor}20`, border: `1px solid ${service.categoryColor}40`, color: service.categoryColor }}>
+                {service.badge}
+              </span>
+            </div>
+          )}
+
           {/* Icon */}
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 relative z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
             style={{
-              background: `${service.categoryColor}15`,
-              border: `1.5px solid ${service.categoryColor}30`,
+              background: `${service.categoryColor}18`,
+              border: `1.5px solid ${service.categoryColor}35`,
               color: service.categoryColor,
             }}>
             {service.icon}
@@ -289,8 +309,8 @@ const ServiceCard = ({ service, index, onClick, isFocused, isDimmed }: {
             <span className="text-white font-outfit text-xs uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 flex items-center gap-1.5">
               Explorar <ArrowUpRight className="w-3.5 h-3.5" />
             </span>
-            <span className="text-xs font-outfit" style={{ color: "rgba(255,255,255,0.2)" }}>
-              {service.price.split("\n")[0].length > 22 ? service.price.split("\n")[0].slice(0, 22) + "…" : service.price.split("\n")[0]}
+            <span className="text-xs font-outfit font-semibold" style={{ color: service.categoryColor, opacity: 0.8 }}>
+              {service.desdePrice}
             </span>
           </div>
         </div>
@@ -368,7 +388,7 @@ const ServicesSection = () => {
             className="text-center mt-14"
           >
             <a
-              href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20cotizar%20un%20servicio."
+              href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20cotizar%20un%20servicio."
               target="_blank" rel="noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-sora font-semibold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95"
               style={{ border: "1px solid rgba(255,255,255,0.3)", color: "#FFFFFF", background: "rgba(255,255,255,0.06)" }}

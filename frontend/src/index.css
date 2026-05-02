@@ -32,6 +32,7 @@
     --muted:           223 12% 70%;       /* #A7ADBF */
     --stroke:          226 22% 18%;       /* sutil, alineado a cosmic */
 
+<<<<<<< HEAD:frontend/src/index.css
     /* ── Lunar Accents (Espacial Minimalista) ── */
     --moon:            226 100% 89%;      /* #C7D2FE — acento principal icy-blue */
     --moon-soft:       228 60% 75%;       /* #A8B5E5 — moon hover */
@@ -39,6 +40,15 @@
     --primary-foreground: 0 0% 98%;
     --primary-vivid:   var(--moon);       /* alias: vivid ahora = moon */
     --amber:           226 80% 70%;       /* alias deprecado: ahora es un moon-light */
+=======
+    /* ── Primary — Electric Violet (Vivid & Energetic) ── */
+    --primary:         262 84% 58%;       /* #7C3AED — Electric Violet */
+    --primary-foreground: 0 0% 98%;
+    --primary-vivid:   270 100% 68%;      /* #A855F7 — hover/accent */
+    --accent-indigo:   239 84% 67%;       /* #6366F1 — indigo accent */
+    --accent-pink:     330 81% 60%;       /* #EC4899 — pink pop */
+    --amber:           231 66% 39%;       /* #2232A8 */
+>>>>>>> 806e164 (Quinta modificacion):src/index.css
 
     /* ── Aliases for shadcn ── */
     --background:      var(--bg);
@@ -65,6 +75,7 @@
     --font-modern:  'Outfit', sans-serif;
     --font-mono:    'JetBrains Mono', monospace;
 
+<<<<<<< HEAD:frontend/src/index.css
     /* ── Raw refs for JS/Canvas (Espacial Minimalista) ── */
     --primary-color:  #7C66FF;            /* cosmic violet */
     --primary-glow:   rgba(199, 210, 254, 0.22);   /* moon glow */
@@ -78,6 +89,17 @@
     --cosmic-color:   #1A1D2E;
     --amber-color:    #C7D2FE;            /* deprecated alias = moon */
     --amber-glow:     rgba(199, 210, 254, 0.18);
+=======
+    /* ── Raw refs for JS/Canvas ── */
+    --primary-color:   #7C3AED;
+    --primary-glow:    rgba(124, 58, 237, 0.35);
+    --primary-subtle:  rgba(124, 58, 237, 0.10);
+    --primary-vivid-color: #A855F7;
+    --accent-indigo-color: #6366F1;
+    --accent-pink-color:   #EC4899;
+    --amber-color:     #2232A8;
+    --amber-glow:      rgba(34, 50, 168, 0.2);
+>>>>>>> 806e164 (Quinta modificacion):src/index.css
 
     /* ── Glass tokens ── */
     --glass-bg:     rgba(255, 255, 255, 0.022);
@@ -379,6 +401,7 @@
     z-index: -1;
   }
 
+<<<<<<< HEAD:frontend/src/index.css
   /* ══ AURORA TEXT — Espacial Minimalista (icy moonlight) ══════ */
   .aurora-text {
     background: linear-gradient(
@@ -388,12 +411,24 @@
       #A8B5E5 50%,
       #C7D2FE 70%,
       #FFFFFF 100%
+=======
+  /* ══ AURORA TEXT ════════════════════════════════════════════════ */
+  .aurora-text {
+    background: linear-gradient(
+      135deg,
+      #A855F7 0%,
+      #7C3AED 22%,
+      #6366F1 45%,
+      #EC4899 68%,
+      #F472B6 85%,
+      #FBBF24 100%
+>>>>>>> 806e164 (Quinta modificacion):src/index.css
     );
     background-size: 300% 300%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: aurora-shift 5s ease infinite;
+    animation: aurora-shift 6s ease infinite;
   }
 
   /* ══ LETTER REVEAL ══════════════════════════════ */
@@ -723,13 +758,20 @@
 /* ══ UTILITY CLASSES ════════════════════════════════ */
 .font-outfit { font-family: var(--font-modern); }
 .font-mono-ai { font-family: var(--font-mono); }
+.font-sora { font-family: 'Sora', sans-serif; }
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-display { font-family: 'Instrument Serif', serif; }
 
 .section-tone-brand {
   background: linear-gradient(to bottom, #09090b, #12131a, #09090b);
 }
 
 .section-tone-deep {
-  background: linear-gradient(to bottom, #09090b, #111633, #09090b);
+  background: linear-gradient(to bottom, #09090b, #0e0a1e, #09090b);
+}
+
+.section-tone-brand-vivid {
+  background: linear-gradient(160deg, #09090B 0%, #100a2a 40%, #0f0521 70%, #09090B 100%);
 }
 
 .animate-fade-up  { animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
@@ -944,4 +986,173 @@ html, body {
   animation-play-state: paused !important;
 }
 
+/* ═══════════════════════════════════════════════════
+   MOBILE-FIRST RESPONSIVE — Premium Touch Experience
+   Additional rules for new components v5.0
+═══════════════════════════════════════════════════ */
+
+/* ── PricingCalculator — Mobile grid collapse ── */
+@media (max-width: 1023px) {
+  /* Stack the 3-column pricing layout vertically */
+  .grid.grid-cols-1.lg\:grid-cols-\[340px_1fr_320px\] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Service selector in PricingCalculator — horizontal scroll */
+  .pricing-service-selector {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+  .pricing-service-selector::-webkit-scrollbar { display: none; }
+
+  /* Pricing B2B filter — wrap on mobile */
+  .flex.flex-col.sm\:flex-row.gap-3.justify-center.mb-10 {
+    flex-direction: column !important;
+  }
+}
+
+/* ── BrandSection — Timeline mobile layout ── */
+@media (max-width: 639px) {
+  /* Force timeline items to single column */
+  .brand-timeline-item.sm\:flex-row-reverse {
+    flex-direction: row !important;
+  }
+}
+
+/* ── Hero Stats strip — wrap gracefully on very small screens ── */
+@media (max-width: 479px) {
+  .hero-stats-strip {
+    gap: 0.75rem !important;
+  }
+  .hero-stats-strip .separator {
+    display: none;
+  }
+}
+
+/* ── Services Modal — Bottom sheet on mobile ── */
+@media (max-width: 639px) {
+  /* Modal dialog — full width bottom sheet */
+  .service-modal-card {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    border-radius: 2rem 2rem 0 0 !important;
+    max-height: 90dvh;
+    overflow-y: auto;
+  }
+}
+
+/* ── BrandSection differential cards — ensure even heights on tablet ── */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .brand-differential-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ── Navbar overflow guard — prevent pill clipping on small screens ── */
+@media (max-width: 380px) {
+  header .liquid-glass-strong {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+}
+
+/* ── Smooth scroll buffer for fixed navbar ── */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ── CTASection particles — hide on small screens for perf ── */
+@media (max-width: 479px) {
+  .cta-particle {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   HERO MOBILE ORBS — CSS-only aurora spheres
+   Replaces WebGL Ballpit on touch devices (< 768px)
+   Zero JS overhead · Full scroll freedom preserved
+═══════════════════════════════════════════════════ */
+
+@keyframes orb-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.55;
+  }
+  33% {
+    transform: translate(calc(var(--orb-drift-x, 12px)), calc(var(--orb-drift-y, -18px))) scale(1.12);
+    opacity: 0.75;
+  }
+  66% {
+    transform: translate(calc(var(--orb-drift-x, -8px) * -0.6), calc(var(--orb-drift-y, 10px) * 0.8)) scale(0.92);
+    opacity: 0.45;
+  }
+}
+
+.hero-mobile-orb {
+  position: absolute;
+  left: var(--orb-x, 50%);
+  top: var(--orb-y, 50%);
+  width: var(--orb-size, 80px);
+  height: var(--orb-size, 80px);
+  border-radius: 50%;
+  /* Vivid aurora gradient per orb */
+  background: radial-gradient(
+    circle at 35% 35%,
+    hsl(var(--orb-hue, 270), 80%, 75%) 0%,
+    hsl(var(--orb-hue, 270), 70%, 55%) 45%,
+    hsl(calc(var(--orb-hue, 270) + 30), 65%, 40%) 100%
+  );
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform, opacity;
+  animation: orb-float var(--orb-dur, 4s) ease-in-out var(--orb-delay, 0s) infinite;
+  /* Unique drift per orb via calc on idx */
+  --orb-drift-x: calc((var(--orb-idx, 0) % 2 == 0 ? 1 : -1) * (8px + var(--orb-idx, 0) * 3px));
+  --orb-drift-y: calc((var(--orb-idx, 0) % 3 == 0 ? -1 : 1) * (12px + var(--orb-idx, 0) * 2px));
+}
+
+/* ── CircularGallery container — allow vertical scroll passthrough ── */
+.cursor-grab {
+  touch-action: pan-y;    /* horizontal drag handled by OGL, vertical by browser */
+}
+
+/* ── Hero text — smaller on tiny screens ── */
+@media (max-width: 360px) {
+  [style*="clamp(2.4rem"] {
+    font-size: clamp(1.8rem, 8vw, 96px) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL PROGRESS BAR — top edge gradient line
+═══════════════════════════════════════════════════ */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  z-index: 9999;
+  pointer-events: none;
+  background: linear-gradient(90deg, #5B3DF5 0%, #7C66FF 35%, #EC4899 70%, #A855F7 100%);
+  transform-origin: left center;
+  will-change: width;
+  transition: width 0.1s linear;
+}
+
+/* ── Chatbot mobile: WhatsApp button is left, chatbot trigger is right — no overlap ── */
+@media (max-width: 767px) {
+  /* Ensure WA button stays left and chatbot stays right — both clear of each other */
+  .chatbot-trigger-mobile { right: 1rem !important; bottom: 6rem !important; }
+}
 

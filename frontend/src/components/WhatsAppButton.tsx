@@ -3,14 +3,14 @@ import { motion } from "framer-motion";
 const WhatsAppButton = () => {
   return (
     <motion.a
-      href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
+      href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
       target="_blank"
       rel="noreferrer"
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
-      className="fixed bottom-6 left-4 z-40 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 active:scale-95 transition-transform md:bottom-10 md:left-10"
-      aria-label="Contactar a Ivan Zuñiga por WhatsApp"
+      className="fixed bottom-6 left-4 z-[43] flex items-center justify-center w-12 h-12 bg-[#25D366] text-white rounded-full shadow-[0_4px_14px_rgba(37,211,102,0.4)] hover:scale-110 active:scale-95 transition-transform md:bottom-8 md:left-8 md:w-14 md:h-14"
+      aria-label="Contactar a IAZR por WhatsApp"
       title="Chat por WhatsApp"
     >
       <svg

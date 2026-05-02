@@ -1,4 +1,4 @@
-import { useRef } from "react";
+﻿import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Calendar, FileCheck, Rocket, MessageSquareHeart } from "lucide-react";
 
@@ -9,7 +9,7 @@ const steps = [
     number: "01",
     icon: <MessageSquareHeart className="w-7 h-7" />,
     title: "Cuentame tu idea",
-    desc: "Contactame por WhatsApp o usa Nova AI. No necesitas saber de tecnologia — yo traduzco tu vision al lenguaje de codigo.",
+    desc: "Contactame por WhatsApp o usa Nova AI. No necesitas saber de tecnologia â€” yo traduzco tu vision al lenguaje de codigo.",
     color: PRIMARY,
     accent: "rgba(255,255,255,0.10)",
     border: "rgba(255,255,255,0.22)",
@@ -38,7 +38,7 @@ const steps = [
   {
     number: "04",
     icon: <Rocket className="w-7 h-7" />,
-    title: "¡Construimos juntos!",
+    title: "Â¡Construimos juntos!",
     desc: "Inicio del proyecto con seguimiento continuo, reportes semanales y demos en vivo hasta la entrega final y despliegue.",
     color: "#a855f7",
     accent: "rgba(168,85,247,0.08)",
@@ -47,7 +47,7 @@ const steps = [
   },
 ];
 
-// ─── Single card ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Single card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const StepCard = ({
   step,
   index,
@@ -172,7 +172,7 @@ const StepCard = ({
             {/* CTA on last step */}
             {isLast && (
               <a
-                href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20quiero%20agendar%20la%20reuni%C3%B3n%20virtual%20de%20diagn%C3%B3stico%20gratuita."
+                href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20quiero%20agendar%20la%20reuni%C3%B3n%20virtual%20de%20diagn%C3%B3stico%20gratuita."
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-3 mt-7 px-7 py-4 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95 text-black"
@@ -192,7 +192,7 @@ const StepCard = ({
   );
 };
 
-// ─── Section ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const HowItWorksSection = () => {
   return (
     <section
@@ -225,7 +225,7 @@ const HowItWorksSection = () => {
             Proceso Transparente
           </span>
           <h2 className="text-4xl md:text-5xl font-sora text-white">
-            ¿Como trabajamos{" "}
+            Â¿Como trabajamos{" "}
             <span style={{ color: PRIMARY }}>juntos?</span>
           </h2>
           <div

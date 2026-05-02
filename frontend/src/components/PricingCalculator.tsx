@@ -2,7 +2,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Globe, Server, Bot, BookOpen, ShieldCheck, FileText,
-  CheckCircle2, AlertTriangle, CalendarCheck, Zap, Clock, Star
+  CheckCircle2, AlertTriangle, CalendarCheck, Zap, Clock, Star,
+  Building2, Briefcase, GraduationCap,
 } from "lucide-react";
 
 const PRIMARY = "#FFFFFF";
@@ -12,10 +13,10 @@ const services = [
   {
     id: "web",
     icon: <Globe className="w-6 h-6" />,
-    color: "#5B3DF5",
+    color: "#7C3AED",
     label: "Página Web Profesional",
     tagline: "Hasta 6 páginas · Diseño premium",
-    basePrice: "Desde $1.200.000 COP",
+    basePrice: "Inversión media",
     time: "5–10 días",
     includes: [
       "Diseño responsive (móvil, tablet, desktop)",
@@ -26,27 +27,22 @@ const services = [
       "Hosting setup + dominio orientado",
     ],
     addons: [
-      { label: "Copywriting profesional", price: "+$150.000/pág" },
-      { label: "SEO técnico avanzado", price: "+$200.000/pág" },
-      { label: "Blog / CMS integrado", price: "+$500.000" },
+      { label: "Copywriting profesional", price: "A cotizar" },
+      { label: "SEO técnico avanzado", price: "A cotizar" },
+      { label: "Blog / CMS integrado", price: "A cotizar" },
     ],
     note: null,
     maxPages: 6,
-    hasSlider: true,
-    baseCalc: (pages: number, copy: boolean, seo: boolean) => {
-      let t = 1200000 + (pages - 1) * 180000;
-      if (copy) t += pages * 150000;
-      if (seo) t += pages * 200000;
-      return Math.min(t, 3200000);
-    },
+    hasSlider: false,
+    baseCalc: () => 0,
   },
   {
     id: "fullstack",
     icon: <Server className="w-6 h-6" />,
-    color: PRIMARY,
+    color: "#A855F7",
     label: "Plataforma Full-Stack",
     tagline: "App completa con backend & BD",
-    basePrice: "Desde $4.500.000 COP",
+    basePrice: "Inversión alta · cotización personalizada",
     time: "3–8 semanas",
     includes: [
       "Frontend React/Next.js premium",
@@ -57,22 +53,22 @@ const services = [
       "Deploy en AWS / Vercel / Railway",
     ],
     addons: [
-      { label: "Módulo de pagos (Wompi/Stripe)", price: "+$800.000" },
-      { label: "Integración IA / chatbot", price: "+$1.200.000" },
-      { label: "Reportes y analytics", price: "+$600.000" },
+      { label: "Módulo de pagos (Wompi/Stripe)", price: "A cotizar" },
+      { label: "Integración IA / chatbot", price: "A cotizar" },
+      { label: "Reportes y analytics", price: "A cotizar" },
     ],
-    note: "Para proyectos complejos se define precio exacto en reunión inicial.",
+    note: "El precio exacto se define en la reunión de kickoff según el alcance.",
     maxPages: null,
     hasSlider: false,
-    baseCalc: () => 4500000,
+    baseCalc: () => 0,
   },
   {
     id: "ai",
     icon: <Bot className="w-6 h-6" />,
-    color: "#7C66FF",
+    color: "#EC4899",
     label: "Automatización con IA",
     tagline: "Agentes LLM, RAG, n8n, pipelines",
-    basePrice: "Desde $2.800.000 COP",
+    basePrice: "Cotización según alcance del proyecto",
     time: "1–3 semanas",
     includes: [
       "Diseño del pipeline de IA",
@@ -83,22 +79,22 @@ const services = [
       "Documentación técnica entregable",
     ],
     addons: [
-      { label: "RAG sobre documentos privados", price: "+$900.000" },
-      { label: "Fine-tuning de modelo", price: "+$1.500.000" },
-      { label: "Mantenimiento mensual", price: "+$400.000/mes" },
+      { label: "RAG sobre documentos privados", price: "A cotizar" },
+      { label: "Fine-tuning de modelo", price: "A cotizar" },
+      { label: "Mantenimiento mensual", price: "A cotizar" },
     ],
-    note: null,
+    note: "Cada proyecto de IA es único. El precio se define tras un diagnóstico inicial gratuito.",
     maxPages: null,
     hasSlider: false,
-    baseCalc: () => 2800000,
+    baseCalc: () => 0,
   },
   {
     id: "mentorship",
     icon: <BookOpen className="w-6 h-6" />,
-    color: "#2DD4BF",
+    color: "#6366F1",
     label: "Mentoría 1 a 1",
     tagline: "Sesiones personalizadas por Google Meet",
-    basePrice: "$70.000 – $90.000 COP / hora",
+    basePrice: "Cotización por sesión o paquete",
     time: "Flexible",
     includes: [
       "Sesiones de 60 o 90 minutos",
@@ -109,10 +105,10 @@ const services = [
       "Soporte post-sesión vía WhatsApp (24h)",
     ],
     addons: [
-      { label: "Pack 5 sesiones", price: "$320.000 (ahorra $30k)" },
-      { label: "Revisión de portafolio/CV", price: "+$50.000" },
+      { label: "Pack de sesiones (descuento especial)", price: "A cotizar" },
+      { label: "Revisión de portafolio/CV", price: "A cotizar" },
     ],
-    note: "Pago previo (1 día antes) vía Nequi, DaviPlata o transferencia.",
+    note: "Cupo limitado · Agendar con anticipación. Precio según frecuencia y modalidad.",
     maxPages: null,
     hasSlider: false,
     baseCalc: () => 0,
@@ -120,10 +116,10 @@ const services = [
   {
     id: "audit",
     icon: <ShieldCheck className="w-6 h-6" />,
-    color: "#EF4444",
+    color: "#F472B6",
     label: "Auditoría de Código",
     tagline: "Revisión técnica + informe detallado",
-    basePrice: "Desde $900.000 COP",
+    basePrice: "Cotización según tamaño del proyecto",
     time: "3–7 días",
     includes: [
       "Análisis de frontend, backend y BD",
@@ -134,13 +130,13 @@ const services = [
       "Sesión de retroalimentación de 60 min",
     ],
     addons: [
-      { label: "Corrección de errores críticos", price: "+$600.000" },
-      { label: "Plan de refactorización", price: "+$400.000" },
+      { label: "Corrección de errores críticos", price: "A cotizar" },
+      { label: "Plan de refactorización", price: "A cotizar" },
     ],
     note: null,
     maxPages: null,
     hasSlider: false,
-    baseCalc: () => 900000,
+    baseCalc: () => 0,
   },
   {
     id: "mga",
@@ -168,13 +164,66 @@ const services = [
 
 type ServiceId = "web" | "fullstack" | "ai" | "mentorship" | "audit" | "mga";
 
-export default function PricingCalculator() {
-  const [activeId, setActiveId] = useState<ServiceId>("web");
-  const [pages, setPages] = useState(3);
-  const [addCopy, setAddCopy] = useState(false);
-  const [addSEO, setAddSEO] = useState(false);
+// ─── B2B Engagement types ─────────────────────────────────────────────────────
+type EngagementType = "b2b" | "ops" | "mentoring";
 
-  const active = services.find(s => s.id === activeId)!;
+const ENGAGEMENTS: {
+  id: EngagementType; icon: React.ReactNode;
+  label: string; sublabel: string;
+  color: string;
+  services: ServiceId[];
+  defaultService: ServiceId;
+  legalNote: string;
+}[] = [
+  {
+    id: "b2b",
+    icon: <Building2 className="w-4 h-4" />,
+    label: "Consultoría B2B",
+    sublabel: "Empresas & Startups",
+    color: "#5B3DF5",
+    services: ["fullstack", "ai", "audit"],
+    defaultService: "fullstack",
+    legalNote: "Servicios prestados bajo esquema de independencia profesional · Director en Zolaris S.A.S · Contrato de prestación de servicios.",
+  },
+  {
+    id: "ops",
+    icon: <Briefcase className="w-4 h-4" />,
+    label: "Prestación OPS",
+    sublabel: "Proyectos específicos",
+    color: "#FFFFFF",
+    services: ["web", "fullstack", "mga"],
+    defaultService: "web",
+    legalNote: "Orden de Prestación de Servicios (OPS) · Facturación electrónica disponible · Sin relación laboral.",
+  },
+  {
+    id: "mentoring",
+    icon: <GraduationCap className="w-4 h-4" />,
+    label: "Mentoría In-Company",
+    sublabel: "Formación de equipos",
+    color: "#2DD4BF",
+    services: ["mentorship", "ai"],
+    defaultService: "mentorship",
+    legalNote: "Talleres y mentoring corporativo · Factura por sesión o paquete mensual · Disponible remoto y presencial en Colombia.",
+  },
+];
+
+export default function PricingCalculator() {
+  const [engagement, setEngagement] = useState<EngagementType>("b2b");
+  const [activeId, setActiveId]     = useState<ServiceId>("fullstack");
+  const [pages,    setPages]        = useState(3);
+  const [addCopy,  setAddCopy]      = useState(false);
+  const [addSEO,   setAddSEO]       = useState(false);
+
+  const currentEngagement = ENGAGEMENTS.find(e => e.id === engagement)!;
+  const visibleServices   = services.filter(s => currentEngagement.services.includes(s.id as ServiceId));
+  const active            = visibleServices.find(s => s.id === activeId) ?? visibleServices[0];
+
+  const handleEngagement = (id: EngagementType) => {
+    setEngagement(id);
+    const eng = ENGAGEMENTS.find(e => e.id === id)!;
+    setActiveId(eng.defaultService);
+    setPages(3); setAddCopy(false); setAddSEO(false);
+  };
 
   const calcPrice = () => {
     if (activeId === "web") return active.baseCalc(pages, addCopy, addSEO);
@@ -182,19 +231,18 @@ export default function PricingCalculator() {
   };
 
   const numPrice = calcPrice();
-  const isQuote = numPrice === 0 || activeId === "mga";
-  const isMentorship = activeId === "mentorship";
+  const isQuote = numPrice === 0 || active?.id === "mga";
+  const isMentorship = active?.id === "mentorship";
 
   const displayPrice = isQuote
-    ? isMentorship
-      ? "$70.000 – $90.000 / hora"
-      : "Cotización personalizada"
-    : `$${numPrice.toLocaleString("es-CO")} COP`;
+    ? "Solicitar cotización"
+    : "Cotización personalizada";
 
   const buildWA = () => {
-    let msg = `Hola Ivan 👋, vi tu portafolio y quiero cotizar:\n\n`;
+    let msg = `Hola IAZR 👋, vi tu portafolio y quiero cotizar:\n\n`;
+    msg += `🏛️ *Tipo de engagement:* ${currentEngagement.label}\n`;
     msg += `📌 *Servicio:* ${active.label}\n`;
-    if (activeId === "web") {
+    if (active?.id === "web") {
       msg += `📄 *Páginas:* ${pages}\n`;
       if (addCopy) msg += `✅ + Copywriting\n`;
       if (addSEO) msg += `✅ + SEO Avanzado\n`;
@@ -235,9 +283,44 @@ export default function PricingCalculator() {
             <span style={{ color: PRIMARY }}>Inversión</span>
           </h2>
           <p className="text-white/40 max-w-lg mx-auto text-sm font-poppins leading-relaxed">
-            Selecciona el servicio y configura tu proyecto para ver el estimado en tiempo real.{" "}
-            <strong className="text-white/60">El precio final se confirma en la reunión de kickoff.</strong>
+            Explora qué incluye cada servicio y solicita tu{" "}
+            <strong className="text-white/70">cotización personalizada por WhatsApp.</strong>{" "}
+            El precio exacto se define según tu caso de uso específico.
           </p>
+        </motion.div>
+
+        {/* ── B2B Engagement Filter ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.05 }}
+          className="flex flex-col sm:flex-row gap-3 justify-center mb-10"
+        >
+          {ENGAGEMENTS.map(eng => (
+            <button
+              key={eng.id}
+              onClick={() => handleEngagement(eng.id)}
+              className="flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-poppins font-semibold transition-all duration-200 border"
+              style={{
+                background: engagement === eng.id ? `${eng.color}15` : "rgba(255,255,255,0.03)",
+                borderColor: engagement === eng.id ? `${eng.color}50` : "rgba(255,255,255,0.07)",
+                color: engagement === eng.id ? eng.color : "rgba(255,255,255,0.4)",
+                boxShadow: engagement === eng.id ? `0 0 20px ${eng.color}18` : "none",
+              }}
+            >
+              <span style={{ color: engagement === eng.id ? eng.color : "rgba(255,255,255,0.3)" }}>
+                {eng.icon}
+              </span>
+              <span>
+                <span className="block leading-none">{eng.label}</span>
+                <span className="text-[10px] font-normal opacity-60">{eng.sublabel}</span>
+              </span>
+              {engagement === eng.id && (
+                <CheckCircle2 className="w-3.5 h-3.5 ml-auto" style={{ color: eng.color }} />
+              )}
+            </button>
+          ))}
         </motion.div>
 
         {/* Main card */}
@@ -256,7 +339,7 @@ export default function PricingCalculator() {
               <p className="text-[10px] font-poppins uppercase tracking-[0.3em] text-white/25 font-bold mb-3">
                 Selecciona un servicio
               </p>
-              {services.map(s => (
+              {visibleServices.map(s => (
                 <button
                   key={s.id}
                   onClick={() => { setActiveId(s.id as ServiceId); setPages(3); setAddCopy(false); setAddSEO(false); }}
@@ -465,9 +548,14 @@ export default function PricingCalculator() {
                     <div className="flex items-center justify-center gap-1.5 mt-2 relative z-10">
                       <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: active.color }} />
                       <span className="text-[10px] font-poppins uppercase tracking-wider" style={{ color: active.color + "99" }}>
-                        {isQuote ? "Requiere reunión virtual" : "Estimado inicial"}
+                        {isQuote ? "Requiere reunión virtual" : "Referencial · precio exacto en kickoff"}
                       </span>
                     </div>
+                    {!isQuote && (
+                      <p className="text-[10px] font-poppins mt-2 relative z-10" style={{ color: "rgba(240,237,232,0.3)" }}>
+                        El precio final se define en la reunión inicial gratuita.
+                      </p>
+                    )}
                   </motion.div>
                 </AnimatePresence>
 
@@ -487,8 +575,16 @@ export default function PricingCalculator() {
                   </div>
                 </div>
 
+                {/* Legal note for current engagement */}
+                <div className="flex items-start gap-2 p-3 rounded-xl border border-white/8 bg-white/[0.02]">
+                  <AlertTriangle className="w-3.5 h-3.5 text-white/25 shrink-0 mt-0.5" />
+                  <p className="text-[10px] font-poppins text-white/30 leading-relaxed">
+                    {currentEngagement.legalNote}
+                  </p>
+                </div>
+
                 {/* Divider */}
-                <div className="h-px w-full mb-4" style={{ background: "rgba(255,255,255,0.05)" }} />
+                <div className="h-px w-full" style={{ background: "rgba(255,255,255,0.05)" }} />
 
                 {/* CTA */}
                 <a

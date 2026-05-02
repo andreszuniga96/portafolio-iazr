@@ -28,7 +28,7 @@ interface ProfileCardProps {
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
-  avatarUrl = '', name = 'Ivan Zuñiga', title = 'Full-Stack & AI Engineer',
+  avatarUrl = '', name = 'IAZR', title = 'CTO & Arquitecto de Soluciones',
   handle = 'iazr', status = 'Disponible ✓', contactText = 'Contactar',
   onContactClick, innerGradient, className = '',
 }) => {

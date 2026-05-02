@@ -4,6 +4,7 @@ import { Menu, X, Instagram, Linkedin, Github } from "lucide-react";
 import OrbitalLogo from "@/components/ui/OrbitalLogo";
 
 const navLinks = [
+<<<<<<< HEAD:frontend/src/components/Navbar.tsx
   { name: "Servicios",   href: "#servicios",   id: "servicios" },
   { name: "Proyectos",   href: "#proyectos",   id: "proyectos" },
   { name: "Oferta",      href: "#pricing",     id: "pricing" },
@@ -11,6 +12,17 @@ const navLinks = [
   { name: "Credibilidad", href: "#about",      id: "about" },
   { name: "FAQ",         href: "#faq",         id: "faq" },
   { name: "Contacto",    href: "#contact",     id: "contact" },
+=======
+  { name: "IA & Soluciones", href: "#ai-section", id: "ai-section" },
+  { name: "Arsenal IA",      href: "#ai-tools",   id: "ai-tools"   },
+  { name: "Servicios",       href: "#servicios",  id: "servicios"  },
+  { name: "Proyectos",       href: "#proyectos",  id: "proyectos"  },
+  { name: "Impacto",         href: "#impacto",    id: "impacto"    },
+  { name: "¿Por qué IAZR?", href: "#brand",      id: "brand"      },
+  { name: "Cotizar",         href: "#pricing",    id: "pricing"    },
+  { name: "FAQ",             href: "#faq",        id: "faq"        },
+  { name: "Contacto",        href: "#contact",    id: "contact"    },
+>>>>>>> 806e164 (Quinta modificacion):src/components/Navbar.tsx
 ];
 
 const Navbar = () => {
@@ -138,7 +150,7 @@ const Navbar = () => {
         {/* Desktop CTA */}
         <div className="hidden md:block pl-1 flex-shrink-0">
           <a
-            href="https://wa.me/573229132643?text=Hola%20Ivan%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
+            href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
             target="_blank"
             rel="noreferrer"
             className="btn-glow flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-primary-foreground font-outfit font-semibold text-xs tracking-wider uppercase hover:brightness-110 active:scale-95 transition-all"
@@ -193,24 +205,24 @@ const Navbar = () => {
             {/* Redes sociales */}
             <div className="flex items-center justify-center gap-4 py-3 mt-1 border-t border-white/8">
               <a href="https://www.linkedin.com/in/iazr96/" target="_blank" rel="noreferrer"
-                aria-label="LinkedIn de Ivan Zuñiga"
+                aria-label="LinkedIn de IAZR"
                 className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
                 <Linkedin size={18} />
               </a>
               <a href="https://www.instagram.com/iazr96/" target="_blank" rel="noreferrer"
-                aria-label="Instagram de Ivan Zuñiga"
+                aria-label="Instagram de IAZR"
                 className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
                 <Instagram size={18} />
               </a>
-              <a href="https://github.com/andreszuniga96" target="_blank" rel="noreferrer"
-                aria-label="GitHub de Ivan Zuñiga"
+              <a href="https://github.com/iazr-dev" target="_blank" rel="noreferrer"
+                aria-label="GitHub de IAZR"
                 className="w-11 h-11 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all">
                 <Github size={18} />
               </a>
             </div>
 
             <motion.a
-              href="https://wa.me/573229132643?text=Hola%20Ivan%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
+              href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20contactarte."
               target="_blank"
               rel="noreferrer"
               initial={{ opacity: 0, y: 8 }}

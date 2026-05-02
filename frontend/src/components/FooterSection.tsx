@@ -16,7 +16,7 @@ const footerLinks = {
     { label: "Formulación MGA",  href: "#servicios" },
   ],
   recursos: [
-    { label: "GitHub", href: "https://github.com/andreszuniga96", external: true },
+    { label: "GitHub", href: "https://github.com/iazr-dev", external: true },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/iazr96/", external: true },
     { label: "Instagram", href: "https://www.instagram.com/iazr96/", external: true },
     { label: "Portafolio Web", href: "#home", external: false },
@@ -53,7 +53,7 @@ const FooterSection = () => {
     >
       {/* Ambient glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[120px] pointer-events-none"
-        style={{ background: "rgba(255,255,255,0.04)" }} />
+        style={{ background: "rgba(124,58,237,0.08)" }} />
 
       {/* LogoLoop tech strip */}
       <div className="mb-16 md:mb-24 py-4 border-y" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
@@ -77,8 +77,13 @@ const FooterSection = () => {
             <div className="flex items-center gap-3 mb-5">
               <OrbitalLogo size={40} />
               <div>
+<<<<<<< HEAD:frontend/src/components/FooterSection.tsx
                 <p className="font-poppins font-bold tracking-widest uppercase text-sm" style={{ color: "#F5F7FF" }}>IAZR</p>
                 <p className="text-[10px] font-poppins" style={{ color: "#A7ADBF" }}>Ivan Zuñiga</p>
+=======
+                <p className="font-poppins font-bold tracking-widest uppercase text-sm" style={{ color: "#f0ede8" }}>IAZR</p>
+                <p className="text-[10px] font-poppins" style={{ color: "#8a857c" }}>CTO & Arquitecto de Soluciones</p>
+>>>>>>> 806e164 (Quinta modificacion):src/components/FooterSection.tsx
               </div>
             </div>
 
@@ -91,7 +96,7 @@ const FooterSection = () => {
               {[
                 { icon: <Linkedin className="w-4 h-4" />, href: "https://www.linkedin.com/in/iazr96/", label: "LinkedIn" },
                 { icon: <Instagram className="w-4 h-4" />, href: "https://www.instagram.com/iazr96/", label: "Instagram" },
-                { icon: <Github className="w-4 h-4" />, href: "https://github.com/andreszuniga96", label: "GitHub" },
+                { icon: <Github className="w-4 h-4" />, href: "https://github.com/iazr-dev", label: "GitHub" },
                 { icon: <Youtube className="w-4 h-4" />, href: "#", label: "YouTube" },
               ].map(({ icon, href, label }) => (
                 <motion.a key={label} href={href} target="_blank" rel="noopener noreferrer"
@@ -173,7 +178,7 @@ const FooterSection = () => {
 
             {/* WhatsApp CTA */}
             <motion.a
-              href="https://wa.me/573229132643?text=Hola%20Ivan%20Zu%C3%B1iga%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20hablar%20de%20un%20proyecto."
+              href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20vi%20tu%20portafolio%20y%20quiero%20hablar%20de%20un%20proyecto."
               target="_blank" rel="noreferrer"
               whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
               className="mt-6 w-full py-3 rounded-xl flex items-center justify-center gap-2 text-xs font-poppins font-semibold uppercase tracking-wider transition-all"
@@ -192,7 +197,7 @@ const FooterSection = () => {
             {/* Gradient separator line */}
             <div className="h-px w-16 rounded-full" style={{ background: "linear-gradient(90deg, #FFFFFF, transparent)" }} />
             <p className="text-[11px] font-poppins" style={{ color: "#8a857c" }}>
-              © {new Date().getFullYear()} Ivan Zuñiga · IAZR · Hecho en Colombia 🇨🇴 · React + GSAP + Three.js
+              © {new Date().getFullYear()} IAZR · Hecho en Colombia 🇨🇴 · React + GSAP + Three.js
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -215,7 +220,7 @@ const FooterSection = () => {
           aria-hidden="true"
           style={{
             fontSize: "clamp(5rem, 22vw, 18rem)",
-            WebkitTextStroke: "1.5px rgba(255,255,255,0.18)",
+            WebkitTextStroke: "1.5px rgba(124,58,237,0.25)",
             color: "transparent",
             fontFamily: "var(--font-modern)",
             fontWeight: 900,

@@ -1,11 +1,11 @@
-import { useRef, useEffect, useState } from "react";
+﻿import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 
-// ─── Stats (combined from StatsSection + Globe) ───────────────────────────────
+// â”€â”€â”€ Stats (combined from StatsSection + Globe) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const stats = [
   { value: 40, suffix: "+", label: "Proyectos entregados" },
-  { value: 98, suffix: "%", label: "Satisfacción de clientes" },
-  { value: 6, suffix: "+", label: "Años de experiencia" },
+  { value: 98, suffix: "%", label: "SatisfacciÃ³n de clientes" },
+  { value: 6, suffix: "+", label: "AÃ±os de experiencia" },
   { value: 1200, suffix: "+", label: "Estudiantes formados" },
   { value: 24, suffix: "/7", label: "Sistemas activos" },
   { value: 4, suffix: "+", label: "Universidades aliadas" },
@@ -14,15 +14,15 @@ const stats = [
 const clients = [
   "MinTIC Colombia",
   "Zolaris Platform",
-  "Registraduría Nacional",
-  "Parquesoft Nariño",
+  "RegistradurÃ­a Nacional",
+  "Parquesoft NariÃ±o",
   "Talento Tech",
   "StartUp Hub Pasto",
-  "Gobernación de Nariño",
+  "GobernaciÃ³n de NariÃ±o",
   "Solar IoT Networks",
 ];
 
-// ─── Animated Counter ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Animated Counter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
@@ -45,7 +45,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   return <span ref={ref}>{count}{suffix}</span>;
 };
 
-// ─── Floating Orb ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Floating Orb â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const FloatingOrb = () => (
   <motion.div
     className="absolute rounded-full pointer-events-none"
@@ -61,7 +61,7 @@ const FloatingOrb = () => (
   />
 );
 
-// ─── Main Section ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Main Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const GlobalPresenceSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
@@ -102,11 +102,11 @@ const GlobalPresenceSection = () => {
             <span style={{ color: "var(--primary-color)" }}>hablan solos</span>
           </h2>
           <p className="mt-6 text-white/40 font-poppins text-lg max-w-2xl mx-auto leading-relaxed">
-            Desde Pasto, Nariño, construyo soluciones digitales que operan a escala nacional e internacional.
+            Desde Pasto, NariÃ±o, construyo soluciones digitales que operan a escala nacional e internacional.
           </p>
         </motion.div>
 
-        {/* Stats grid — 6 stats */}
+        {/* Stats grid â€” 6 stats */}
         <motion.div
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-24"
           style={{ y }}
@@ -137,7 +137,7 @@ const GlobalPresenceSection = () => {
           ))}
         </motion.div>
 
-        {/* Client grid — elegant badge layout */}
+        {/* Client grid â€” elegant badge layout */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -189,24 +189,24 @@ const GlobalPresenceSection = () => {
 
           <span className="text-xs font-poppins uppercase tracking-[0.3em] font-bold block mb-4"
             style={{ color: "var(--primary-color)" }}>
-            ¿Listo para comenzar?
+            Â¿Listo para comenzar?
           </span>
           <h3 className="text-3xl md:text-5xl font-sora text-white mb-6 relative z-10">
-            Tu próximo proyecto me espera
+            Tu prÃ³ximo proyecto me espera
           </h3>
           <p className="text-white/40 font-poppins max-w-xl mx-auto mb-10 relative z-10">
-            Cuéntame tu idea. En 24 horas tendrás una propuesta técnica lista, sin compromiso.
+            CuÃ©ntame tu idea. En 24 horas tendrÃ¡s una propuesta tÃ©cnica lista, sin compromiso.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
-            <a href="https://wa.me/573229132643?text=Hola%20Ivan%2C%20quiero%20hablar%20sobre%20un%20proyecto"
+            <a href="https://wa.me/573229132643?text=Hola%20IAZR%20%F0%9F%91%8B%2C%20quiero%20hablar%20sobre%20un%20proyecto"
               target="_blank" rel="noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-sora font-bold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95 shadow-xl text-black"
               style={{ background: "var(--primary-color)", boxShadow: "0 0 40px rgba(255,255,255,0.4)" }}>
-              Iniciar conversación
+              Iniciar conversaciÃ³n
             </a>
             <a href="#servicios"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-sora font-bold text-sm uppercase tracking-wider text-white/60 hover:text-white border border-white/15 hover:border-white/30 transition-all">
-              Ver servicios →
+              Ver servicios â†’
             </a>
           </div>
         </motion.div>

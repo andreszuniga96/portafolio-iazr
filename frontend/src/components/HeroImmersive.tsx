@@ -66,6 +66,7 @@ const HeroImmersive = () => {
         className="absolute inset-0 w-full h-full"
       >
         <BallpitBoundary>
+<<<<<<< HEAD:frontend/src/components/HeroImmersive.tsx
           <div className="absolute inset-0" style={{ pointerEvents: 'auto' }}>
             <Ballpit
               className="absolute inset-0"
@@ -92,7 +93,59 @@ const HeroImmersive = () => {
         </BallpitBoundary>
         {/* Dark overlay so text stays readable — sutil para no ocultar el ballpit */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#09090B]/85 via-[#09090B]/45 to-[#09090B]/15 pointer-events-none" />
+=======
+          {/* On desktop: full WebGL Ballpit — on mobile: CSS-only aurora orbs (no touch capture) */}
+          <div
+            className="absolute inset-0"
+            style={{ pointerEvents: isMobile ? 'none' : 'auto' }}
+          >
+            {!isMobile ? (
+              <Ballpit
+                className="absolute inset-0"
+                followCursor={true}
+                count={200}
+                gravity={0.45}
+                friction={0.997}
+                wallBounce={0.92}
+                maxVelocity={0.12}
+                colors={[0xA855F7, 0x7C3AED, 0x6366F1, 0xEC4899, 0xF472B6, 0xFBBF24, 0xffffff, 0x8B5CF6]}
+                ambientColor={0xffffff}
+                ambientIntensity={0.5}
+                lightIntensity={90}
+                minSize={0.4}
+                maxSize={1.1}
+              />
+            ) : (
+              /* Mobile: lightweight CSS aurora orbs — zero JS overhead, full scroll freedom */
+              <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="hero-mobile-orb"
+                    style={{
+                      '--orb-idx': i,
+                      '--orb-x': `${10 + (i * 11) % 80}%`,
+                      '--orb-y': `${5 + (i * 17) % 85}%`,
+                      '--orb-size': `${60 + (i * 23) % 120}px`,
+                      '--orb-hue': `${260 + (i * 40) % 100}`,
+                      '--orb-dur': `${3 + (i * 0.7) % 4}s`,
+                      '--orb-delay': `${(i * 0.4) % 2}s`,
+                    } as React.CSSProperties}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </BallpitBoundary>
+        {/* Lighter overlay so balls show through vividly */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-[#09090B]/52 to-transparent pointer-events-none" />
+>>>>>>> 806e164 (Quinta modificacion):src/components/HeroImmersive.tsx
       </motion.div>
+
+      {/* Radial ambient glow behind text — adds depth and warmth */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        background: 'radial-gradient(ellipse 90% 65% at 50% 85%, rgba(124,58,237,0.28) 0%, rgba(99,102,241,0.15) 45%, transparent 75%)'
+      }} />
 
       {/* ── Layer 3: Text content ── */}
       <motion.div
@@ -101,38 +154,57 @@ const HeroImmersive = () => {
       >
         <div>
           <div className="hero-sub mb-4 sm:mb-5">
-            <SectionLabel text="Ivan Zuñiga — Ingeniería & Inteligencia Artificial" delay={0.3} />
+            <SectionLabel text="IAZR — Tu CTO Externo · Arquitectura · IA · Full-Stack" delay={0.3} />
           </div>
 
           <h1
-            className="font-outfit font-bold uppercase text-white leading-[0.9] tracking-[-0.03em] mb-6 sm:mb-8 overflow-visible"
-            style={{ fontSize: 'clamp(2.2rem, 9vw, 90px)' }}
+            className="font-outfit font-bold uppercase text-white leading-[0.88] tracking-[-0.03em] mb-6 sm:mb-8 overflow-visible"
+            style={{ fontSize: 'clamp(2.4rem, 9vw, 96px)' }}
           >
             <span className="block">
-              <TextReveal text="Tecnología" delay={0.35} className="text-white" />
+              <TextReveal text="Arquitecturas" delay={0.35} className="text-white" />
             </span>
             <span className="block aurora-text">
-              <TextReveal text="de Vanguardia" delay={0.6} />
+              <TextReveal text="que Escalan." delay={0.55} />
             </span>
             <span className="block">
-              <TextReveal text="para Colombia." delay={0.85} className="text-white" />
+              <TextReveal text="IA que Decide." delay={0.75} className="text-white" />
             </span>
           </h1>
 
           <p
-            className="hero-sub max-w-2xl text-sm sm:text-base md:text-lg font-outfit font-light mb-8 sm:mb-12"
-            style={{ color: 'rgba(255,255,255,0.7)' }}
+            className="hero-sub max-w-2xl text-sm sm:text-base md:text-lg font-outfit font-light mb-6 sm:mb-8"
+            style={{ color: 'rgba(255,255,255,0.65)' }}
           >
-            Construyo plataformas inmersivas, automatizo con{' '}
-            <span className="text-white font-medium">Inteligencia Artificial</span> y formo el
-            talento tecnológico que Colombia necesita para competir a nivel mundial.
+            Diseño arquitecturas escalables, automatizo procesos críticos y dirijo equipos técnicos con{' '}
+            <span className="text-white font-medium">IA & Data Strategy</span> para empresas que quieren liderar en Colombia y el mundo.
           </p>
+
+          {/* ─ Credibility stats strip ─ */}
+          <div className="hero-sub flex items-center gap-4 sm:gap-6 mb-8 sm:mb-10 flex-wrap">
+            {[
+              { val: '40+', label: 'Proyectos' },
+              { val: '98%', label: 'Satisfacción' },
+              { val: '6+', label: 'Años' },
+              { val: '1200+', label: 'Estudiantes' },
+            ].map((s, i) => (
+              <div key={i} className="flex items-baseline gap-1.5">
+                <span className="font-outfit font-bold text-white" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.4rem)' }}>{s.val}</span>
+                <span className="font-outfit text-xs uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.35)' }}>{s.label}</span>
+                {i < 3 && <span className="ml-3 sm:ml-4" style={{ color: 'rgba(255,255,255,0.12)' }}>|</span>}
+              </div>
+            ))}
+          </div>
 
           <div className="hero-sub flex flex-col sm:flex-row gap-3 sm:gap-4">
             <a
               href="#servicios"
-              className="btn-glow px-6 sm:px-8 py-4 rounded-full bg-primary text-primary-foreground font-outfit font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all text-center"
-              style={{ minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              className="btn-glow px-6 sm:px-8 py-4 rounded-full font-outfit font-bold text-sm uppercase tracking-wider hover:brightness-110 hover:scale-105 active:scale-95 transition-all text-center text-white"
+              style={{
+                background: 'linear-gradient(135deg, #7C3AED 0%, #EC4899 100%)',
+                boxShadow: '0 0 32px rgba(124,58,237,0.45)',
+                minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}
             >
               Ver Servicios
             </a>
@@ -140,9 +212,9 @@ const HeroImmersive = () => {
               href="#proyectos"
               className="px-6 sm:px-8 py-4 rounded-full font-outfit font-semibold text-sm uppercase tracking-wider transition-all hover:scale-105 active:scale-95 text-center"
               style={{
-                border: '1px solid rgba(255,255,255,0.2)',
-                color: 'rgba(240,237,232,0.8)',
-                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(168,85,247,0.3)',
+                color: 'rgba(240,237,232,0.85)',
+                background: 'rgba(124,58,237,0.08)',
                 backdropFilter: 'blur(8px)',
                 minHeight: '48px',
                 display: 'flex',

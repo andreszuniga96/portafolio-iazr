@@ -120,9 +120,7 @@ const HeroSection = () => {
         </span>
 
         <h1 className="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-foreground mb-6 glitch-text p-2">
-          Ivan Andres
-          <br />
-          Zuniga
+          IAZR
         </h1>
 
         <div className="h-8 mb-4">
