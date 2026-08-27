@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    /*
+     * ─────────────────────────────────────────────────────────────────────
+     *  TSCONFIG — Configuración de TypeScript (Next.js 15 + React 19).
+     *
+     *  · target ES2017: estándar de Next (compatibilidad con runtimes de
+     *    borde y Node 18+). `lib` incluye DOM para tipado de navegador.
+     *  · moduleResolution "bundler" + module "esnext": resolución moderna
+     *    que entiende los exports con subpath (p. ej. "ai/test") y los
+     *    paquetes ESM-first (Tailwind v4, Lenis, next-themes).
+     *  · jsx "preserve": Next compila JSX con SWC; tsc solo tipa.
+     *  · plugin "next": reglas específicas del framework (next-env.d.ts).
+     *  · "@/*": alias raíz — todos los imports del proyecto usan @/… para
+     *    que mover archivos de carpeta no rompa rutas relativas profundas.
+     * ─────────────────────────────────────────────────────────────────────
+     */
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Dark background circle -->
+  <rect width="64" height="64" rx="16" fill="#0a0a0a"/>
+  <!-- Orange outer ring -->
+  <circle cx="32" cy="32" r="28" stroke="#f97316" stroke-width="2" fill="none" opacity="0.6"/>
+  <!-- Inner glow ring -->
+  <circle cx="32" cy="32" r="24" fill="#f97316" fill-opacity="0.08"/>
+  <!-- Letter I — italic, bold, centered -->
+  <text
+    x="32"
+    y="44"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="34"
+    font-style="italic"
+    font-weight="bold"
+    fill="#f97316"
+    letter-spacing="-1"
+  >I</text>
+  <!-- Small dot/accent below -->
+  <circle cx="32" cy="56" r="2.5" fill="#f97316" opacity="0.5"/>
+</svg>

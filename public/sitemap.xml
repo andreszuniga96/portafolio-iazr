@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://portafolio-iazr.vercel.app/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+
+    <!-- Versiones de idioma alternativas -->
+    <xhtml:link rel="alternate" hreflang="es" href="https://portafolio-iazr.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://portafolio-iazr.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://portafolio-iazr.vercel.app/" />
+
+    <!-- Imagen principal para Google Images -->
+    <image:image>
+      <image:loc>https://portafolio-iazr.vercel.app/og.png</image:loc>
+      <image:title>IAZR - Iván Andrés Zúñiga: Director Tecnológico, Full-Stack Developer y Mentor Tech</image:title>
+      <image:caption>Portafolio profesional de Iván Andrés Zúñiga (IAZR). Dirección tecnológica, desarrollo Full-Stack, IA aplicada, datos y mentoría tech desde Colombia para el mundo.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://portafolio-iazr.vercel.app/about</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+
+    <xhtml:link rel="alternate" hreflang="es" href="https://portafolio-iazr.vercel.app/about" />
+    <xhtml:link rel="alternate" hreflang="es-CO" href="https://portafolio-iazr.vercel.app/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://portafolio-iazr.vercel.app/about" />
+  </url>
+
+</urlset>
