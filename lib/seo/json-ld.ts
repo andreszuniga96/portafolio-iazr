@@ -24,6 +24,7 @@ type Person = {
   familyName: string;
   jobTitle: string;
   url: string;
+  image: string;
   sameAs: string[];
   email: string;
   telephone: string;
@@ -58,6 +59,12 @@ export function buildPersonSchema(): Person {
     familyName: siteConfig.author.familyName,
     jobTitle: "Director Tecnológico · Full-Stack Developer · Mentor Tech",
     url: siteConfig.url,
+    /**
+     * image: la foto del perfil professional expuesta como og.png.
+     * Google usa este campo para poblar el Knowledge Panel cuando
+     * el autor aparece en búsquedas de nombre propio.
+     */
+    image: `${siteConfig.url}/og.png`,
     sameAs: [
       siteConfig.author.github,
       ...siteConfig.author.githubAlt,
@@ -163,12 +170,79 @@ export function buildOrganizationSchema(): Organization {
 }
 
 /**
+ * ProfilePage schema (Schema.org 2024).
+ * Señal directa para páginas de portafolio personal: Google las identifica
+ * como "About Me" / "Profile" y las posiciona con mayor confianza en
+ * búsquedas de nombre de persona + cargo.
+ */
+export function buildProfilePageSchema() {
+  const person = buildPersonSchema();
+  return {
+    "@type": "ProfilePage",
+    "@id": `${siteConfig.url}/#profile`,
+    url: siteConfig.url,
+    name: `${siteConfig.author.name} — Portafolio Profesional`,
+    description: siteConfig.description,
+    dateCreated: "2026-01-01",
+    dateModified: new Date().toISOString().split("T")[0],
+    mainEntity: person,
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Inicio",
+          item: siteConfig.url,
+        },
+      ],
+    },
+  };
+}
+
+/**
+ * WebSite schema con SearchAction.
+ * Habilita el "Sitelinks search box" de Google: cuando alguien busca el
+ * nombre del sitio, Google puede mostrar un cuadro de búsqueda directo
+ * debajo del resultado principal.
+ */
+export function buildWebSiteSchema() {
+  return {
+    "@type": "WebSite",
+    "@id": `${siteConfig.url}/#website`,
+    url: siteConfig.url,
+    name: siteConfig.title,
+    description: siteConfig.description,
+    inLanguage: "es-CO",
+    author: {
+      "@type": "Person",
+      name: siteConfig.author.name,
+      url: siteConfig.url,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${siteConfig.url}/?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+}
+
+/**
  * Construye el grafo completo. `@graph` permite declarar múltiples nodos
  * independientes en un único bloque application/ld+json, recomendado por Google.
+ * Orden: ProfilePage primero (más específico) → Person → Organization → WebSite.
  */
 export function buildJsonLdGraph() {
   return {
     "@context": "https://schema.org",
-    "@graph": [buildPersonSchema(), buildOrganizationSchema()],
+    "@graph": [
+      buildProfilePageSchema(),
+      buildPersonSchema(),
+      buildOrganizationSchema(),
+      buildWebSiteSchema(),
+    ],
   };
 }
