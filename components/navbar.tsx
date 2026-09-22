@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { Menu, Moon, Sun, X, FileText } from "lucide-react";
 
 import { siteConfig } from "@/lib/data/site";
 import { cn } from "@/lib/utils";
@@ -120,6 +120,22 @@ export function Navbar() {
             )}
           </button>
 
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="hidden border border-border/60 hover:border-primary/40 md:inline-flex"
+          >
+            <a
+              href="https://drive.google.com/file/d/1uXSsTCNRBIJW5D3zHWLMhyqlnwWQ69sp/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FileText className="size-3.5" />
+              CV
+            </a>
+          </Button>
+
           <Button asChild className="hidden md:inline-flex" size="sm">
             <a href="#contacto">Auditoría</a>
           </Button>
@@ -158,6 +174,16 @@ export function Navbar() {
                 </a>
               );
             })}
+            <a
+              href="https://drive.google.com/file/d/1uXSsTCNRBIJW5D3zHWLMhyqlnwWQ69sp/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="inline-flex items-center gap-2 py-1 text-sm text-muted-foreground transition-colors hover:text-primary"
+            >
+              <FileText className="size-4" />
+              Descargar CV
+            </a>
             <a
               href={siteConfig.author.github}
               target="_blank"

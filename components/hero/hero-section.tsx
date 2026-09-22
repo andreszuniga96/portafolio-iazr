@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, ClipboardCheck, FolderKanban } from "lucide-react";
+import { ArrowDown, ClipboardCheck, FolderKanban, FileText } from "lucide-react";
 
 import { BackgroundBeams } from "@/components/hero/background-beams";
 import { BlurIn } from "@/components/hero/blur-in";
@@ -33,9 +33,9 @@ import { Button } from "@/components/ui/button";
 
 const stats = [
   { value: "7+", label: "Años de experiencia" },
-  { value: "11", label: "Certificaciones internacionales" },
-  { value: "13", label: "Roles profesionales" },
-  { value: "3", label: "Títulos de postgrado" },
+  { value: "11", label: "Certificaciones" },
+  { value: "500+", label: "Mentorizados" },
+  { value: "3", label: "Títulos postgrado" },
 ];
 
 export function HeroSection() {
@@ -135,6 +135,16 @@ export function HeroSection() {
             <a href="#proyectos">
               <FolderKanban className="size-4" />
               Explorar Proyectos
+            </a>
+          </Button>
+          <Button variant="ghost" size="lg" asChild className="border border-border/60 hover:border-primary/40">
+            <a
+              href="https://drive.google.com/file/d/1uXSsTCNRBIJW5D3zHWLMhyqlnwWQ69sp/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FileText className="size-4" />
+              Ver CV
             </a>
           </Button>
         </motion.div>

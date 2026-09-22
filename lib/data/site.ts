@@ -58,7 +58,7 @@ export const siteConfig = {
     ],
     /** Datos reales de contacto (CV julio 2026). */
     linkedin: "https://www.linkedin.com/in/iazr96/",
-    email: "ivanzuiga1996@gmail.com",
+    email: "iazr.code@gmail.com",
     /** WhatsApp: número con código de país (sin +, espacios ni guiones). */
     whatsapp: "https://wa.me/573229132643",
     whatsappDisplay: "+57 322 913 2643",
@@ -66,7 +66,7 @@ export const siteConfig = {
   socials: {
     github: "https://github.com/andreszuniga96",
     linkedin: "https://www.linkedin.com/in/iazr96/",
-    email: "mailto:ivanzuiga1996@gmail.com",
+    email: "mailto:iazr.code@gmail.com",
     whatsapp: "https://wa.me/573229132643",
   },
   /** Navegación principal: anclas de la landing + ruta /about (página propia) */
