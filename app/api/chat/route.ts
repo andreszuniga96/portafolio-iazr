@@ -17,7 +17,7 @@ const DEMO_TEXT_ID = "demo-text-1";
  *    (useChat) consume cada delta en tiempo real → "latencia nula" percibida.
  *  · System Prompt: se construye desde lib/ai/system-prompt.ts (contexto
  *    sintético del ingeniero inyectado al modelo subyacente).
- *  · Proveedor: GROQ (createGroq) con llama-3.3-70b-versatile por defecto
+ *  · Proveedor: GROQ (createGroq) con llama3-70b-8192 por defecto
  *    (modelo configurable vía GROQ_MODEL). Groq entrega latencias de inferencia
  *    extremadamente bajas → streaming casi instantáneo para el usuario.
  *  · Modo demo (sin GROQ_API_KEY): se usa MockLanguageModelV4 + simulateReadableStream
@@ -101,6 +101,38 @@ export async function POST(req: Request) {
   // GET /api/chat/model para que el terminal pinte el badge del modelo real.
   const { provider, model: modelId } = getActiveModelConfig();
 
+  // Pre-validación liviana: si hay clave de Groq, verificamos que el modelo
+  // exista ANTES de abrir el stream SSE. Así el error es sincrónico y el
+  // try/catch lo captura antes de que el AI SDK emita nada al cliente.
+  if (provider === "groq") {
+    try {
+      const checkRes = await fetch(
+        `https://api.groq.com/openai/v1/models/${modelId}`,
+        { headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` } }
+      );
+      if (!checkRes.ok) {
+        console.warn(
+          `[/api/chat] Modelo Groq "${modelId}" no disponible (${checkRes.status}) — modo demo.`
+        );
+        const fallback = streamText({
+          model: buildDemoModel(),
+          system,
+          messages: await convertToModelMessages(messages),
+        });
+        return fallback.toUIMessageStreamResponse();
+      }
+    } catch {
+      // Red caída u otro error de fetch: fallback demo silencioso.
+      console.warn("[/api/chat] No se pudo verificar el modelo Groq — modo demo.");
+      const fallback = streamText({
+        model: buildDemoModel(),
+        system,
+        messages: await convertToModelMessages(messages),
+      });
+      return fallback.toUIMessageStreamResponse();
+    }
+  }
+
   try {
     const result = streamText({
       // Con clave → modelo real de Groq; sin clave → stream demo predefinido.
@@ -111,37 +143,24 @@ export async function POST(req: Request) {
       messages: await convertToModelMessages(messages),
       temperature: 0.6,
       maxOutputTokens: 1024,
+      // onError: captura errores que el SDK propaga dentro del stream SSE
+      // (e.g. el proveedor rechaza la solicitud tras haber iniciado la conexión).
+      onError: ({ error: streamError }) => {
+        console.warn("[/api/chat] Error dentro del stream:", streamError);
+      },
     });
 
     // toUIMessageStreamResponse serializa el stream en SSE (`data: {json}\n\n`)
     // exactamente como lo parsea useChat en el cliente.
     return result.toUIMessageStreamResponse();
   } catch (error: unknown) {
-    // Si Groq rechaza la clave (401/403) o el modelo no existe, caemos en
-    // modo demo para que el usuario reciba una respuesta en lugar de un error.
-    const isAuthError =
-      error instanceof Error &&
-      (error.message.includes("401") ||
-        error.message.includes("403") ||
-        error.message.includes("invalid_api_key") ||
-        error.message.includes("Incorrect API key"));
-
-    if (isAuthError || provider === "groq") {
-      // Fallback transparente: la respuesta demo explica la situación.
-      const fallbackResult = streamText({
-        model: buildDemoModel(),
-        system,
-        messages: await convertToModelMessages(messages),
-      });
-      return fallbackResult.toUIMessageStreamResponse();
-    }
-
-    // Otros errores (red, timeouts): propagar con 500 para que el cliente
-    // muestre el mensaje de reintento.
+    // Errores sincrónicos inesperados (no capturados por la pre-validación).
     console.error("[/api/chat] Error inesperado:", error);
-    return new Response(
-      JSON.stringify({ error: "Error interno del servidor" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    const fallback = streamText({
+      model: buildDemoModel(),
+      system,
+      messages: await convertToModelMessages(messages),
+    });
+    return fallback.toUIMessageStreamResponse();
   }
 }

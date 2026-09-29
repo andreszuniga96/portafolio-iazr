@@ -7,7 +7,7 @@
  *  centraliza la decisión:
  *
  *   · GROQ_API_KEY presente  → proveedor "groq", modelo GROQ_MODEL o el
- *     default llama-3.3-70b-versatile (demo: false).
+ *     default openai/gpt-oss-20b (demo: false).
  *   · Sin clave              → proveedor "demo" (MockLanguageModelV4 de
  *     ai/test), para que la UI muestre el estado real y honesto.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -22,8 +22,8 @@ export type ModelConfig = {
   demo: boolean;
 };
 
-/** Modelo por defecto de Groq: buen equilibrio velocidad/calidad para asistencia. */
-const DEFAULT_GROQ_MODEL = "llama-3.3-70b-versatile";
+/** Modelo por defecto de Groq disponible en la cuenta actual. */
+const DEFAULT_GROQ_MODEL = "openai/gpt-oss-20b";
 
 export function getActiveModelConfig(): ModelConfig {
   const apiKey = process.env.GROQ_API_KEY;
