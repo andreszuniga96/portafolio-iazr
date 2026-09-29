@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Geist, JetBrains_Mono } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import localFont from "next/font/local";
 
 import { siteConfig } from "@/lib/data/site";
 import { buildJsonLdGraph } from "@/lib/seo/json-ld";
@@ -13,29 +14,29 @@ import { Navbar } from "@/components/navbar";
 import "./globals.css";
 
 /**
- * ─────────────────────────────────────────────────────────────────────────────
- *  TIPOGRAFÍA — Sistema restringido de 2 familias (next/font, auto-alojado).
+ * TIPOGRAFÍA — Sistema restringido de 2 familias.
  *
- *  La especificación exige un sistema tipográfico mínimo con CERO bloqueo:
- *   · Geist Sans (fundamento geométrico general) → cuerpo, titulares y UI.
- *   · JetBrains Mono (estricto para código / acentos técnicos) → datos,
- *     fragmentos de código, terminal, métricas.
- *
- *  next/font subconjunta (solo los glifos usados), auto-aloja los woff2 en el
- *  despliegue (cero peticiones externas en runtime) y ajusta métricas para
- *  estabilizar el CLS ≈ 0. Solo se cargan los pesos que el sistema usa.
- * ─────────────────────────────────────────────────────────────────────────────
+ * · GeistSans: importado del paquete oficial `geist` de Vercel.
+ *   No requiere Google Fonts en build time — las fuentes viajan con node_modules.
+ *   Expone la variable CSS --font-geist-sans que el @theme de globals.css consume.
+ * · JetBrains Mono: cargado como fuente local desde @fontsource/jetbrains-mono
+ *   para evitar depéndencia de red en build time. Expone --font-jetbrains-mono.
  */
-const geist = Geist({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-geist",
-  display: "swap",
-});
+const geist = GeistSans;
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const jetbrainsMono = localFont({
+  src: [
+    {
+      path: "../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2",
+      weight: "500",
+      style: "normal",
+    },
+  ],
   variable: "--font-jetbrains-mono",
   display: "swap",
 });

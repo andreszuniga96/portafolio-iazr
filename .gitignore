@@ -5,10 +5,12 @@
 /.next
 /out
 
-# Variables de entorno sensibles
+# Variables de entorno — NUNCA versionar archivos con claves reales
 .env
 .env.local
 .env*.local
+.env.development
+.env.production
 
 # TypeScript
 *.tsbuildinfo
@@ -20,7 +22,13 @@ yarn-debug.log*
 yarn-error.log*
 .DS_Store
 *.pem
+Thumbs.db
 
 # Editor
 .idea
 .vscode
+*.swp
+*.swo
+
+# Vercel
+.vercel

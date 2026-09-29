@@ -101,18 +101,47 @@ export async function POST(req: Request) {
   // GET /api/chat/model para que el terminal pinte el badge del modelo real.
   const { provider, model: modelId } = getActiveModelConfig();
 
-  const result = streamText({
-    // Con clave → modelo real de Groq; sin clave → stream demo predefinido.
-    model: provider === "groq" ? groq(modelId) : buildDemoModel(),
-    system,
-    // convertToModelMessages normaliza el formato UI (partes) al formato de
-    // mensajes del proveedor; así el cliente puede enviar attachments etc.
-    messages: await convertToModelMessages(messages),
-    temperature: 0.6,
-    maxOutputTokens: 1024,
-  });
+  try {
+    const result = streamText({
+      // Con clave → modelo real de Groq; sin clave → stream demo predefinido.
+      model: provider === "groq" ? groq(modelId) : buildDemoModel(),
+      system,
+      // convertToModelMessages normaliza el formato UI (partes) al formato de
+      // mensajes del proveedor; así el cliente puede enviar attachments etc.
+      messages: await convertToModelMessages(messages),
+      temperature: 0.6,
+      maxOutputTokens: 1024,
+    });
 
-  // toUIMessageStreamResponse serializa el stream en SSE (`data: {json}\n\n`)
-  // exactamente como lo parsea useChat en el cliente.
-  return result.toUIMessageStreamResponse();
+    // toUIMessageStreamResponse serializa el stream en SSE (`data: {json}\n\n`)
+    // exactamente como lo parsea useChat en el cliente.
+    return result.toUIMessageStreamResponse();
+  } catch (error: unknown) {
+    // Si Groq rechaza la clave (401/403) o el modelo no existe, caemos en
+    // modo demo para que el usuario reciba una respuesta en lugar de un error.
+    const isAuthError =
+      error instanceof Error &&
+      (error.message.includes("401") ||
+        error.message.includes("403") ||
+        error.message.includes("invalid_api_key") ||
+        error.message.includes("Incorrect API key"));
+
+    if (isAuthError || provider === "groq") {
+      // Fallback transparente: la respuesta demo explica la situación.
+      const fallbackResult = streamText({
+        model: buildDemoModel(),
+        system,
+        messages: await convertToModelMessages(messages),
+      });
+      return fallbackResult.toUIMessageStreamResponse();
+    }
+
+    // Otros errores (red, timeouts): propagar con 500 para que el cliente
+    // muestre el mensaje de reintento.
+    console.error("[/api/chat] Error inesperado:", error);
+    return new Response(
+      JSON.stringify({ error: "Error interno del servidor" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  }
 }

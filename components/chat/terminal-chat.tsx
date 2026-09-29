@@ -268,12 +268,39 @@ export function TerminalChat() {
             })}
 
             {error ? (
-              <p
+              <div
                 role="alert"
-                className="rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive"
+                className="rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3"
               >
-                // error de conexión — reintenta o revisa GROQ_API_KEY
-              </p>
+                <p className="text-xs text-destructive">
+                  // error de conexión — el asistente no está disponible ahora mismo
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground/70">
+                  Puedes contactarme directamente por{" "}
+                  <a
+                    href="mailto:iazr.code@gmail.com"
+                    className="text-primary underline-offset-2 hover:underline"
+                  >
+                    iazr.code@gmail.com
+                  </a>{" "}
+                  o{" "}
+                  <a
+                    href="https://wa.me/573229132643"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline-offset-2 hover:underline"
+                  >
+                    WhatsApp
+                  </a>
+                </p>
+                <button
+                  type="button"
+                  onClick={clearError}
+                  className="mt-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground/60 hover:text-primary transition-colors"
+                >
+                  ↺ reintentar
+                </button>
+              </div>
             ) : null}
           </div>
         )}
